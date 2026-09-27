@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "chrome"],
+    "allowJs": true,
+    "checkJs": true
+  },
+  "include": ["scripts", "*.config.ts", "e2e"]
+}

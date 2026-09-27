@@ -1,16 +1,47 @@
 {
-  "name": "gmail-cleanup-extension",
-  "version": "1.0.0",
+  "name": "gmail-cleanup",
+  "version": "2.0.0",
   "private": true,
   "description": "Chrome extension that ranks Gmail senders by volume and cleans them up in bulk.",
+  "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "test": "node --test tests/*.test.mjs",
-    "package": "rm -f gmail-cleanup.zip && zip -r gmail-cleanup.zip manifest.json background.js dashboard.html dashboard.css dashboard.js lib icons",
-    "test:e2e": "node tests/e2e.mjs",
-    "screenshots": "node scripts/screenshots.mjs"
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/build.mjs --watch",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.node.json",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "npm run build && playwright test",
+    "screenshots": "npm run build && playwright test --config scripts/screenshots/playwright.config.ts",
+    "package": "npm run build && node scripts/package.mjs",
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm test && npm run test:e2e"
+  },
+  "dependencies": {
+    "@preact/signals": "^2.11.2",
+    "preact": "^10.29.8",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
-    "playwright": "^1.56.1"
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "~1.56.0",
+    "@types/chrome": "^0.3.0",
+    "@types/node": "^22.20.4",
+    "@vitest/coverage-v8": "^4.1.11",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.11.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "fake-indexeddb": "^6.2.5",
+    "globals": "^17.12.0",
+    "prettier": "^3.9.9",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.70.1",
+    "vitest": "^4.1.11"
   }
 }

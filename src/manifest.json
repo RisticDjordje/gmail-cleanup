@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Gmail Cleanup: Top Senders",
+  "version": "0.0.0",
+  "description": "See who fills your Gmail the most, then trash, archive, unsubscribe or filter them in bulk.",
+  "minimum_chrome_version": "116",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp5vvoLU5Ft4TLjfwp3yCidMk5A5Li93DINTUrV3IRZ3eTuGRWHDhXlujVmv7dmQ8stEFWu81XdvQc9t1EUbampzdPcEymMV9rkp5wIDK3MBiVFahkF06Q3IxtN7r60jaehRYCPJWtXdPnHbuyzTTR5R9DN/STy4jzsDESOL00d1Qsrq7H8zydfvmxbkf8Ez/EGgC3QGKq9OtAvP/iedNf+pcR5xCpOvCzb2DqNz+tUm4iX8y/Q1fLYDc3pVXJD7f8jGR6w0dl55C4rRqRul11Pe1jHsM9bmybqyyWZKLx45j5XPPRT6DsI371srx2KpK8B6LVitJZ9HiuYmMPRlWOwIDAQAB",
+  "permissions": ["identity", "storage", "unlimitedStorage"],
+  "host_permissions": ["https://gmail.googleapis.com/*", "https://oauth2.googleapis.com/*"],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "action": {
+    "default_title": "Gmail Cleanup",
+    "default_icon": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png" }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; base-uri 'none'"
+  }
+}
