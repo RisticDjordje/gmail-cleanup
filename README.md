@@ -167,7 +167,7 @@ npm run screenshots     # regenerates docs/screenshots from a fictional mailbox
 npm run package         # zip dist/ for a release
 ```
 
-Releases: bump `version` in `package.json`, then push a `vX.Y.Z` tag. The release workflow builds, tests and attaches the zip.
+Releases: bump `version` in `package.json`, then either push a `vX.Y.Z` tag or run the **Release** workflow from the Actions tab. It builds, tests, tags the commit and attaches the zip.
 
 ### Architecture
 
