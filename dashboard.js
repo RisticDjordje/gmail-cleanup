@@ -62,11 +62,10 @@ const state = {
 init().catch((e) => showError(e));
 
 async function init() {
-  const stored = await chrome.storage.local.get(['settings', 'keep', 'unsubscribed', 'lastScan']);
+  const stored = await chrome.storage.local.get(['settings', 'keep', 'unsubscribed']);
   state.settings = { ...DEFAULT_SETTINGS, ...stored.settings };
   state.keep = new Set(stored.keep || []);
   state.unsubscribed = stored.unsubscribed || {};
-  state.lastScan = stored.lastScan || null;
 
   bindUi();
   applySettingsToUi();
@@ -91,21 +90,31 @@ function showView(name) {
   updateActionBar();
 }
 
+const scanKey = (email) => `scan:${email}`;
+
 async function onSignedIn() {
   state.profile = await gmail.getProfile();
-  await auth.setLoginHint(state.profile.emailAddress);
-  $('#accountEmail').textContent = state.profile.emailAddress;
+  const email = state.profile.emailAddress;
+  await auth.setLoginHint(email);
+  $('#accountEmail').textContent = email;
 
-  // Cached data belongs to a single account; drop it if the user switched accounts.
-  if (state.lastScan && state.lastScan.email !== state.profile.emailAddress) {
-    await db.clear();
-    state.lastScan = null;
+  // v1.0 kept one shared cache for whichever account scanned last; move it to that account.
+  const { lastScan: legacy } = await chrome.storage.local.get('lastScan');
+  await db.migrateLegacy(legacy?.email).catch((e) => console.warn('Cache migration failed', e));
+  if (legacy) {
+    if (legacy.email) await chrome.storage.local.set({ [scanKey(legacy.email)]: legacy });
     await chrome.storage.local.remove('lastScan');
   }
 
+  // Each account has its own cache and last scan.
+  await db.useAccount(email);
+  state.lastScan = (await chrome.storage.local.get(scanKey(email)))[scanKey(email)] || null;
   const records = await db.getAll();
   state.cache = new Map(records.map((r) => [r.id, r]));
   state.viewIds = new Set(state.lastScan?.ids || []);
+  state.selected.clear();
+  state.expanded.clear();
+  state.shown = PAGE_SIZE;
   showView('app');
   recompute();
   updateScanInfo();
@@ -133,6 +142,7 @@ function bindUi() {
   $('#signInBtn').addEventListener('click', () => signIn(false));
   $('#switchAccountBtn').addEventListener('click', () => signIn(true));
   $('#signOutBtn').addEventListener('click', async () => {
+    if (!(await stopWork())) return;
     await auth.signOut();
     showView('signin');
   });
@@ -154,7 +164,7 @@ function bindUi() {
       saveSettings();
     });
   }
-  $('#scanBtn').addEventListener('click', scan);
+  $('#scanBtn').addEventListener('click', () => (state.scanPromise = scan()));
   $('#stopBtn').addEventListener('click', () => state.scanAbort?.abort());
 
   $('#search').addEventListener('input', (e) => {
@@ -240,8 +250,8 @@ function bindUi() {
     await db.clear();
     state.cache.clear();
     state.viewIds.clear();
+    if (state.lastScan) await chrome.storage.local.remove(scanKey(state.lastScan.email));
     state.lastScan = null;
-    await chrome.storage.local.remove('lastScan');
     recompute();
     updateScanInfo();
   });
@@ -279,10 +289,25 @@ function saveKeep() {
 function saveLastScan() {
   if (!state.lastScan) return;
   state.lastScan.ids = [...state.viewIds];
-  return chrome.storage.local.set({ lastScan: state.lastScan });
+  return chrome.storage.local.set({ [scanKey(state.lastScan.email)]: state.lastScan });
+}
+
+/** Stop a running scan before the account changes. Returns false if another action is still running. */
+async function stopWork() {
+  if (state.scanAbort) {
+    state.scanAbort.abort();
+    await state.scanPromise;
+  } else if (state.busy) {
+    toast('Wait for the current action to finish first');
+    return false;
+  }
+  closeModal();
+  $('#toasts').replaceChildren(); // Undo buttons belong to the previous account
+  return true;
 }
 
 async function signIn(selectAccount) {
+  if (!(await stopWork())) return;
   $('#signinError').hidden = true;
   try {
     await auth.getToken({ interactive: true, selectAccount });
@@ -295,7 +320,9 @@ async function signIn(selectAccount) {
 }
 
 function friendlyAuthError(e) {
-  const msg = e?.message || String(e);
+  const msg = describeError(e);
+  if (/missing_scopes|insufficient/i.test(msg))
+    return 'Google didn’t give the extension access to Gmail. Sign in again and tick every box on the permissions screen (or “Select all”).';
   if (/redirect_uri_mismatch/i.test(msg))
     return `Google rejected the redirect URI. Make sure ${auth.redirectUri()} is listed exactly under Authorized redirect URIs.`;
   if (/access_denied|cancel|did not approve/i.test(msg)) return 'Sign-in was cancelled.';
@@ -907,7 +934,7 @@ async function ensureFullScope() {
     await auth.getToken({ interactive: true, scopes: [...auth.BASE_SCOPES, auth.FULL_SCOPE] });
     return await auth.hasScope(auth.FULL_SCOPE);
   } catch (e) {
-    showError(e);
+    toast(friendlyAuthError(e), { error: true }); // still signed in; just no extra permission
     return false;
   }
 }
@@ -1211,10 +1238,16 @@ function showError(e) {
     showView('signin');
     return;
   }
-  const msg = e?.message || String(e);
-  toast(msg.includes('insufficient') ? 'Gmail refused: missing permission. Try signing out and in again.' : `Error: ${msg}`, {
+  const msg = describeError(e);
+  toast(/insufficient/i.test(msg) ? 'Gmail refused: missing permission. Sign out, sign in again and tick every permission box.' : `Error: ${msg}`, {
     error: true,
   });
+}
+
+function describeError(e) {
+  if (e === null || e === undefined) return 'something went wrong and the browser gave no details. Please try again.';
+  if (typeof e === 'string') return e;
+  return e.message || e.name || String(e);
 }
 
 // ---------------------------------------------------------------------------

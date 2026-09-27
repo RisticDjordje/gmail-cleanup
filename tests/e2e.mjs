@@ -1,187 +1,29 @@
-// End-to-end smoke test: loads dashboard.html in Chromium with a mocked `chrome.*` API and a fake
-// Gmail REST API (via Playwright request routing), then drives the main flows.
-// Run: npm run test:e2e   (set SCREENSHOTS=dir to save screenshots)
-import { chromium } from 'playwright';
+// End-to-end smoke test: drives dashboard.html in Chromium against a fake Gmail API (see harness.mjs).
+// Run: npm run test:e2e   (set SCREENSHOTS=dir to save a screenshot after each step)
 import assert from 'node:assert/strict';
-import path from 'node:path';
 import fs from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+import { createMailbox, launchDashboard } from './harness.mjs';
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const ORIGIN = 'http://extension.test';
 const shots = process.env.SCREENSHOTS;
 if (shots) fs.mkdirSync(shots, { recursive: true });
 
-// ---- Fake mailbox --------------------------------------------------------
-const senders = [
-  ['Daily Deals', 'deals@shop.example', 90, { oneClick: 'https://shop.example/unsub' }],
-  ['LinkedIn', 'messages-noreply@linkedin.com', 60, { mailto: 'mailto:leave@linkedin.com?subject=unsubscribe' }],
-  ['Shop News', 'news@mail.shop.example', 40, { link: 'https://shop.example/prefs' }],
-  ['GitHub', 'notifications@github.com', 35, {}],
-  ['Mom', 'mom@gmail.com', 20, {}],
-  ['Bank', 'alerts@bank.example', 15, {}],
-];
-const messages = new Map();
-let n = 0;
-const DAY = 86_400_000;
-for (const [name, email, count, unsub] of senders) {
-  for (let i = 0; i < count; i++) {
-    const id = `m${++n}`;
-    const headers = [
-      { name: 'From', value: `"${name}" <${email}>` },
-      { name: 'Subject', value: `${name} message #${i + 1}` },
-    ];
-    if (unsub.oneClick) {
-      headers.push({ name: 'List-Unsubscribe', value: `<${unsub.oneClick}>` });
-      headers.push({ name: 'List-Unsubscribe-Post', value: 'List-Unsubscribe=One-Click' });
-    }
-    if (unsub.mailto) headers.push({ name: 'List-Unsubscribe', value: `<${unsub.mailto}>` });
-    if (unsub.link) headers.push({ name: 'List-Unsubscribe', value: `<${unsub.link}>` });
-    const labels = new Set(['INBOX']);
-    if (email !== 'mom@gmail.com' && i % 5 !== 0) labels.add('UNREAD');
-    if (email === 'mom@gmail.com' && i < 3) labels.add('STARRED');
-    messages.set(id, {
-      id,
-      internalDate: String(Date.now() - n * DAY),
-      sizeEstimate: 20_000 + (n % 7) * 15_000,
-      labels,
-      headers,
-      from: email,
-    });
-  }
-}
-const calls = { batchModify: [], batchDelete: [], send: [], filters: [], unsubPosts: [] };
+const S = (name, email, count, extra = {}) => ({ name, email, count, ...extra });
+const mailboxes = {
+  'me@gmail.com': createMailbox([
+    S('Daily Deals', 'deals@shop.example', 90, { unsub: { oneClick: 'https://shop.example/unsub' } }),
+    S('LinkedIn', 'messages-noreply@linkedin.com', 60, { unsub: { mailto: 'mailto:leave@linkedin.com?subject=unsubscribe' } }),
+    S('Shop News', 'news@mail.shop.example', 40, { unsub: { link: 'https://shop.example/prefs' } }),
+    S('GitHub', 'notifications@github.com', 35),
+    S('Mom', 'mom@gmail.com', 20, { unreadEvery: 0, starred: 3 }),
+    S('Bank', 'alerts@bank.example', 15),
+  ]),
+  'second@gmail.com': createMailbox([S('Newsletter', 'hello@news.example', 12), S('Friend', 'pal@gmail.com', 4)], { idPrefix: 'x' }),
+};
 
-function matches(m, q, includeSpamTrash, labelIds) {
-  if (!includeSpamTrash && (m.labels.has('TRASH') || m.labels.has('SPAM'))) return false;
-  for (const l of labelIds) if (!m.labels.has(l)) return false;
-  const from = q.match(/from:\(([^)]*)\)|from:(\S+)/);
-  if (from) {
-    const list = (from[1] ?? from[2]).split(/\s+OR\s+/).map((s) => s.trim());
-    if (!list.some((f) => (f.startsWith('@') ? m.from.endsWith(f) : m.from === f))) return false;
-  }
-  if (/-is:starred/.test(q) && m.labels.has('STARRED')) return false;
-  if (/(^|\s)is:unread/.test(q) && !m.labels.has('UNREAD')) return false;
-  if (/(^|\s)in:inbox/.test(q) && !m.labels.has('INBOX')) return false;
-  return true;
-}
-
-async function gmailApi(route) {
-  const req = route.request();
-  const url = new URL(req.url());
-  const p = url.pathname.replace('/gmail/v1/users/me', '');
-  assert.equal(req.headers().authorization, 'Bearer fake-token');
-  const json = (body, status = 200) => route.fulfill({ status, contentType: 'application/json', body: JSON.stringify(body) });
-
-  if (p === '/profile') return json({ emailAddress: 'me@gmail.com', messagesTotal: messages.size });
-  if (p === '/messages' && req.method() === 'GET') {
-    const q = url.searchParams.get('q') || '';
-    const all = [...messages.values()].filter((m) =>
-      matches(m, q, url.searchParams.get('includeSpamTrash') === 'true', url.searchParams.getAll('labelIds')),
-    );
-    const start = Number(url.searchParams.get('pageToken') || 0);
-    const size = Number(url.searchParams.get('maxResults') || 100);
-    const page = all.slice(start, start + size);
-    return json({
-      messages: page.map((m) => ({ id: m.id })),
-      ...(start + size < all.length ? { nextPageToken: String(start + size) } : {}),
-    });
-  }
-  if (p === '/messages/batchModify') {
-    const body = req.postDataJSON();
-    calls.batchModify.push(body);
-    for (const id of body.ids) {
-      const m = messages.get(id);
-      body.addLabelIds?.forEach((l) => m.labels.add(l));
-      body.removeLabelIds?.forEach((l) => m.labels.delete(l));
-    }
-    return route.fulfill({ status: 204, body: '' });
-  }
-  if (p === '/messages/batchDelete') {
-    const body = req.postDataJSON();
-    calls.batchDelete.push(body);
-    body.ids.forEach((id) => messages.delete(id));
-    return route.fulfill({ status: 204, body: '' });
-  }
-  if (p === '/messages/send') {
-    calls.send.push(Buffer.from(req.postDataJSON().raw, 'base64url').toString());
-    return json({ id: 'sent1' });
-  }
-  if (p === '/settings/filters') {
-    calls.filters.push(req.postDataJSON());
-    return json({ id: `f${calls.filters.length}` });
-  }
-  const get = p.match(/^\/messages\/(\w+)$/);
-  if (get) {
-    const m = messages.get(get[1]);
-    if (!m) return json({ error: { code: 404, message: 'Not Found' } }, 404);
-    return json({
-      id: m.id,
-      internalDate: m.internalDate,
-      sizeEstimate: m.sizeEstimate,
-      labelIds: [...m.labels],
-      payload: { headers: m.headers },
-    });
-  }
-  return json({ error: { message: `unhandled ${req.method()} ${p}` } }, 500);
-}
-
-// ---- chrome.* mock (runs in the page before any script) -----------------
-function chromeMock() {
-  const key = '__chrome_storage__';
-  const load = () => JSON.parse(sessionStorage.getItem(key) || '{}');
-  const save = (d) => sessionStorage.setItem(key, JSON.stringify(d));
-  window.__authUrls = [];
-  window.chrome = {
-    storage: {
-      local: {
-        async get(keys) {
-          const d = load();
-          const out = {};
-          for (const k of [].concat(keys)) if (k in d) out[k] = d[k];
-          return out;
-        },
-        async set(obj) {
-          save({ ...load(), ...obj });
-        },
-        async remove(keys) {
-          const d = load();
-          for (const k of [].concat(keys)) delete d[k];
-          save(d);
-        },
-      },
-    },
-    identity: {
-      getRedirectURL: () => 'https://abcdefghijklmnop.chromiumapp.org/',
-      async launchWebAuthFlow({ url, interactive }) {
-        window.__authUrls.push({ url, interactive });
-        const u = new URL(url);
-        if (u.searchParams.get('prompt') === 'none' && !sessionStorage.getItem('__signedIn')) {
-          throw new Error('User interaction required.');
-        }
-        sessionStorage.setItem('__signedIn', '1');
-        const scope = encodeURIComponent(u.searchParams.get('scope'));
-        return `https://abcdefghijklmnop.chromiumapp.org/#access_token=fake-token&expires_in=3600&scope=${scope}`;
-      },
-    },
-  };
-}
-
-// ---- Run ------------------------------------------------------------------
-const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, colorScheme: process.env.COLOR_SCHEME || 'light' });
-const errors = [];
-page.on('pageerror', (e) => errors.push(e));
-page.on('console', (m) => m.type() === 'error' && errors.push(new Error(m.text())));
-await page.addInitScript(chromeMock);
-await page.route(`${ORIGIN}/**`, (route) => {
-  const file = path.join(root, new URL(route.request().url()).pathname);
-  return fs.existsSync(file) ? route.fulfill({ path: file }) : route.fulfill({ status: 404 });
-});
-await page.route('https://gmail.googleapis.com/**', gmailApi);
-await page.route('https://shop.example/**', (route) => {
-  calls.unsubPosts.push({ url: route.request().url(), method: route.request().method(), body: route.request().postData() });
-  return route.fulfill({ status: 200, body: 'ok' });
+const { browser, page, calls, errors } = await launchDashboard({
+  mailboxes,
+  colorScheme: process.env.COLOR_SCHEME || 'light',
 });
 
 const step = async (name, fn) => {
@@ -193,7 +35,6 @@ const toast = (text) => page.locator('.toast', { hasText: text }).waitFor();
 const rowNames = () => page.locator('#rows tr.row .sender-name').allTextContents();
 
 await step('01-setup', async () => {
-  await page.goto(`${ORIGIN}/dashboard.html`);
   await page.locator('#setupView').waitFor();
   assert.equal(await page.locator('#redirectUri').textContent(), 'https://abcdefghijklmnop.chromiumapp.org/');
   await page.fill('#clientIdInput', 'not-a-client-id');
@@ -321,6 +162,37 @@ await step('13-reload-uses-cache', async () => {
   await page.locator('#resultsView').waitFor();
   assert.equal(await page.locator('.stat .value').first().textContent(), '52');
   assert.equal(calls.batchModify.length, before);
+});
+
+await step('14-switch-account', async () => {
+  // Leave an Undo toast from the first account around; it must not survive the switch.
+  await page.locator('#rows tr.row', { hasText: 'notifications@github.com' }).locator('input[type=checkbox]').check();
+  await page.click('#actionBar [data-action=read]');
+  await page.click('#modalActions button[value=ok]');
+  await toast('Marked');
+  await page.evaluate(() => (window.__nextAccount = 'second@gmail.com'));
+  await page.click('#switchAccountBtn');
+  await page.locator('#accountEmail', { hasText: 'second@gmail.com' }).waitFor();
+  assert.equal(await page.locator('.toast button', { hasText: 'Undo' }).count(), 0);
+  assert.ok(await page.locator('#resultsView').isHidden()); // nothing scanned yet for this account
+  const switchAuth = new URL((await page.evaluate(() => window.__authUrls.at(-1))).url);
+  assert.doesNotMatch(switchAuth.searchParams.get('scope'), /mail\.google\.com/); // no carried-over permissions
+  await page.click('#scanBtn');
+  await toast('Scan complete: 16 emails');
+  assert.deepEqual(await rowNames(), ['Newsletter', 'Friend']);
+});
+
+await step('15-switch-back-keeps-cache', async () => {
+  const listCalls = [];
+  const onReq = (r) => /\/messages\/m\d+\?/.test(r.url()) && listCalls.push(r.url());
+  page.on('request', onReq);
+  await page.evaluate(() => (window.__nextAccount = 'me@gmail.com'));
+  await page.click('#switchAccountBtn');
+  await page.locator('#accountEmail', { hasText: 'me@gmail.com' }).waitFor();
+  await page.locator('#resultsView').waitFor();
+  assert.equal(await page.locator('.stat .value').first().textContent(), '52');
+  page.off('request', onReq);
+  assert.equal(listCalls.length, 0); // served from this account's cache, no re-reading
 });
 
 await browser.close();

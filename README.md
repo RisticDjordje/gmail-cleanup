@@ -1,103 +1,138 @@
-# Gmail Cleanup: Top Senders
+<div align="center">
 
-A Chrome extension that scans your Gmail, ranks everyone who emails you by how much they send, and lets you clean them out in bulk.
+<img src="icons/icon128.png" width="88" alt="">
 
-It runs entirely in your browser. It talks straight to the Gmail API with your own Google OAuth client, so your mail never goes through a third-party server.
+# Gmail Cleanup
 
-## What it does
+**See who fills your Gmail the most, then clean them out in bulk.**
 
-**See who's filling your mailbox**
-- Groups every email **by sender** or **by domain** (e.g. all `*.amazon.com` addresses together).
-- Sorts by **most emails**, **most storage**, **most unread**, most recent, oldest or name.
-- For each sender it shows the count, % unread, total size and latest date. Expand a row to see recent subject lines and every address they used.
-- Summary tiles show emails scanned, number of senders, total size, % unread, and how many senders you can unsubscribe from.
-- **Insight cards** point out easy wins: senders you *never read*, mailing lists and newsletters, senders using over 10 MB, and what share of your mail comes from your top 10 senders. Click a card to filter the list.
-- Search, filter chips (*Has unsubscribe*, *Mostly unread*, *Hide kept*) and **CSV export**.
+A Chrome extension that ranks every sender in your mailbox by how much they send, and lets you trash, unsubscribe, block or archive them a few hundred at a time. It runs entirely in your browser.
 
-**Clean up in bulk** (select any number of senders, then:)
+[![Tests](https://github.com/RisticDjordje/GmailCleanupExtension/actions/workflows/test.yml/badge.svg)](https://github.com/RisticDjordje/GmailCleanupExtension/actions/workflows/test.yml)
+![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-1a73e8)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+<img src="docs/screenshots/dashboard.png" alt="Dashboard ranking senders by number of emails" width="900">
+
+</div>
+
+## Features
+
+### See who is filling your mailbox
+- Every email grouped **by sender** or **by domain** (all of `*.shopnest.com` together).
+- Sort by **most emails**, **most storage**, **most unread**, newest, oldest or name.
+- For each sender: email count, % unread, total size and latest date. Expand a row for recent subject lines and every address they used.
+- **Insight cards** point out easy wins: senders you never read, mailing lists, storage hogs, and how much of your mail your top 10 senders send.
+- Search, filters (*Has unsubscribe*, *Mostly unread*, *Hide kept*) and **CSV export**.
+
+<img src="docs/screenshots/select.png" alt="Several senders selected with the bulk action bar" width="900">
+
+### Clean up in bulk
+Select any number of senders, then:
+
 | Action | What happens |
 |---|---|
 | **Move to Trash** | Trashes every email from them. Gmail empties Trash after 30 days. **Undo** is available right after. |
-| **Unsubscribe** | Uses the sender's `List-Unsubscribe` header: one-click unsubscribe (RFC 8058) where supported, otherwise sends the unsubscribe email for you, otherwise gives you the links to click. It can also trash their existing mail and add a block filter in the same step. |
-| **Block future** | Creates Gmail filters that send future mail from them to Trash, or skip the inbox (optionally marking it read). It can also apply to their existing mail. |
-| **Archive** | Removes them from the inbox; they stay searchable. Undoable. |
-| **Mark read** | Clears unread counts. Undoable. |
+| **Unsubscribe** | Uses the sender's own unsubscribe header: one-click unsubscribe where supported, otherwise it sends the unsubscribe email for you, otherwise it gives you the links. Optionally trashes their mail and blocks them in the same step. |
+| **Block future** | Creates Gmail filters that send their future mail to Trash, or skip the inbox (optionally marking it read). |
+| **Archive** / **Mark read** | Clear the inbox or the unread count. Undoable. |
 | **Delete forever** | Skips Trash. Asks for the extra permission this needs only when you first use it. |
 
-**Safety**
-- Nothing is changed without a confirmation that shows the exact number of emails affected.
-- **Never touch starred** (on by default) and **Never touch important** options.
-- **Keep** (☆) a sender to protect them from being selected in bulk actions.
-- Actions only apply to what you scanned. If you scanned "Older than 1 year", trashing a sender only trashes their mail that is more than a year old.
+<img src="docs/screenshots/unsubscribe.png" alt="Unsubscribe dialog" width="900">
 
-**Scan options**
-- Scope: all mail, inbox only, Promotions/Social/Updates/Forums tabs, unread only, emails over 5 MB, or any custom Gmail search (e.g. `before:2020/01/01 has:attachment`).
-- Age filter (older than 1 month to 5 years) and an optional limit for a quick first look.
-- Results are cached locally (IndexedDB), so reopening is instant and rescans only read new mail. You can stop a scan at any time and continue later.
+### Built to be safe
+- Every action first shows a confirmation with the **exact number of emails** it will affect.
+- **Never touch starred** (on by default) and **never touch important** options.
+- Mark a sender as **Keep** (☆) so they can't be selected for bulk actions.
+- Actions only apply to what you scanned. If you scanned "older than 1 year", trashing a sender only removes their mail from more than a year ago.
 
-**Extra tools**: empty Trash or Spam immediately, clear the kept list, clear the local cache.
+### Scanning
+- Scan all mail, the inbox, a Promotions/Social/Updates/Forums tab, unread mail, emails over 5 MB, or any **custom Gmail search** (e.g. `before:2020/01/01 has:attachment`).
+- Optional age filter and limit for a quick first look.
+- Results are **cached per account**, so reopening is instant, rescans only read new mail, and you can switch between several Gmail accounts.
+- You can stop a scan at any time and continue it later.
 
-## Setup
+**Extra tools:** empty Trash or Spam immediately, clear the kept list, clear the local cache. Includes dark mode.
 
-Because this is a personal extension (not on the Chrome Web Store), you create your own free Google OAuth client once. It takes about 5 minutes.
+<img src="docs/screenshots/dark.png" alt="Dark mode, grouped by domain and sorted by storage" width="900">
+
+## Install
+
+This is a personal extension, loaded straight from this folder and not from the Chrome Web Store. Gmail only lets apps read mail through a Google sign-in key, so you create your own free key once. It takes about 5 minutes and doesn't need a credit card.
+
+<img src="docs/screenshots/setup.png" alt="First-run setup screen" width="700">
 
 ### 1. Load the extension
+1. [Download this repo as a ZIP](https://github.com/RisticDjordje/GmailCleanupExtension/archive/HEAD.zip) and unzip it somewhere permanent (not a folder you clean out).
+2. Open `chrome://extensions`, turn on **Developer mode** (top right), click **Load unpacked** and choose the unzipped folder (the one containing `manifest.json`).
+3. Pin the extension from the puzzle-piece menu and click its icon. The dashboard opens and shows your **redirect URI**, which looks like `https://<extension-id>.chromiumapp.org/`.
 
-1. Download or clone this repository.
-2. Open `chrome://extensions`, turn on **Developer mode** (top right), click **Load unpacked** and choose this folder.
-3. Click the extension's toolbar icon (pin it from the puzzle-piece menu). A dashboard tab opens and shows your **redirect URI**, which looks like `https://<extension-id>.chromiumapp.org/`. You'll need it in step 2.
+### 2. Create a Google Cloud project
+1. Open [console.cloud.google.com/projectcreate](https://console.cloud.google.com/projectcreate), name the project (e.g. *Gmail Cleanup*) and click **Create**.
+2. Open the [Gmail API page](https://console.cloud.google.com/apis/library/gmail.googleapis.com), check that your new project is selected at the top, and click **Enable**.
 
-### 2. Create a Google OAuth client
+### 3. Set up the sign-in screen
+1. Open [Google Auth Platform](https://console.cloud.google.com/auth/overview) and click **Get started**.
+2. Fill in an app name and your email, choose **External** as the audience, agree to the policy and click **Create**.
+3. Go to **Audience → Test users → Add users** and add **every Gmail address you want to clean up**. Leave the app in *Testing* mode.
 
-1. Go to the [Google Cloud Console](https://console.cloud.google.com/projectcreate) and create a project (any name).
-2. Enable the [Gmail API](https://console.cloud.google.com/apis/library/gmail.googleapis.com) for the project.
-3. Open [Google Auth Platform → Branding / Audience](https://console.cloud.google.com/auth/overview) and configure the consent screen:
-   - User type **External**, and fill in an app name and your email.
-   - Under **Audience → Test users**, add the Gmail address(es) you want to clean up.
-4. Open [Clients](https://console.cloud.google.com/auth/clients) → **Create client**:
-   - Application type: **Web application**
-   - **Authorized redirect URIs**: paste the redirect URI from the dashboard, *including the trailing slash*.
-5. Copy the **Client ID** (ends in `.apps.googleusercontent.com`).
+### 4. Create the client ID
+1. Go to **Clients → Create client**. Choose application type **Web application**.
+2. Under **Authorized redirect URIs**, add the redirect URI from the dashboard, *including the trailing slash*.
+3. Click **Create** and copy the **Client ID** (ends in `.apps.googleusercontent.com`). You don't need the secret.
 
-### 3. Sign in
+### 5. Sign in
+Paste the client ID into the dashboard, click **Save**, then **Sign in with Google**. Google will say *"Google hasn't verified this app"*. That's expected for your own app: click **Continue**, then **Select all** on the permissions screen.
 
-Paste the client ID into the dashboard, click **Save**, then **Sign in with Google**.
+**First run:** try *Scan: Promotions tab* with *Limit: Newest 2,000*. It takes about a minute.
 
-Google will warn that it *hasn't verified this app*. That's expected, because it's your own app in testing mode: click **Continue**. You can sign in with any Google account you added as a test user, not only the one Chrome is signed into. Use **Switch account** to change accounts.
+## Troubleshooting
 
-> **Tip:** the extension ID (and so the redirect URI) comes from the folder you loaded it from. If you move the folder, re-add the new redirect URI in the Cloud Console.
+| Problem | Fix |
+|---|---|
+| `redirect_uri_mismatch` | The URI in Step 4 must match the dashboard exactly, including the trailing `/`. |
+| *Access blocked* / `access_denied` | That Gmail address isn't a **test user** yet (Step 3.3). Each account you switch to needs to be listed. |
+| *Authorization page could not be loaded* | Wrong client ID, or the client isn't the *Web application* type. |
+| *Google didn't give the extension access* | On the permissions screen, tick every box (or **Select all**). |
+| It worked, then suddenly `redirect_uri_mismatch` | You moved the extension folder, which changes its ID. Add the new redirect URI to the same client. |
 
-## Permissions
+## Privacy and permissions
+
+The extension only reads message **headers** (sender, subject, date, size, unsubscribe info), never message bodies. It talks directly to Google's Gmail API from your browser; there is no server. Tokens and the scan cache stay in your Chrome profile, and **Sign out** revokes access.
 
 | Permission | Why |
 |---|---|
-| `gmail.modify` | Read message headers (sender, subject, date, size, unsubscribe info), trash/archive/mark read, and send unsubscribe emails. It **cannot** permanently delete. |
+| `gmail.modify` | Read headers, trash, archive, mark read and send unsubscribe emails. It **cannot** permanently delete. |
 | `gmail.settings.basic` | Create filters for "Block future". |
 | `https://mail.google.com/` | Only requested the first time you use **Delete forever** or **Empty Trash/Spam**. |
-| `identity`, `storage`, `unlimitedStorage` | Sign-in, settings, and caching scan results locally. |
-
-The extension only reads headers (`format=metadata`), never message bodies. Access tokens and the cache stay in your browser profile. **Sign out** revokes the token.
+| `identity`, `storage`, `unlimitedStorage` | Sign-in, settings and the local scan cache. |
 
 ## Performance
 
-Gmail limits each user to about 250 API "quota units" per second. Reading one message costs 5, so the scanner reads about 40 messages per second. A first full scan of 10,000 emails takes about 4 minutes, and 100,000 takes about 40 minutes. Later scans only read new messages. To get results faster, pick a limit (e.g. newest 10,000) or a narrower scope (e.g. Promotions) first.
-
-Bulk actions are fast: up to 1,000 emails per API call.
+Gmail lets each user make about 250 API "quota units" per second, and reading one message costs 5. That means about **40 messages per second**: 10,000 emails take about 4 minutes and 100,000 about 40 minutes the first time. Later scans only read new mail. Bulk actions handle 1,000 emails per request.
 
 ## Development
 
 ```
-lib/parse.js    pure helpers (header parsing, grouping, queries); unit-tested
-lib/gmail.js    Gmail REST client: quota-aware rate limiter, retries, token refresh
-lib/auth.js     OAuth via chrome.identity.launchWebAuthFlow
-lib/db.js       IndexedDB cache of message metadata
-dashboard.*     the UI
-background.js   opens the dashboard when you click the toolbar icon
+manifest.json       Manifest V3; clicking the icon opens dashboard.html
+dashboard.*         the UI
+lib/parse.js        pure helpers: header parsing, grouping, Gmail queries (unit-tested)
+lib/gmail.js        Gmail REST client: quota-aware rate limiter, retries, token refresh
+lib/auth.js         OAuth via chrome.identity.launchWebAuthFlow
+lib/db.js           per-account IndexedDB cache of message headers
+tests/harness.mjs   fake Gmail API + chrome.* mock for browser tests
 ```
 
 ```sh
-npm test            # unit tests (Node 18+)
-npm install         # installs Playwright for the e2e test
-npm run test:e2e    # drives the dashboard in Chromium against a fake Gmail API
-npm run package     # zip for distribution
+npm install          # installs Playwright (only needed for the browser tests)
+npm test             # unit tests
+npm run test:e2e     # drives the dashboard in Chromium against a fake Gmail
+npm run screenshots  # regenerates docs/screenshots from a fictional mailbox
+npm run package      # zip for sharing
 ```
+
+After editing the code, click the reload icon on the extension's card in `chrome://extensions`.
+
+## License
+
+[MIT](LICENSE)
