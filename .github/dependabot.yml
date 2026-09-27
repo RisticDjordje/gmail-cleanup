@@ -4,10 +4,18 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    # Major versions need a deliberate migration (e.g. TypeScript 7 isn't supported by
+    # typescript-eslint yet), so Dependabot only proposes compatible updates.
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
     groups:
-      dev-dependencies:
-        dependency-type: development
+      npm-dependencies:
+        patterns: ['*']
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    groups:
+      github-actions:
+        patterns: ['*']
