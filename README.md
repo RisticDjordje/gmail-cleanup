@@ -8,7 +8,7 @@
 
 A Chrome extension that ranks every sender in your mailbox by how much they send, and lets you trash, unsubscribe, block or archive them a few hundred at a time. It runs entirely in your browser.
 
-[![Tests](https://github.com/RisticDjordje/GmailCleanupExtension/actions/workflows/ci.yml/badge.svg)](https://github.com/RisticDjordje/GmailCleanupExtension/actions/workflows/ci.yml)
+[![Tests](https://github.com/RisticDjordje/gmail-cleanup/actions/workflows/ci.yml/badge.svg)](https://github.com/RisticDjordje/gmail-cleanup/actions/workflows/ci.yml)
 ![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-1a73e8)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -69,13 +69,13 @@ This is a personal extension that you load into Chrome yourself (it is not on th
 
 ### 1. Load the extension
 
-**Option A: download a release.** Download `gmail-cleanup-<version>.zip` from the [latest release](https://github.com/RisticDjordje/GmailCleanupExtension/releases/latest) and unzip it somewhere permanent.
+**Option A: download a release.** Download `gmail-cleanup-<version>.zip` from the [latest release](https://github.com/RisticDjordje/gmail-cleanup/releases/latest) and unzip it somewhere permanent.
 
 **Option B: build it yourself** (Node 20+):
 
 ```sh
-git clone https://github.com/RisticDjordje/GmailCleanupExtension.git
-cd GmailCleanupExtension
+git clone https://github.com/RisticDjordje/gmail-cleanup.git
+cd gmail-cleanup
 npm ci && npm run build   # outputs the extension to dist/
 ```
 

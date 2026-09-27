@@ -3,7 +3,7 @@ import { useState } from 'preact/hooks';
 import { useController } from '../context';
 import { Button, ExternalLink } from '../components/ui';
 
-const README_SETUP = 'https://github.com/RisticDjordje/GmailCleanupExtension#install';
+const README_SETUP = 'https://github.com/RisticDjordje/gmail-cleanup#install';
 
 export function SetupView(): JSX.Element {
   const controller = useController();
