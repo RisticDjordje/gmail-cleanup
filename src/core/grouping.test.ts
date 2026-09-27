@@ -116,6 +116,18 @@ describe('keep list', () => {
     expect(isKept(byDomain, new Set(['a@shop.com']))).toBe(false);
   });
 
+  it('never offers malformed addresses for actions', () => {
+    const weird = group({
+      key: '@shop.com',
+      groupBy: 'domain',
+      addresses: new Map([
+        ['ok@shop.com', { count: 1, unsubscribe: null }],
+        ['shop.com', { count: 1, unsubscribe: null }],
+      ]),
+    });
+    expect(actionableAddresses(weird, new Set())).toEqual(['ok@shop.com']);
+  });
+
   it('excludes individually kept addresses from actions on a domain', () => {
     expect(actionableAddresses(byDomain, new Set(['a@shop.com']))).toEqual(['b@shop.com']);
     expect(actionableAddresses(byDomain, new Set(['@shop.com']))).toEqual([]);

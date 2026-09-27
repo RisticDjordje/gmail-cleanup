@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { isHttpsUrl, parseFrom, parseMailto, parseUnsubscribe, UNKNOWN_SENDER } from './headers';
+import {
+  isSafeAddress,
+  isSafeUnsubscribeUrl,
+  parseFrom,
+  parseMailto,
+  parseUnsubscribe,
+  UNKNOWN_SENDER,
+} from './headers';
 
 describe('parseFrom', () => {
   it.each([
@@ -39,6 +46,7 @@ describe('parseUnsubscribe', () => {
 
   it('ignores insecure or unusable entries', () => {
     expect(parseUnsubscribe('<http://x.com/u>', undefined)).toBeNull();
+    expect(parseUnsubscribe('<https://10.0.0.1/u>', 'List-Unsubscribe=One-Click')).toBeNull();
     expect(parseUnsubscribe('<javascript:alert(1)>', undefined)).toBeNull();
     expect(parseUnsubscribe('<mailto:a@x.com,b@y.com>', undefined)).toBeNull();
     expect(parseUnsubscribe('', undefined)).toBeNull();
@@ -51,8 +59,8 @@ describe('parseUnsubscribe', () => {
 });
 
 describe('parseMailto', () => {
-  it('reads subject and body with defaults', () => {
-    expect(parseMailto('mailto:leave@list.com?Subject=Remove%20me')).toEqual({
+  it('reads the address and keeps only unsubscribe-like subjects', () => {
+    expect(parseMailto('mailto:Leave@List.com?Subject=Remove%20me')).toEqual({
       to: 'leave@list.com',
       subject: 'Remove me',
       body: 'unsubscribe',
@@ -65,8 +73,19 @@ describe('parseMailto', () => {
     expect(parseMailto('mailto:?to=a@b.com&body=stop')).toEqual({
       to: 'a@b.com',
       subject: 'unsubscribe',
-      body: 'stop',
+      body: 'unsubscribe',
     });
+  });
+
+  it('never lets the sender choose what we write', () => {
+    expect(parseMailto('mailto:ceo@othercorp.com?subject=I%20resign&body=Effective%20today')).toEqual({
+      to: 'ceo@othercorp.com',
+      subject: 'unsubscribe',
+      body: 'unsubscribe',
+    });
+    expect(parseMailto(`mailto:a@b.com?subject=unsubscribe%20${'x'.repeat(300)}`)?.subject).toBe(
+      'unsubscribe',
+    );
   });
 
   it('rejects anything but a single plausible address', () => {
@@ -78,14 +97,48 @@ describe('parseMailto', () => {
   });
 
   it('strips line breaks from the subject', () => {
-    expect(parseMailto('mailto:a@b.com?subject=hi%0D%0ABcc:%20x@y.com')?.subject).toBe('hi Bcc: x@y.com');
+    expect(parseMailto('mailto:a@b.com?subject=unsub%0D%0ABcc:%20x@y.com')?.subject).toBe(
+      'unsub Bcc: x@y.com',
+    );
   });
 });
 
-describe('isHttpsUrl', () => {
-  it('accepts only https', () => {
-    expect(isHttpsUrl('https://a.com')).toBe(true);
-    expect(isHttpsUrl('http://a.com')).toBe(false);
-    expect(isHttpsUrl('not a url')).toBe(false);
+describe('isSafeUnsubscribeUrl', () => {
+  it.each([
+    ['https://news.example.com/u?id=1', true],
+    ['http://news.example.com/u', false],
+    ['https://192.168.1.1/cgi-bin/reboot', false],
+    ['https://2130706433/', false], // decimal IP, normalized to 127.0.0.1
+    ['https://0x7f.1/', false],
+    ['https://[::1]/', false],
+    ['https://localhost/u', false],
+    ['https://router.local/u', false],
+    ['https://printer.home.arpa/u', false],
+    ['https://intranet/u', false],
+    ['https://news.example.com:8443/u', false],
+    ['https://user:pass@news.example.com/u', false],
+    ['javascript:alert(1)', false],
+    ['not a url', false],
+  ])('%s → %s', (url, safe) => {
+    expect(isSafeUnsubscribeUrl(url)).toBe(safe);
+  });
+});
+
+describe('isSafeAddress', () => {
+  it.each([
+    ['deals@shop.com', true],
+    ['first.last+tag@mail.example.co.uk', true],
+    ["o'brien@example.ie", true],
+    ['(unknown sender)', false],
+    ['amazon.com', false],
+    ['x@evil.com|com', false],
+    ['a*@x.com', false],
+    ['-a@x.com', false],
+    ['a"b@x.com', false],
+    ['a@x', false],
+    ['a@-x.com', false],
+    ['Upper@x.com', false], // records are lowercased; anything else is unexpected
+  ])('%s → %s', (email, safe) => {
+    expect(isSafeAddress(email)).toBe(safe);
   });
 });

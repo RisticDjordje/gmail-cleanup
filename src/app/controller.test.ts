@@ -6,8 +6,7 @@ import { MessageCache } from '../cache/messageCache';
 import { MemoryArea } from '../platform/storage';
 import type { FakeSender } from '../testing/fakeGmail';
 import { FakeGmail } from '../testing/fakeGmail';
-import { FakeIdentity } from '../testing/fakeIdentity';
-import { UnsubscribeService } from '../services/unsubscribe';
+import { accountOfToken, FakeIdentity, grant, tokenFor } from '../testing/fakeIdentity';
 import { AppController } from './controller';
 import type { Answers, DialogKind, DialogRequest } from './dialogs';
 import { DISMISSED } from './dialogs';
@@ -32,7 +31,9 @@ type Script = {
 
 interface Setup {
   controller: AppController;
+  /** me@gmail.com's mailbox. */
   gmail: FakeGmail;
+  accounts: Map<string, FakeGmail>;
   identity: FakeIdentity;
   local: MemoryArea;
   session: MemoryArea;
@@ -45,22 +46,37 @@ interface Setup {
 async function setup(
   options: { signedIn?: boolean; local?: MemoryArea; session?: MemoryArea } = {},
 ): Promise<Setup> {
-  const gmail = new FakeGmail('me@gmail.com', SENDERS);
+  const accounts = new Map([
+    ['me@gmail.com', new FakeGmail('me@gmail.com', SENDERS)],
+    [
+      'second@gmail.com',
+      new FakeGmail('second@gmail.com', [{ name: 'Pal', email: 'pal@gmail.com', count: 3 }], {
+        idPrefix: 'x',
+      }),
+    ],
+  ]);
+  const gmail = accounts.get('me@gmail.com')!;
   const identity = new FakeIdentity();
   const local = options.local ?? new MemoryArea();
   const session = options.session ?? new MemoryArea();
-  const auth = new OAuthClient({ identity, local, session, revoke: () => Promise.resolve() });
+  const auth = new OAuthClient({
+    identity,
+    local,
+    session,
+    whoAmI: accountOfToken,
+    revoke: () => Promise.resolve(),
+  });
   const factory = new IDBFactory();
   const post = vi.fn<(url: string) => Promise<void>>(() => Promise.resolve());
   const controller = new AppController({
     auth,
-    gmail,
+    gmailFor: (account) => accounts.get(account)!,
     persistence: new Persistence(local),
     openCache: (account) => MessageCache.open(account, factory),
-    unsubscribe: new UnsubscribeService(gmail, post),
+    postOneClick: post,
   });
   const asked: DialogRequest[] = [];
-  const state: Setup = { controller, gmail, identity, local, session, asked, post, script: {} };
+  const state: Setup = { controller, gmail, accounts, identity, local, session, asked, post, script: {} };
   effect(() => {
     const open = controller.dialogs.current.value;
     if (!open) return;
@@ -324,7 +340,9 @@ describe('AppController', () => {
       for (const key of ['deals@shop.com', 'news@mail.shop.com', 'hi@letters.com'])
         s.controller.setSelected(key, true);
       s.script.unsubscribe = { trashExisting: true, blockFuture: true };
+      s.script.confirmAction = true;
       await s.controller.unsubscribe();
+      expect(s.asked.find((r) => r.kind === 'confirmAction')).toMatchObject({ action: 'trash', count: 31 });
 
       expect(s.post).toHaveBeenCalledWith('https://shop.com/u');
       expect(s.gmail.sent).toHaveLength(1);
@@ -369,7 +387,13 @@ describe('AppController', () => {
       s.controller.setGroupBy('domain');
       s.controller.setSelected('@shop.com', true);
       s.script.block = { mode: 'archiveRead', applyNow: true };
+      s.script.confirmAction = true;
       await s.controller.blockFuture();
+      expect(s.asked.find((r) => r.kind === 'block')).toMatchObject({ criteria: ['@shop.com'] });
+      expect(s.asked.find((r) => r.kind === 'confirmAction')).toMatchObject({
+        action: 'archiveRead',
+        count: 26,
+      });
       expect(s.gmail.filters).toEqual([
         { criteria: { from: '@shop.com' }, action: { removeLabelIds: ['INBOX', 'UNREAD'] } },
       ]);
@@ -377,6 +401,122 @@ describe('AppController', () => {
       expect(labels).not.toContain('INBOX');
       expect(labels).not.toContain('UNREAD');
       expect(s.controller.groupIndex.value.get('@shop.com')?.unread).toBe(0);
+    });
+  });
+
+  describe('audit regressions', () => {
+    it('keeps each account on its own tokens and mailbox', async () => {
+      const s = await setup();
+      s.identity.picked = 'second@gmail.com';
+      await s.controller.signIn({ selectAccount: true });
+      expect(s.controller.account.value).toBe('second@gmail.com');
+      await s.controller.startScan();
+      expect(s.controller.stats.value.messages).toBe(3);
+      expect(s.accounts.get('second@gmail.com')!.calls).toContain('getProfile');
+      expect(s.gmail.calls).not.toContain('list -in:drafts -in:chats');
+    });
+
+    it('refuses a full-access token for the wrong account', async () => {
+      const s = await setup();
+      await s.controller.startScan();
+      s.controller.setSelected('alerts@bank.com', true);
+      s.script.grantFullAccess = true;
+      s.script.confirmAction = true;
+      s.identity.respond = (call) => grant(call, { access_token: tokenFor('other@gmail.com') });
+      await s.controller.runBulkAction('delete');
+      expect(lastToast(s.controller)).toMatch(/signed you in as other@gmail.com/);
+      expect(s.gmail.idsFrom('alerts@bank.com')).toHaveLength(4);
+      expect(s.asked.map((r) => r.kind)).not.toContain('confirmAction');
+    });
+
+    it('blocks other work while Google’s popup is open', async () => {
+      const s = await setup();
+      let release = (): void => undefined;
+      const real = s.identity.launchWebAuthFlow;
+      s.identity.launchWebAuthFlow = (url, interactive) =>
+        new Promise((resolve) => (release = () => void real(url, interactive).then(resolve)));
+      const switching = s.controller.signIn({ selectAccount: true });
+      await vi.waitFor(() => expect(s.controller.busy.value).toBe(true));
+      await s.controller.startScan(); // ignored: busy
+      expect(s.controller.snapshot.value).toBeNull();
+      release();
+      await switching;
+      expect(s.controller.busy.value).toBe(false);
+    });
+
+    it('shows the account in every confirmation', async () => {
+      const s = await setup();
+      await s.controller.startScan();
+      s.controller.setSelected('alerts@bank.com', true);
+      await s.controller.runBulkAction('archive');
+      expect(s.asked.at(-1)).toMatchObject({ kind: 'confirmAction', account: 'me@gmail.com' });
+    });
+
+    it('does not block a whole domain when a kept address in it was not scanned', async () => {
+      const s = await setup();
+      await s.controller.startScan();
+      await s.controller.toggleKeep({
+        ...s.controller.groupIndex.value.get('deals@shop.com')!,
+        key: 'boss@shop.com',
+      });
+      s.controller.setGroupBy('domain');
+      s.controller.setSelected('@shop.com', true);
+      s.script.block = { mode: 'trash', applyNow: false };
+      await s.controller.blockFuture();
+      expect(s.gmail.filters.map((f) => f.criteria.from).sort()).toEqual([
+        'deals@shop.com',
+        'news@mail.shop.com',
+      ]);
+    });
+
+    it('offers Undo for the part of an action that succeeded before a failure', async () => {
+      const s = await setup();
+      await s.controller.startScan();
+      s.controller.setSelected('deals@shop.com', true);
+      s.script.confirmAction = true;
+      const real = s.gmail.batchModify.bind(s.gmail);
+      s.gmail.batchModify = async (ids, change, progress) => {
+        if (!change.add?.includes('TRASH')) return real(ids, change, progress);
+        await real(ids.slice(0, 5), change);
+        progress?.onProgress?.(5);
+        throw new Error('Backend Error');
+      };
+      await s.controller.runBulkAction('trash');
+      const toast = s.controller.toasts.toasts.value.at(-1)!;
+      expect(toast.tone).toBe('error');
+      expect(toast.message).toBe('Moved 5 of 20 emails to Trash, then Gmail failed: Backend Error');
+      expect(s.controller.stats.value.messages).toBe(41 - 5);
+      s.gmail.batchModify = real;
+      toast.action!.run();
+      await vi.waitFor(() => expect(lastToast(s.controller)).toBe('Undone'));
+      expect(s.controller.stats.value.messages).toBe(41);
+    });
+
+    it('undo does not add messages into a newer scan', async () => {
+      const s = await setup();
+      await s.controller.startScan();
+      s.controller.setSelected('alerts@bank.com', true);
+      s.script.confirmAction = true;
+      await s.controller.runBulkAction('trash');
+      const undo = s.controller.toasts.toasts.value.at(-1)!.action!;
+      s.controller.updateSettings((st) => ({ ...st, scan: { ...st.scan, scope: 'unread' } }));
+      await s.controller.startScan();
+      const before = s.controller.snapshot.value!.ids.length;
+      undo.run();
+      await vi.waitFor(() => expect(lastToast(s.controller)).toBe('Undone'));
+      expect(s.controller.snapshot.value!.ids.length).toBe(before);
+      expect(s.gmail.labelsOf(s.gmail.idsFrom('alerts@bank.com')[0]!)).not.toContain('TRASH');
+    });
+
+    it('reverts a keep toggle that could not be saved', async () => {
+      const s = await setup();
+      await s.controller.startScan();
+      const set = s.local.set.bind(s.local);
+      s.local.set = (key, value) =>
+        key === 'keep' ? Promise.reject(new Error('quota exceeded')) : set(key, value);
+      await s.controller.toggleKeep(s.controller.groupIndex.value.get('mom@gmail.com')!);
+      expect(s.controller.keep.value.size).toBe(0);
+      expect(lastToast(s.controller)).toBe('quota exceeded');
     });
   });
 

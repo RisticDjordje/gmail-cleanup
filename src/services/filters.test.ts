@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { GmailApiError } from '../gmail/errors';
 import { FakeGmail } from '../testing/fakeGmail';
-import { BLOCK_FILTER_ACTIONS, createBlockFilters } from './filters';
+import { BLOCK_FILTER_ACTIONS, createBlockFilters, isSafeFilterSender } from './filters';
 
 describe('createBlockFilters', () => {
   it('creates one filter per sender and tolerates duplicates', async () => {
@@ -16,6 +16,14 @@ describe('createBlockFilters', () => {
       { criteria: { from: '@spam.com' }, action: BLOCK_FILTER_ACTIONS.trash },
     ]);
     expect(progress).toEqual([1, 2]);
+  });
+
+  it('refuses malformed senders before creating anything', async () => {
+    const gmail = new FakeGmail('me@gmail.com');
+    await expect(createBlockFilters(gmail, ['a@x.com', 'amazon.com'], 'trash')).rejects.toThrow(/malformed/);
+    expect(gmail.filters).toEqual([]);
+    expect(isSafeFilterSender('@shop.co.uk')).toBe(true);
+    expect(isSafeFilterSender('@evil|com')).toBe(false);
   });
 
   it('propagates real failures', async () => {

@@ -17,6 +17,8 @@ export function describeError(error: unknown, redirectUri: string): string {
         return 'Google didn’t grant access to Gmail. Sign in again and tick every box on the permissions screen (or “Select all”).';
       case 'page_load_failed':
         return `Google’s sign-in page couldn’t load. Check that the client ID is a “Web application” client and that ${redirectUri} is listed exactly under Authorized redirect URIs.`;
+      case 'wrong_account':
+        return `${error.message} Switch accounts in Google’s window, or use “Switch account” here.`;
       case 'state_mismatch':
         return 'The sign-in response didn’t match the request, so it was ignored. Please try again.';
       case 'failed':

@@ -1,4 +1,5 @@
 import type { FilterAction, GmailClient } from '../gmail/client';
+import { isSafeAddress } from '../core/headers';
 import { GmailApiError } from '../gmail/errors';
 
 export const BLOCK_MODES = ['trash', 'archive', 'archiveRead'] as const;
@@ -20,6 +21,8 @@ export async function createBlockFilters(
   mode: BlockMode,
   onProgress?: (done: number) => void,
 ): Promise<number> {
+  const unsafe = senders.find((s) => !isSafeFilterSender(s));
+  if (unsafe !== undefined) throw new Error(`Refusing to create a filter for a malformed sender: ${unsafe}`);
   let done = 0;
   for (const from of senders) {
     try {
@@ -33,4 +36,9 @@ export async function createBlockFilters(
     onProgress?.(done);
   }
   return done;
+}
+
+/** An address, or `@domain`, that can't change the meaning of a Gmail filter's "from" criteria. */
+export function isSafeFilterSender(sender: string): boolean {
+  return sender.startsWith('@') ? isSafeAddress(`x${sender}`) : isSafeAddress(sender);
 }

@@ -4,7 +4,7 @@ import { AppController } from '../app/controller';
 import { Persistence } from '../app/persistence';
 import { chromeIdentity, OAuthClient } from '../auth/oauth';
 import { MessageCache } from '../cache/messageCache';
-import { GmailClient } from '../gmail/client';
+import { GmailClient, whoAmI } from '../gmail/client';
 import { chromeStorageArea } from '../platform/storage';
 import { App } from './App';
 import { ControllerContext } from './context';
@@ -15,10 +15,11 @@ const auth = new OAuthClient({
   identity: chromeIdentity(),
   local,
   session: chromeStorageArea(chrome.storage.session),
+  whoAmI: (accessToken) => whoAmI(accessToken),
 });
 const controller = new AppController({
   auth,
-  gmail: new GmailClient({ tokens: auth }),
+  gmailFor: (_account, tokens) => new GmailClient({ tokens }),
   persistence: new Persistence(local),
   openCache: (account) => MessageCache.open(account),
 });

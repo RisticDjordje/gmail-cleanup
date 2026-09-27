@@ -839,3 +839,12 @@ dialog::backdrop {
     transition-duration: 0.01ms !important;
   }
 }
+
+.modal .recipients {
+  margin: 4px 0 0;
+  padding-left: 18px;
+}
+.modal .warn-inline {
+  color: var(--danger);
+  font-size: 12.5px;
+}

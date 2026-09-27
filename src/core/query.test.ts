@@ -55,6 +55,11 @@ describe('fromClauses', () => {
     expect(fromClauses([])).toEqual([]);
   });
 
+  it('refuses malformed addresses that could broaden a search', () => {
+    expect(() => fromClauses(['ok@x.com', 'amazon.com'])).toThrow(/malformed/);
+    expect(() => fromClauses(['x@evil.com|com'])).toThrow(/malformed/);
+  });
+
   it('quotes terms that would change the query meaning', () => {
     expect(quoteTerm('(unknown sender)')).toBe('"(unknown sender)"');
     expect(quoteTerm('-a@x.com')).toBe('"-a@x.com"');

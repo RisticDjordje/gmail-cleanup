@@ -133,6 +133,11 @@ const ACTION_TEXT: Readonly<
     note: 'Removes them from your inbox. They stay searchable in All Mail. You can undo right after.',
   },
   markRead: { title: 'Mark as read', button: 'Mark read', note: 'You can undo right after.' },
+  archiveRead: {
+    title: 'Archive and mark read',
+    button: 'Archive and mark read',
+    note: 'Removes them from your inbox and marks them read. You can undo right after.',
+  },
   spam: {
     title: 'Report spam',
     button: 'Report spam',
@@ -170,7 +175,8 @@ function ConfirmAction({ request, answer }: Props<'confirmAction'>): JSX.Element
   return (
     <Confirm title={text.title} confirmLabel={text.button} danger={text.danger ?? false} answer={answer}>
       <p>
-        <b>{pluralize(request.count, 'email')}</b> from <SenderNames names={request.senders} />.
+        <b>{pluralize(request.count, 'email')}</b> from <SenderNames names={request.senders} /> in{' '}
+        <b>{request.account}</b>.
       </p>
       <p class={text.danger ? 'warn' : 'muted'}>{text.note}</p>
       <p class="muted small">
@@ -210,7 +216,22 @@ function Unsubscribe({ request, answer }: Props<'unsubscribe'>): JSX.Element {
           <ul>
             {count('oneClick') > 0 && <li>{formatNumber(count('oneClick'))} automatically (one-click)</li>}
             {count('email') > 0 && (
-              <li>{formatNumber(count('email'))} by sending an unsubscribe email from your account</li>
+              <li>
+                {formatNumber(count('email'))} by sending an email that says “unsubscribe” from your account,
+                to:
+                <ul class="recipients">
+                  {targets
+                    .filter((t) => t.method === 'email')
+                    .map((t) => (
+                      <li key={t.address}>
+                        <code>{t.recipient}</code>
+                        {t.crossDomain && (
+                          <span class="warn-inline"> (not {t.address}’s domain: check you recognize it)</span>
+                        )}
+                      </li>
+                    ))}
+                </ul>
+              </li>
             )}
             {count('website') > 0 && (
               <li>
@@ -279,6 +300,16 @@ function Block({ request, answer }: Props<'block'>): JSX.Element {
         Create Gmail filters so future emails from <SenderNames names={request.senders} /> never reach your
         inbox.
       </p>
+      <p class="muted small">
+        {request.criteria.length === 1 ? 'Filter' : `${formatNumber(request.criteria.length)} filters`}: from{' '}
+        {request.criteria.slice(0, 5).map((c, i) => (
+          <span key={c}>
+            {i > 0 && ', '}
+            <code>{c}</code>
+          </span>
+        ))}
+        {request.criteria.length > 5 && ` and ${formatNumber(request.criteria.length - 5)} more`}
+      </p>
       <fieldset class="radios">
         <legend class="visually-hidden">What happens to future emails</legend>
         {BLOCK_OPTIONS.map(([value, label, hint]) => (
@@ -299,7 +330,7 @@ function Block({ request, answer }: Props<'block'>): JSX.Element {
       </fieldset>
       <label class="check">
         <input type="checkbox" checked={applyNow} onChange={(e) => setApplyNow(e.currentTarget.checked)} />
-        Apply the same action to their existing emails now
+        Also apply it to their existing emails (you’ll see the count first)
       </label>
       <p class="muted small">
         Review or remove filters in Gmail under Settings → Filters and Blocked Addresses.

@@ -1,4 +1,5 @@
 import type * as z from 'zod/mini';
+import type { TokenProvider } from '../auth/oauth';
 import { BASE_SCOPES, SCOPES } from '../auth/oauth';
 import type { RawMessage } from '../core/record';
 import { METADATA_HEADERS } from '../core/record';
@@ -15,11 +16,6 @@ import {
   messageMetadataSchema,
   profileSchema,
 } from './schemas';
-
-export interface TokenProvider {
-  getToken(options: { interactive: boolean; scopes: readonly string[] }): Promise<string>;
-  invalidate(accessToken: string): Promise<void>;
-}
 
 /** Gmail quota units per method (https://developers.google.com/gmail/api/reference/quota). */
 const COST = {
@@ -51,6 +47,11 @@ interface RequestOptions {
   readonly cost: number;
   readonly scopes?: readonly string[];
   readonly signal?: AbortSignal | undefined;
+  /**
+   * Non-idempotent requests (sending mail) must not be retried after a network error or 5xx:
+   * Gmail may have acted before the response was lost. Rate-limit rejections are always safe to retry.
+   */
+  readonly idempotent?: boolean;
 }
 
 export interface GmailClientOptions {
@@ -174,7 +175,7 @@ export class GmailClient {
       await this.#request('/messages/batchDelete', null, {
         method: 'POST',
         cost: COST.batchDelete,
-        scopes: [...BASE_SCOPES, SCOPES.full],
+        scopes: [SCOPES.full],
         signal: progress.signal,
         body: { ids: batch },
       });
@@ -198,6 +199,7 @@ export class GmailClient {
       cost: COST.send,
       body: { raw },
       params: { fields: 'id' },
+      idempotent: false,
     });
   }
 
@@ -272,8 +274,9 @@ export class GmailClient {
         });
       } catch (error) {
         if (isAbortError(error) || options.signal?.aborted) throw error;
-        if (attempt >= MAX_ATTEMPTS)
+        if (attempt >= MAX_ATTEMPTS || options.idempotent === false) {
           throw new GmailApiError('network', 'Could not reach Gmail. Check your connection.');
+        }
         await this.#backoff(attempt, null, options.signal);
         continue;
       }
@@ -290,7 +293,8 @@ export class GmailClient {
         await this.#tokens.invalidate(token);
         continue;
       }
-      const retriable = error.kind === 'rate_limited' || error.kind === 'server';
+      const retriable =
+        error.kind === 'rate_limited' || (error.kind === 'server' && options.idempotent !== false);
       if (retriable && attempt < MAX_ATTEMPTS) {
         await this.#backoff(
           attempt,
@@ -373,4 +377,14 @@ export function retryAfterMs(header: string | null, now: number): number | null 
   if (Number.isFinite(seconds)) return Math.max(0, seconds * 1000);
   const date = Date.parse(header);
   return Number.isNaN(date) ? null : Math.max(0, date - now);
+}
+
+/** The Gmail address an access token belongs to (used to verify tokens before trusting them). */
+export async function whoAmI(accessToken: string, fetchImpl: typeof fetch = fetch): Promise<string> {
+  const response = await fetchImpl(
+    'https://gmail.googleapis.com/gmail/v1/users/me/profile?fields=emailAddress,historyId',
+    { headers: { Authorization: `Bearer ${accessToken}` }, cache: 'no-store' },
+  );
+  if (!response.ok) throw await toApiError(response);
+  return parseBody(await response.text(), profileSchema).emailAddress;
 }

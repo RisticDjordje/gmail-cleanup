@@ -17,6 +17,21 @@ describe('planUnsubscribe', () => {
       ['c@x.com', 'website'],
     ]);
     expect(plan.unavailable).toEqual(['d@x.com']);
+    expect(plan.targets[1]).toMatchObject({ recipient: 'u@x.com', crossDomain: false });
+  });
+
+  it('flags unsubscribe emails addressed to another domain', () => {
+    const { targets } = planUnsubscribe([
+      { address: 'news@shop.com', info: { url: null, mailto: 'mailto:ceo@othercorp.com', oneClick: false } },
+      {
+        address: 'news@mail.shop.com',
+        info: { url: null, mailto: 'mailto:leave@lists.shop.com', oneClick: false },
+      },
+    ]);
+    expect(targets.map((t) => [t.recipient, t.crossDomain])).toEqual([
+      ['ceo@othercorp.com', true],
+      ['leave@lists.shop.com', false],
+    ]);
   });
 });
 
@@ -37,7 +52,7 @@ describe('UnsubscribeService', () => {
       { address: 'c@x.com', status: 'needsWebsite', url: 'https://x.com/3' },
     ]);
     expect(post).toHaveBeenCalledWith('https://x.com/1');
-    expect(decodeBase64Url(gmail.sent[0]!)).toMatch(/^To: leave@x.com\r\nSubject: bye\r\n/);
+    expect(decodeBase64Url(gmail.sent[0]!)).toMatch(/^To: leave@x.com\r\nSubject: unsubscribe\r\n/);
     expect(progress).toEqual([1, 2, 3]);
   });
 
@@ -46,9 +61,30 @@ describe('UnsubscribeService', () => {
     gmail.sendMessage = () => Promise.reject(new Error('quota'));
     const post = vi.fn(() => Promise.reject(new Error('offline')));
     const results = await new UnsubscribeService(gmail, post).execute([
-      { address: 'a@x.com', method: 'oneClick', url: 'https://x.com/1', mailto: null },
-      { address: 'b@x.com', method: 'email', url: null, mailto: 'mailto:leave@x.com' },
-      { address: 'c@x.com', method: 'email', url: null, mailto: 'mailto:not valid' },
+      {
+        address: 'a@x.com',
+        method: 'oneClick',
+        url: 'https://x.com/1',
+        mailto: null,
+        recipient: null,
+        crossDomain: false,
+      },
+      {
+        address: 'b@x.com',
+        method: 'email',
+        url: null,
+        mailto: 'mailto:leave@x.com',
+        recipient: 'leave@x.com',
+        crossDomain: false,
+      },
+      {
+        address: 'c@x.com',
+        method: 'email',
+        url: null,
+        mailto: 'mailto:not valid',
+        recipient: null,
+        crossDomain: false,
+      },
     ]);
     expect(results).toEqual([
       { address: 'a@x.com', status: 'needsWebsite', url: 'https://x.com/1' },

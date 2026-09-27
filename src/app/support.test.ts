@@ -20,6 +20,11 @@ describe('describeError', () => {
     ['missing_scopes', '', /tick every box/],
     ['page_load_failed', '', /id\.chromiumapp\.org/],
     ['state_mismatch', '', /didn’t match/],
+    [
+      'wrong_account',
+      'Google signed you in as a@x.com, but this tab is working on b@x.com.',
+      /Switch account/,
+    ],
     ['failed', 'redirect_uri_mismatch', /Authorized redirect URIs/],
     ['failed', 'server_error', /Sign-in failed: server_error/],
   ])('explains auth error %s', (code, message, expected) => {
@@ -89,7 +94,7 @@ describe('DialogService', () => {
 
   it('shows progress, which dismisses open questions', async () => {
     const dialogs = new DialogService();
-    const question = dialogs.ask({ kind: 'block', senders: ['x'] });
+    const question = dialogs.ask({ kind: 'block', senders: ['x'], criteria: ['x@y.com'] });
     dialogs.showProgress('Working', 'step 1', 0.5);
     expect(await question).toBeNull();
     expect(dialogs.progress.value).toEqual({ title: 'Working', label: 'step 1', fraction: 0.5 });

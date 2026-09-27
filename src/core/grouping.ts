@@ -1,4 +1,5 @@
 import { domainKey } from './domains';
+import { isSafeAddress } from './headers';
 import type {
   AddressStats,
   GroupBy,
@@ -133,10 +134,13 @@ export function isKept(group: SenderGroup, keep: KeepList): boolean {
   return group.groupBy === 'sender' && keep.has(domainKey(group.key));
 }
 
-/** Addresses in a group that bulk actions may touch: individually kept addresses are excluded. */
+/**
+ * Addresses in a group that bulk actions may touch. Kept addresses are excluded, and so are
+ * malformed ones: an address is only ever used in a Gmail search or filter if it can't change its meaning.
+ */
 export function actionableAddresses(group: SenderGroup, keep: KeepList): string[] {
   if (isKept(group, keep)) return [];
-  return [...group.addresses.keys()].filter((email) => !keep.has(email));
+  return [...group.addresses.keys()].filter((email) => !keep.has(email) && isSafeAddress(email));
 }
 
 export const MOSTLY_UNREAD_RATIO = 0.8;

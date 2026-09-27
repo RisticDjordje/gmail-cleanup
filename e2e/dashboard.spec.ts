@@ -101,7 +101,12 @@ test.describe('dashboard', () => {
       .getByRole('button', { name: 'Unsubscribe' })
       .click();
     await expect(harness.dialog()).toContainText('automatically (one-click)');
+    await expect(harness.dialog()).toContainText('leave@linkedin.com'); // who gets the unsubscribe email
     await harness.dialog().getByRole('button', { name: 'Unsubscribe' }).click();
+
+    // Trashing their existing mail shows the exact count first.
+    await expect(harness.dialog()).toContainText('190 emails');
+    await harness.dialog().getByRole('button', { name: 'Move to Trash' }).click();
 
     await expect(harness.dialog()).toContainText('Finish on these websites');
     await expect(harness.dialog().getByRole('link', { name: 'news@mail.shop.example' })).toHaveAttribute(
@@ -131,8 +136,11 @@ test.describe('dashboard', () => {
       .dialog()
       .getByLabel(/Skip the inbox: archive/)
       .check();
+    await expect(harness.dialog()).toContainText('Filter: from notifications@github.com');
     await harness.dialog().getByRole('button', { name: 'Create filters' }).click();
-    await expect(harness.toast('Created 1 filter')).toBeVisible();
+    await expect(harness.dialog()).toContainText('35 emails');
+    await harness.dialog().getByRole('button', { name: 'Archive' }).click();
+    await expect(harness.toast('Archived 35 emails')).toBeVisible();
     const gmail = accounts.get('me@gmail.com')!;
     expect(gmail.filters).toEqual([
       { criteria: { from: 'notifications@github.com' }, action: { removeLabelIds: ['INBOX'] } },
@@ -149,7 +157,10 @@ test.describe('dashboard', () => {
       .getByRole('region', { name: 'Bulk actions' })
       .getByRole('button', { name: 'Block future' })
       .click();
-    await harness.dialog().getByLabel('Apply the same action to their existing emails now').uncheck();
+    await harness
+      .dialog()
+      .getByLabel(/Also apply it to their existing emails/)
+      .uncheck();
     await harness.dialog().getByRole('button', { name: 'Create filters' }).click();
     await expect(harness.toast('Created 1 filter')).toBeVisible();
     expect(accounts.get('me@gmail.com')!.filters[0]?.criteria).toEqual({ from: '@shop.example' });

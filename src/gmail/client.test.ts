@@ -2,8 +2,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { SCOPES } from '../auth/oauth';
 import { isAbortError } from '../shared/async';
 import { VirtualClock } from '../testing/fixtures';
-import type { TokenProvider } from './client';
-import { GmailClient, retryAfterMs } from './client';
+import type { TokenProvider } from '../auth/oauth';
+import { GmailClient, retryAfterMs, whoAmI } from './client';
 import { GmailApiError } from './errors';
 import { QuotaLimiter } from './rateLimiter';
 
@@ -270,6 +270,27 @@ describe('GmailClient', () => {
     expect(error).toBeInstanceOf(GmailApiError);
     expect(error).toMatchObject({ kind, status, message });
     expect(clock.sleeps).toEqual([]);
+  });
+
+  it('never retries sending mail after a network error or 5xx, but does after rate limiting', async () => {
+    reply(() => apiError(503, 'Unavailable'));
+    await expect(client.sendMessage('cmF3')).rejects.toMatchObject({ kind: 'server' });
+    reply(() => Promise.reject(new TypeError('Failed to fetch')));
+    await expect(client.sendMessage('cmF3')).rejects.toMatchObject({ kind: 'network' });
+    reply(
+      () => apiError(429, 'Too many'),
+      () => json({ id: 'sent' }),
+    );
+    await client.sendMessage('cmF3');
+    expect(requests).toHaveLength(4);
+  });
+
+  it('reports who a token belongs to', async () => {
+    const fetchFake = (async () =>
+      json({ emailAddress: 'me@gmail.com', historyId: '1' })) as unknown as typeof fetch;
+    expect(await whoAmI('t', fetchFake)).toBe('me@gmail.com');
+    const denied = (async () => apiError(401, 'Invalid Credentials')) as unknown as typeof fetch;
+    await expect(whoAmI('t', denied)).rejects.toMatchObject({ kind: 'unauthorized' });
   });
 
   it('keeps the status line for non-JSON errors', async () => {

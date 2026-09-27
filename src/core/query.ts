@@ -1,3 +1,4 @@
+import { isSafeAddress } from './headers';
 import type { Protection, ScanOptions, ScanScope } from './types';
 
 const SCOPE_QUERIES: Readonly<Record<Exclude<ScanScope, 'custom'>, string>> = {
@@ -39,11 +40,16 @@ export function quoteTerm(term: string): string {
   return /[\s(){}"]|^-/.test(term) ? `"${term.replace(/"/g, '')}"` : term;
 }
 
-/** `from:(a OR b OR …)` clauses, chunked so each query stays well under Gmail's length limit. */
+/**
+ * `from:(a OR b OR …)` clauses, chunked so each query stays well under Gmail's length limit.
+ * Throws on any address that isSafeAddress rejects: a bulk action must never run a broadened search.
+ */
 export function fromClauses(addresses: readonly string[], chunkSize = 20): string[] {
+  const unsafe = addresses.find((a) => !isSafeAddress(a));
+  if (unsafe !== undefined) throw new Error(`Refusing to search for a malformed address: ${unsafe}`);
   const clauses: string[] = [];
   for (let i = 0; i < addresses.length; i += chunkSize) {
-    const chunk = addresses.slice(i, i + chunkSize).map(quoteTerm);
+    const chunk = addresses.slice(i, i + chunkSize);
     clauses.push(chunk.length === 1 ? `from:${chunk[0] ?? ''}` : `from:(${chunk.join(' OR ')})`);
   }
   return clauses;

@@ -138,11 +138,21 @@ Gmail lets each user make about 250 API "quota units" per second, and reading on
 ## Security
 
 - **No server.** The extension talks only to Google (`gmail.googleapis.com`, `accounts.google.com`, `oauth2.googleapis.com`) and, when you unsubscribe, to the sender's own unsubscribe endpoint.
-- **Least privilege.** It reads headers only (`format=metadata`), never bodies. Permanent deletion needs a separate scope that is requested only when you first use it.
-- **Tokens.** Access tokens live in `chrome.storage.session` (memory only, gone when the browser closes), are never logged, and are revoked on sign-out. Each OAuth request carries a random `state` that must match (CSRF protection), and the granted scopes are checked.
-- **Untrusted input.** Everything from Gmail is validated with schemas at the boundary. Sender names and subjects are rendered as text (no `innerHTML`). CSV exports neutralize spreadsheet formulas.
-- **Unsubscribing.** One-click unsubscribe is an RFC 8058 POST to `https` URLs only, sent without cookies or referrer. Unsubscribe emails must target exactly one valid address, and header injection is stripped. The UI warns that unsubscribing from real spam confirms your address.
+- **Least privilege.** It reads headers only (`format=metadata`), never bodies. Permanent deletion uses a separate, short-lived token with the full-mail scope. It is requested only when you delete forever, so everyday tokens never carry it.
+- **Tokens:**
+  - Access tokens are kept per account in `chrome.storage.session`, which lives only in memory and is gone when the browser closes. They are never logged, and they are revoked on sign-out.
+  - Every new token is checked against the account it was requested for. A tab working on one mailbox can't act on another, even with several accounts or tabs open.
+  - Each OAuth request carries a random `state` that must match (CSRF protection), and the granted scopes are checked.
+- **Untrusted email content:**
+  - Everything from Gmail is schema-validated. Sender names and subjects are rendered as text (no `innerHTML`), and CSV exports neutralize spreadsheet formulas.
+  - Only strictly validated `local@domain` addresses are ever put into a Gmail search or filter, so a crafted `From:` header can't broaden a bulk action.
+- **Unsubscribing:**
+  - One-click unsubscribe is an RFC 8058 POST sent without cookies or referrer. It only goes to public `https` hosts: no IP addresses, `localhost`, local-network names or custom ports.
+  - Unsubscribe emails always say just "unsubscribe" and go to exactly one address. The dialog lists every recipient and flags any that aren't on the sender's domain.
+  - The UI warns that unsubscribing from real spam confirms your address.
+- **Nothing destructive without a count.** Every path that changes mail shows the exact number of emails and the account first. That includes "also trash" after unsubscribing and "apply now" after blocking. Undo restores the previous labels exactly, including after a partial failure.
 - **Strict CSP.** `script-src 'self'; object-src 'none'; base-uri 'none'`. There is no remote code and no `eval`.
+- **Supply chain.** Releases are built with a read-only token. Only a separate publish step, which runs no project code, can write.
 
 ## Development
 

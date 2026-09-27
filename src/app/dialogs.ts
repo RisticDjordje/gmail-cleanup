@@ -19,11 +19,11 @@ export interface BlockChoice {
  * it looks. `Answers` gives each dialog's result type.
  */
 export type DialogRequest =
-  | { readonly kind: 'confirmAction'; readonly action: BulkAction; readonly count: number; readonly senders: readonly string[]; readonly scanQuery: string; readonly protection: Protection }
+  | { readonly kind: 'confirmAction'; readonly action: BulkAction; readonly account: string; readonly count: number; readonly senders: readonly string[]; readonly scanQuery: string; readonly protection: Protection }
   | { readonly kind: 'nothingToDo'; readonly action: BulkAction }
   | { readonly kind: 'grantFullAccess' }
   | { readonly kind: 'unsubscribe'; readonly plan: UnsubscribePlan }
-  | { readonly kind: 'block'; readonly senders: readonly string[] }
+  | { readonly kind: 'block'; readonly senders: readonly string[]; readonly criteria: readonly string[] }
   | { readonly kind: 'websiteLinks'; readonly done: number; readonly links: readonly { readonly address: string; readonly url: string }[] }
   | { readonly kind: 'emptyFolder'; readonly folder: 'Trash' | 'Spam'; readonly count: number }
   | { readonly kind: 'folderAlreadyEmpty'; readonly folder: 'Trash' | 'Spam' }

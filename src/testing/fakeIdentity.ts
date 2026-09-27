@@ -7,12 +7,22 @@ export interface AuthCall {
   readonly interactive: boolean;
 }
 
+/** Token issued for an account; `accountOfToken` reverses it (a stand-in for Gmail's profile call). */
+export const tokenFor = (account: string): string => `token-${account}`;
+export const accountOfToken = (token: string): Promise<string> =>
+  Promise.resolve(token.replace(/^token-/, ''));
+
 /** Google's redirect for a successful (or overridden) authorization request. */
-export function grant(call: AuthCall, overrides: Record<string, string | null> = {}): string {
+export function grant(
+  call: AuthCall,
+  overrides: Record<string, string | null> = {},
+  picked = 'me@gmail.com',
+): string {
   const p = call.url.searchParams;
   const fragment = new URLSearchParams();
+  const account = p.get('prompt') === 'select_account' ? picked : (p.get('login_hint') ?? picked);
   const values: Record<string, string | null> = {
-    access_token: `token-${p.get('login_hint') ?? 'picked'}`,
+    access_token: tokenFor(account),
     expires_in: '3600',
     scope: p.get('scope'),
     state: p.get('state'),
@@ -25,7 +35,9 @@ export function grant(call: AuthCall, overrides: Record<string, string | null> =
 /** Scriptable chrome.identity: each call is answered by `respond` (grants everything by default). */
 export class FakeIdentity implements IdentityPort {
   calls: AuthCall[] = [];
-  respond: (call: AuthCall) => string = (call) => grant(call);
+  /** The account Google's chooser returns. */
+  picked = 'me@gmail.com';
+  respond: (call: AuthCall) => string = (call) => grant(call, {}, this.picked);
   redirectUri = (): string => REDIRECT;
   launchWebAuthFlow = (url: string, interactive: boolean): Promise<string> => {
     const call = { url: new URL(url), interactive };

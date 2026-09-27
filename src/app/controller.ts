@@ -1,6 +1,6 @@
 import { batch, computed, signal } from '@preact/signals';
-import type { OAuthClient } from '../auth/oauth';
-import { AuthError, BASE_SCOPES, isValidClientId, SCOPES } from '../auth/oauth';
+import type { OAuthClient, TokenProvider } from '../auth/oauth';
+import { AuthError, isValidClientId, SCOPES } from '../auth/oauth';
 import { sendersToCsv } from '../core/csv';
 import { domainKey } from '../core/domains';
 import { formatNumber, pluralize } from '../core/format';
@@ -16,14 +16,15 @@ import {
 import { buildScanQuery, protectionTerms } from '../core/query';
 import type { GroupBy, ListFilters, MessageRecord, SenderGroup, SortKey } from '../core/types';
 import type { GmailClient } from '../gmail/client';
-import type { BulkAction, UndoToken } from '../services/cleanup';
-import { ACTION_SPECS, CleanupService } from '../services/cleanup';
-import { createBlockFilters } from '../services/filters';
+import type { BulkAction, Search, UndoToken } from '../services/cleanup';
+import { ACTION_SPECS, CleanupService, PartialActionError } from '../services/cleanup';
+import type { BlockMode } from '../services/filters';
+import { createBlockFilters, isSafeFilterSender } from '../services/filters';
 import type { PersistentCache } from '../services/messageStore';
 import { MessageStore } from '../services/messageStore';
 import type { ScanProgress } from '../services/scanner';
 import { Scanner } from '../services/scanner';
-import { planUnsubscribe, UnsubscribeService } from '../services/unsubscribe';
+import { planUnsubscribe, postOneClick, UnsubscribeService } from '../services/unsubscribe';
 import { DialogService } from './dialogs';
 import { describeError } from './errors';
 import type { Persistence, ScanSnapshot, Settings } from './persistence';
@@ -45,15 +46,25 @@ export type GmailApi = Pick<
 
 export type AuthApi = Pick<
   OAuthClient,
-  'getConfig' | 'setClientId' | 'setLoginHint' | 'getToken' | 'hasScope' | 'signOut' | 'redirectUri'
+  | 'getConfig'
+  | 'setClientId'
+  | 'signIn'
+  | 'resume'
+  | 'forAccount'
+  | 'hasFullAccess'
+  | 'signOut'
+  | 'redirectUri'
 >;
+
+export type CacheHandle = PersistentCache & { close(): void };
 
 export interface ControllerDeps {
   readonly auth: AuthApi;
-  readonly gmail: GmailApi;
+  /** A Gmail client for one account, using that account's tokens. */
+  readonly gmailFor: (account: string, tokens: TokenProvider) => GmailApi;
   readonly persistence: Persistence;
-  readonly openCache: (account: string) => Promise<PersistentCache & { close(): void }>;
-  readonly unsubscribe?: UnsubscribeService;
+  readonly openCache: (account: string) => Promise<CacheHandle>;
+  readonly postOneClick?: (url: string) => Promise<void>;
   readonly now?: () => number;
 }
 
@@ -78,11 +89,34 @@ const ACTION_COPY: Readonly<
   trash: { title: 'Move to Trash', verb: 'Moving to Trash', done: (n) => `Moved ${n} to Trash` },
   archive: { title: 'Archive', verb: 'Archiving', done: (n) => `Archived ${n}` },
   markRead: { title: 'Mark as read', verb: 'Marking as read', done: (n) => `Marked ${n} as read` },
+  archiveRead: {
+    title: 'Archive and mark read',
+    verb: 'Archiving',
+    done: (n) => `Archived and marked read ${n}`,
+  },
   spam: { title: 'Report spam', verb: 'Reporting spam', done: (n) => `Reported ${n} as spam` },
   delete: { title: 'Delete forever', verb: 'Deleting', done: (n) => `Permanently deleted ${n}` },
 };
 
+const BLOCK_APPLY_ACTION: Readonly<Record<BlockMode, BulkAction>> = {
+  trash: 'trash',
+  archive: 'archive',
+  archiveRead: 'archiveRead',
+};
+
 const emails = (n: number): string => pluralize(n, 'email');
+
+/** Everything bound to the signed-in account. Replaced as a whole when the account changes. */
+interface AccountSession {
+  readonly account: string;
+  readonly gmail: GmailApi;
+  readonly tokens: TokenProvider;
+  readonly cache: CacheHandle;
+  readonly store: MessageStore;
+  readonly scanner: Scanner;
+  readonly cleanup: CleanupService;
+  readonly unsubscriber: UnsubscribeService;
+}
 
 /**
  * Application state (as signals) and every user-facing operation. UI components only read
@@ -100,39 +134,34 @@ export class AppController {
   readonly unsubscribed = signal<ReadonlyMap<string, number>>(new Map());
   readonly snapshot = signal<ScanSnapshot | null>(null);
   readonly scanState = signal<ScanState>({ status: 'idle' });
-  /** A scan or bulk action is running; other long operations must wait. */
+  /** A scan, bulk action or sign-in is running; nothing else may start. */
   readonly busy = signal(false);
   readonly search = signal('');
   readonly selected = signal<ReadonlySet<string>>(new Set());
   readonly expanded = signal<ReadonlySet<string>>(new Set());
   readonly visibleCount = signal(PAGE_SIZE);
 
-  /** The current account's message store. It isn't reactive itself, so changes bump `version`. */
-  readonly #storeState = signal<{ readonly store: MessageStore | null; readonly version: number }>({
-    store: null,
+  /** The account session. Its store isn't reactive, so store changes bump `version`. */
+  readonly #state = signal<{ readonly session: AccountSession | null; readonly version: number }>({
+    session: null,
     version: 0,
   });
-  #cache: (PersistentCache & { close(): void }) | null = null;
   #scanAbort: AbortController | null = null;
   #scanFinished: Promise<void> = Promise.resolve();
 
   readonly #auth: AuthApi;
-  readonly #gmail: GmailApi;
+  readonly #gmailFor: ControllerDeps['gmailFor'];
   readonly #persistence: Persistence;
   readonly #openCache: ControllerDeps['openCache'];
-  readonly #scanner: Scanner;
-  readonly #cleanup: CleanupService;
-  readonly #unsubscriber: UnsubscribeService;
+  readonly #postOneClick: (url: string) => Promise<void>;
   readonly #now: () => number;
 
   constructor(deps: ControllerDeps) {
     this.#auth = deps.auth;
-    this.#gmail = deps.gmail;
+    this.#gmailFor = deps.gmailFor;
     this.#persistence = deps.persistence;
     this.#openCache = deps.openCache;
-    this.#scanner = new Scanner(deps.gmail);
-    this.#cleanup = new CleanupService(deps.gmail);
-    this.#unsubscriber = deps.unsubscribe ?? new UnsubscribeService(deps.gmail);
+    this.#postOneClick = deps.postOneClick ?? postOneClick;
     this.#now = deps.now ?? Date.now;
   }
 
@@ -140,9 +169,9 @@ export class AppController {
 
   /** Cached records for the messages in the current scan. */
   readonly records = computed<readonly MessageRecord[]>(() => {
-    const { store } = this.#storeState.value;
+    const { session } = this.#state.value;
     const snapshot = this.snapshot.value;
-    return store && snapshot ? store.pick(snapshot.ids) : [];
+    return session && snapshot ? session.store.pick(snapshot.ids) : [];
   });
 
   readonly groups = computed(() => groupMessages(this.records.value, this.settings.value.view.groupBy));
@@ -206,24 +235,23 @@ export class AppController {
   // --- Lifecycle & account ---------------------------------------------------------
 
   async init(): Promise<void> {
-    const [settings, keep, unsubscribed, config] = await Promise.all([
-      this.#persistence.settings.get(),
-      this.#persistence.keep.get(),
-      this.#persistence.unsubscribed.get(),
-      this.#auth.getConfig(),
-    ]);
-    batch(() => {
-      this.settings.value = settings;
-      this.keep.value = new Set(keep);
-      this.unsubscribed.value = new Map(Object.entries(unsubscribed));
-    });
-    if (!config.clientId) {
-      this.view.value = 'setup';
-      return;
-    }
     try {
-      await this.#auth.getToken({ interactive: false });
-      await this.#enterAccount();
+      const [settings, keep, unsubscribed, config] = await Promise.all([
+        this.#persistence.settings.get(),
+        this.#persistence.keep.get(),
+        this.#persistence.unsubscribed.get(),
+        this.#auth.getConfig(),
+      ]);
+      batch(() => {
+        this.settings.value = settings;
+        this.keep.value = new Set(keep);
+        this.unsubscribed.value = new Map(Object.entries(unsubscribed));
+      });
+      if (!config.clientId) {
+        this.view.value = 'setup';
+        return;
+      }
+      await this.#enterAccount(await this.#auth.resume());
     } catch (error) {
       this.#showSignIn(error instanceof AuthError && error.code === 'interaction_required' ? null : error);
     }
@@ -236,53 +264,80 @@ export class AppController {
       );
       return false;
     }
-    await this.#auth.setClientId(clientId);
-    this.#showSignIn(null);
-    return true;
+    try {
+      await this.#auth.setClientId(clientId);
+      this.#showSignIn(null);
+      return true;
+    } catch (error) {
+      this.#report(error);
+      return false;
+    }
   }
 
   async signIn(options: { selectAccount?: boolean } = {}): Promise<void> {
     if (!(await this.#stopWork())) return;
-    this.signInError.value = null;
     const wasSignedIn = this.view.peek() === 'app';
+    this.signInError.value = null;
+    // Busy while Google's popup is open, so nothing can start against the old account meanwhile.
+    this.busy.value = true;
     try {
-      await this.#auth.getToken({ interactive: true, selectAccount: options.selectAccount ?? false });
-      await this.#enterAccount();
+      const account = await this.#auth.signIn({ selectAccount: options.selectAccount ?? false });
+      await this.#enterAccount(account);
     } catch (error) {
       // Cancelling "switch account" leaves the current account signed in.
       if (wasSignedIn && error instanceof AuthError && error.code === 'cancelled') return;
       this.#showSignIn(error);
+    } finally {
+      this.busy.value = false;
     }
   }
 
   async signOut(): Promise<void> {
     if (!(await this.#stopWork())) return;
-    await this.#auth.signOut();
-    this.#leaveAccount();
-    this.#showSignIn(null);
+    try {
+      const account = this.account.peek();
+      if (account) await this.#auth.signOut(account);
+      this.#leaveAccount();
+      this.#showSignIn(null);
+    } catch (error) {
+      this.#report(error);
+    }
   }
 
   async resetClient(): Promise<void> {
     if (!(await this.#stopWork())) return;
-    await this.#auth.signOut();
-    await this.#auth.setClientId('');
-    this.#leaveAccount();
-    this.view.value = 'setup';
+    try {
+      const account = this.account.peek();
+      if (account) await this.#auth.signOut(account);
+      await this.#auth.setClientId('');
+      this.#leaveAccount();
+      this.view.value = 'setup';
+    } catch (error) {
+      this.#report(error);
+    }
   }
 
-  async #enterAccount(): Promise<void> {
-    const profile = await this.#gmail.getProfile();
-    const account = profile.emailAddress;
-    await this.#auth.setLoginHint(account);
+  async #enterAccount(account: string): Promise<void> {
+    const tokens = this.#auth.forAccount(account);
+    const gmail = this.#gmailFor(account, tokens);
     const cache = await this.#openCache(account);
     const [store, snapshot] = await Promise.all([
       MessageStore.load(cache),
       this.#persistence.snapshot(account).get(),
     ]);
-    this.#cache?.close();
-    this.#cache = cache;
+    this.#session()?.cache.close();
+    const session: AccountSession = {
+      account,
+      gmail,
+      tokens,
+      cache,
+      store,
+      scanner: new Scanner(gmail),
+      cleanup: new CleanupService(gmail),
+      unsubscriber: new UnsubscribeService(gmail, this.#postOneClick),
+    };
     batch(() => {
-      this.#setStore(store);
+      this.#setSession(session);
       this.account.value = account;
       this.snapshot.value = snapshot;
       this.#resetListState();
@@ -292,26 +347,25 @@ export class AppController {
   }
 
   #leaveAccount(): void {
-    this.#cache?.close();
-    this.#cache = null;
+    this.#session()?.cache.close();
     batch(() => {
-      this.#setStore(null);
+      this.#setSession(null);
       this.account.value = null;
       this.snapshot.value = null;
       this.#resetListState();
     });
   }
 
-  #store(): MessageStore | null {
-    return this.#storeState.peek().store;
+  #session(): AccountSession | null {
+    return this.#state.peek().session;
   }
 
-  #setStore(store: MessageStore | null): void {
-    this.#storeState.value = { store, version: this.#storeState.peek().version + 1 };
+  #setSession(session: AccountSession | null): void {
+    this.#state.value = { session, version: this.#state.peek().version + 1 };
   }
 
   #storeChanged(): void {
-    this.#setStore(this.#store());
+    this.#setSession(this.#session());
   }
 
   #resetListState(): void {
@@ -347,7 +401,7 @@ export class AppController {
   updateSettings(update: (current: Settings) => Settings): void {
     const next = update(this.settings.peek());
     this.settings.value = next;
-    void this.#persistence.settings.set(next).catch((error: unknown) => this.#report(error));
+    this.#persistence.settings.set(next).catch((error: unknown) => this.#report(error));
   }
 
   setGroupBy(groupBy: GroupBy): void {
@@ -443,8 +497,7 @@ export class AppController {
       keep.add(group.key);
       this.selected.value = toggled(this.selected.peek(), group.key, false);
     }
-    this.keep.value = keep;
-    await this.#persistence.keep.set([...keep]);
+    await this.#saveKeep(keep);
   }
 
   async clearKept(): Promise<void> {
@@ -453,9 +506,18 @@ export class AppController {
       this.toasts.show('No senders are kept.');
       return;
     }
-    if (!(await this.dialogs.ask({ kind: 'clearKept', count }))) return;
-    this.keep.value = new Set();
-    await this.#persistence.keep.set([]);
+    if (await this.dialogs.ask({ kind: 'clearKept', count })) await this.#saveKeep(new Set());
+  }
+
+  async #saveKeep(keep: ReadonlySet<string>): Promise<void> {
+    const previous = this.keep.peek();
+    this.keep.value = keep;
+    try {
+      await this.#persistence.keep.set([...keep]);
+    } catch (error) {
+      this.keep.value = previous; // don't show a protection that wasn't saved
+      this.#report(error);
+    }
   }
 
   exportCsv(): string {
@@ -465,13 +527,12 @@ export class AppController {
   // --- Scanning --------------------------------------------------------------------------
 
   async startScan(): Promise<void> {
-    const store = this.#store();
-    const account = this.account.peek();
-    if (!store || !account || this.busy.peek()) return;
+    const session = this.#session();
+    if (!session || this.busy.peek()) return;
 
     const { scan, protection } = this.settings.peek();
     const query = buildScanQuery(scan, protection);
-    const snapshotStore = this.#persistence.snapshot(account);
+    const snapshotStore = this.#persistence.snapshot(session.account);
     const abort = new AbortController();
     let finish = (): void => undefined;
     this.#scanFinished = new Promise((resolve) => (finish = resolve));
@@ -488,14 +549,14 @@ export class AppController {
     };
 
     try {
-      const outcome = await this.#scanner.scan(store, {
+      const outcome = await session.scanner.scan(session.store, {
         query,
         max: scan.maxMessages,
         signal: abort.signal,
         onProgress: (progress) => (this.scanState.value = { status: 'running', progress }),
         onListed: (ids) => {
           this.selected.value = new Set();
-          void saveSnapshot(ids, false).catch((error: unknown) => this.#report(error));
+          saveSnapshot(ids, false).catch((error: unknown) => this.#report(error));
         },
         onRecords: () => this.#storeChanged(),
       });
@@ -529,24 +590,10 @@ export class AppController {
   /** Find the selected senders' messages, confirm with the exact count, then apply `action`. */
   async runBulkAction(action: BulkAction): Promise<void> {
     const groups = this.selectedGroups.peek();
-    if (!groups.length || this.busy.peek()) return;
-    if (action === 'delete' && !(await this.#ensureFullAccess())) return;
-
-    await this.#exclusive(async () => {
-      const ids = await this.#findMessages(groups, action);
-      if (!ids.length) {
-        await this.dialogs.ask({ kind: 'nothingToDo', action });
-        return;
-      }
-      const confirmed = await this.dialogs.ask({
-        kind: 'confirmAction',
-        action,
-        count: ids.length,
-        senders: groups.map((g) => g.displayName),
-        scanQuery: this.snapshot.peek()?.query ?? '',
-        protection: this.settings.peek().protection,
-      });
-      if (confirmed) await this.#execute(action, ids, groups);
+    if (!groups.length) return;
+    await this.#exclusive(async (session) => {
+      if (action === 'delete' && !(await this.#ensureFullAccess(session))) return;
+      await this.#findConfirmAndRun(session, action, groups);
     });
   }
 
@@ -565,8 +612,8 @@ export class AppController {
     const choice = await this.dialogs.ask({ kind: 'unsubscribe', plan });
     if (!choice) return;
 
-    await this.#exclusive(async () => {
-      const results = await this.#unsubscriber.execute(plan.targets, (n) =>
+    await this.#exclusive(async (session) => {
+      const results = await session.unsubscriber.execute(plan.targets, (n) =>
         this.dialogs.showProgress('Unsubscribing', `${n} of ${plan.targets.length}`, n / plan.targets.length),
       );
       const done = results.filter((r) => r.status === 'done');
@@ -576,11 +623,8 @@ export class AppController {
         this.unsubscribed.value = unsubscribed;
         await this.#persistence.unsubscribed.set(Object.fromEntries(unsubscribed));
       }
-      if (choice.blockFuture) await this.#createFilters(groups, 'trash');
-      if (choice.trashExisting) {
-        const ids = await this.#findMessages(groups, 'trash');
-        if (ids.length) await this.#execute('trash', ids, groups);
-      }
+      if (choice.blockFuture) await this.#createFilters(session, this.#filterSenders(groups), 'trash');
+      if (choice.trashExisting) await this.#findConfirmAndRun(session, 'trash', groups);
       this.dialogs.hideProgress();
 
       const links = results.flatMap((r) =>
@@ -600,68 +644,80 @@ export class AppController {
   async blockFuture(): Promise<void> {
     const groups = this.selectedGroups.peek();
     if (!groups.length || this.busy.peek()) return;
-    const choice = await this.dialogs.ask({ kind: 'block', senders: groups.map((g) => g.displayName) });
+    const criteria = this.#filterSenders(groups);
+    if (!criteria.length) {
+      await this.dialogs.ask({ kind: 'nothingToDo', action: 'trash' });
+      return;
+    }
+    const choice = await this.dialogs.ask({
+      kind: 'block',
+      senders: groups.map((g) => g.displayName),
+      criteria,
+    });
     if (!choice) return;
 
-    await this.#exclusive(async () => {
-      const created = await this.#createFilters(groups, choice.mode);
-      if (choice.applyNow) {
-        const action = choice.mode === 'trash' ? 'trash' : 'archive';
-        const ids = await this.#findMessages(groups, action);
-        if (ids.length) {
-          if (choice.mode === 'archiveRead') {
-            await this.#cleanup.run('markRead', ids);
-            await this.#applyLocally('markRead', ids);
-          }
-          await this.#execute(action, ids, groups);
-        }
-      }
+    await this.#exclusive(async (session) => {
+      const created = await this.#createFilters(session, criteria, choice.mode);
       this.toasts.show(`Created ${pluralize(created, 'filter')}`);
+      if (choice.applyNow) await this.#findConfirmAndRun(session, BLOCK_APPLY_ACTION[choice.mode], groups);
     });
   }
 
   async emptyFolder(label: 'TRASH' | 'SPAM'): Promise<void> {
-    if (this.busy.peek() || !(await this.#ensureFullAccess())) return;
     const folder = label === 'TRASH' ? 'Trash' : 'Spam';
-    await this.#exclusive(async () => {
+    await this.#exclusive(async (session) => {
+      if (!(await this.#ensureFullAccess(session))) return;
       this.dialogs.showProgress(`Empty ${folder}`, 'Counting…');
-      const ids = await this.#gmail.listMessageIds('', { labelIds: [label], includeSpamTrash: true });
+      const ids = await session.gmail.listMessageIds('', { labelIds: [label], includeSpamTrash: true });
       if (!ids.length) {
         await this.dialogs.ask({ kind: 'folderAlreadyEmpty', folder });
         return;
       }
       if (!(await this.dialogs.ask({ kind: 'emptyFolder', folder, count: ids.length }))) return;
-      await this.#cleanup.run('delete', ids, {
-        onProgress: (n) =>
-          this.dialogs.showProgress(
-            `Emptying ${folder}`,
-            `${formatNumber(n)} of ${formatNumber(ids.length)}`,
-            n / ids.length,
-          ),
-      });
-      await this.#store()?.remove(ids);
-      this.#storeChanged();
+      try {
+        await session.cleanup.run('delete', ids, {
+          onProgress: (n) =>
+            this.dialogs.showProgress(
+              `Emptying ${folder}`,
+              `${formatNumber(n)} of ${formatNumber(ids.length)}`,
+              n / ids.length,
+            ),
+        });
+      } catch (error) {
+        if (error instanceof PartialActionError) await session.store.remove(error.succeeded);
+        throw error;
+      } finally {
+        this.#storeChanged();
+      }
+      await session.store.remove(ids);
       this.toasts.show(`Emptied ${folder}: ${emails(ids.length)} deleted`);
     });
   }
 
   async clearCache(): Promise<void> {
-    const account = this.account.peek();
-    if (!account || this.busy.peek() || !(await this.dialogs.ask({ kind: 'clearCache' }))) return;
-    await this.#store()?.clear();
-    await this.#persistence.snapshot(account).remove();
-    batch(() => {
-      this.snapshot.value = null;
-      this.selected.value = new Set();
-      this.#storeChanged();
+    await this.#exclusive(async (session) => {
+      if (!(await this.dialogs.ask({ kind: 'clearCache' }))) return;
+      await session.store.clear();
+      await this.#persistence.snapshot(session.account).remove();
+      batch(() => {
+        this.snapshot.value = null;
+        this.selected.value = new Set();
+        this.#storeChanged();
+      });
     });
   }
 
-  /** Run a long operation with the busy flag set and errors reported. */
-  async #exclusive(work: () => Promise<void>): Promise<void> {
+  /** Run a long operation for the current account: one at a time, errors reported, progress cleared. */
+  async #exclusive(work: (session: AccountSession) => Promise<void>): Promise<void> {
+    const session = this.#session();
+    if (!session) return;
+    if (this.busy.peek()) {
+      this.toasts.show('Wait for the current action to finish first.');
+      return;
+    }
     this.busy.value = true;
     try {
-      await work();
+      await work(session);
     } catch (error) {
       this.#report(error);
     } finally {
@@ -670,95 +726,153 @@ export class AppController {
     }
   }
 
-  /** Message IDs from the groups' addresses, restricted to the last scan's search and current protections. */
-  #findMessages(groups: readonly SenderGroup[], action: BulkAction): Promise<string[]> {
-    const keep = this.keep.peek();
-    const addresses = [...new Set(groups.flatMap((g) => actionableAddresses(g, keep)))];
-    const query = [this.snapshot.peek()?.query ?? '', ...protectionTerms(this.settings.peek().protection)]
-      .join(' ')
-      .trim();
+  /** Search for the groups' messages, show the exact count, and run the action if confirmed. */
+  async #findConfirmAndRun(
+    session: AccountSession,
+    action: BulkAction,
+    groups: readonly SenderGroup[],
+  ): Promise<void> {
+    const search = this.#search(groups);
     const title = ACTION_COPY[action].title;
     this.dialogs.showProgress(title, 'Finding emails…');
-    return this.#cleanup.findMessages(addresses, query, action, {
+    const ids = await session.cleanup.findMessages(search, action, {
       onProgress: (n) => this.dialogs.showProgress(title, `Finding emails… ${formatNumber(n)}`),
     });
+    this.dialogs.hideProgress();
+    if (!ids.length) {
+      await this.dialogs.ask({ kind: 'nothingToDo', action });
+      return;
+    }
+    const confirmed = await this.dialogs.ask({
+      kind: 'confirmAction',
+      action,
+      account: session.account,
+      count: ids.length,
+      senders: groups.map((g) => g.displayName),
+      scanQuery: this.snapshot.peek()?.query ?? '',
+      protection: this.settings.peek().protection,
+    });
+    if (confirmed) await this.#execute(session, action, search, ids, groups);
   }
 
-  async #execute(action: BulkAction, ids: readonly string[], groups: readonly SenderGroup[]): Promise<void> {
+  /** The groups' actionable addresses, restricted to the last scan's search and current protections. */
+  #search(groups: readonly SenderGroup[]): Search {
+    const keep = this.keep.peek();
+    return {
+      addresses: [...new Set(groups.flatMap((g) => actionableAddresses(g, keep)))],
+      baseQuery: [this.snapshot.peek()?.query ?? '', ...protectionTerms(this.settings.peek().protection)]
+        .join(' ')
+        .trim(),
+    };
+  }
+
+  async #execute(
+    session: AccountSession,
+    action: BulkAction,
+    search: Search,
+    ids: readonly string[],
+    groups: readonly SenderGroup[],
+  ): Promise<void> {
     const copy = ACTION_COPY[action];
-    const account = this.account.peek();
-    const store = this.#store();
-    const wasInInbox = ids.filter((id) => store?.get(id)?.inInbox);
-    const token = await this.#cleanup.run(action, ids, {
-      wasInInbox,
-      onProgress: (n) =>
-        this.dialogs.showProgress(
-          copy.title,
-          `${copy.verb}… ${formatNumber(n)} of ${formatNumber(ids.length)}`,
-          n / ids.length,
-        ),
-    });
-    const removedFromView = await this.#applyLocally(action, ids);
+    const progress = (n: number): void =>
+      this.dialogs.showProgress(
+        copy.title,
+        `${copy.verb}… ${formatNumber(n)} of ${formatNumber(ids.length)}`,
+        n / ids.length,
+      );
+    progress(0);
+    const restore = action === 'delete' ? {} : await session.cleanup.captureRestore(search, action, ids);
+    const viewAtStart = this.snapshot.peek();
+
+    let token: UndoToken | null;
+    let changed = ids;
+    let failure: PartialActionError | null = null;
+    try {
+      token = await session.cleanup.run(action, ids, { restore, onProgress: progress });
+    } catch (error) {
+      if (!(error instanceof PartialActionError)) throw error;
+      failure = error;
+      token = error.token;
+      changed = error.succeeded;
+    }
+
+    const removedFromView = await this.#applyLocally(session, action, changed);
     this.selected.value = new Set([...this.selected.peek()].filter((k) => !groups.some((g) => g.key === k)));
     this.dialogs.hideProgress();
-    this.toasts.show(
-      copy.done(emails(ids.length)),
-      token ? { action: { label: 'Undo', run: () => void this.#undo(token, removedFromView, account) } } : {},
-    );
+    const undo = token
+      ? { label: 'Undo', run: () => void this.#undo(session, token, removedFromView, viewAtStart) }
+      : undefined;
+    if (failure) {
+      const reason = describeError(failure.cause, this.#auth.redirectUri());
+      this.toasts.show(
+        `${copy.done(`${formatNumber(changed.length)} of ${emails(ids.length)}`)}, then Gmail failed: ${reason}`,
+        {
+          tone: 'error',
+          ...(undo ? { action: undo } : {}),
+        },
+      );
+    } else {
+      this.toasts.show(copy.done(emails(ids.length)), undo ? { action: undo } : {});
+    }
   }
 
   /** Mirror an action in the cache and the scan's view. Returns IDs removed from the view. */
-  async #applyLocally(action: BulkAction, ids: readonly string[]): Promise<string[]> {
-    const store = this.#store();
-    if (!store) return [];
+  async #applyLocally(
+    session: AccountSession,
+    action: BulkAction,
+    ids: readonly string[],
+  ): Promise<string[]> {
     const spec = ACTION_SPECS[action];
-    if (action === 'delete') await store.remove(ids);
+    if (action === 'delete') await session.store.remove(ids);
     else if (spec.labels) {
       const { add, remove } = spec.labels;
-      await store.applyLabelChanges(ids.map((id) => ({ id, added: add, removed: remove })));
+      await session.store.applyLabelChanges(ids.map((id) => ({ id, added: add, removed: remove })));
     }
     const scope = this.snapshot.peek()?.scope;
     const leavesView =
       spec.leavesMailbox ||
-      (action === 'archive' && scope === 'inbox') ||
-      (action === 'markRead' && scope === 'unread');
-    const removed = leavesView ? await this.#removeFromView(ids) : [];
+      (scope === 'inbox' && spec.labels?.remove.includes('INBOX') === true) ||
+      (scope === 'unread' && spec.labels?.remove.includes('UNREAD') === true);
+    const removed = leavesView ? await this.#removeFromView(session.account, ids) : [];
     this.#storeChanged();
     return removed;
   }
 
-  async #undo(token: UndoToken, removedFromView: readonly string[], account: string | null): Promise<void> {
-    if (account !== this.account.peek()) return;
-    if (this.busy.peek()) {
-      this.toasts.show('Wait for the current action to finish, then try Undo again.');
-      return;
-    }
+  async #undo(
+    session: AccountSession,
+    token: UndoToken,
+    removedFromView: readonly string[],
+    viewAtStart: ScanSnapshot | null,
+  ): Promise<void> {
+    if (session !== this.#session()) return; // the account changed since
     await this.#exclusive(async () => {
       this.dialogs.showProgress('Undo', 'Restoring…');
-      await this.#cleanup.undo(token, (n) =>
+      await session.cleanup.undo(token, (n) =>
         this.dialogs.showProgress(
           'Undo',
           `Restoring… ${formatNumber(n)} of ${formatNumber(token.ids.length)}`,
-          n / token.ids.length,
         ),
       );
       const labels = ACTION_SPECS[token.action].labels;
-      if (labels) {
-        await this.#store()?.applyLabelChanges([
-          ...token.ids.map((id) => ({ id, added: labels.remove, removed: labels.add })),
-          ...token.wasInInbox.map((id) => ({ id, added: ['INBOX'], removed: [] })),
-        ]);
+      await session.store.applyLabelChanges([
+        ...(labels?.add.length ? token.ids.map((id) => ({ id, added: [], removed: labels.add })) : []),
+        ...Object.entries(token.restore).flatMap(([label, ids]) =>
+          ids.map((id) => ({ id, added: [label], removed: [] })),
+        ),
+      ]);
+      // Only put messages back into the scan they were removed from, not a newer one.
+      const current = this.snapshot.peek();
+      if (current && current.scannedAt === viewAtStart?.scannedAt && current.query === viewAtStart.query) {
+        await this.#restoreToView(session.account, removedFromView);
       }
-      await this.#restoreToView(removedFromView);
       this.#storeChanged();
       this.toasts.show('Undone');
     });
   }
 
-  async #removeFromView(ids: readonly string[]): Promise<string[]> {
+  async #removeFromView(account: string, ids: readonly string[]): Promise<string[]> {
     const snapshot = this.snapshot.peek();
-    const account = this.account.peek();
-    if (!snapshot || !account) return [];
+    if (!snapshot) return [];
     const gone = new Set(ids);
     const removed = snapshot.ids.filter((id) => gone.has(id));
     if (!removed.length) return [];
@@ -766,10 +880,9 @@ export class AppController {
     return removed;
   }
 
-  async #restoreToView(ids: readonly string[]): Promise<void> {
+  async #restoreToView(account: string, ids: readonly string[]): Promise<void> {
     const snapshot = this.snapshot.peek();
-    const account = this.account.peek();
-    if (!snapshot || !account || !ids.length) return;
+    if (!snapshot || !ids.length) return;
     const present = new Set(snapshot.ids);
     await this.#saveSnapshot(account, {
       ...snapshot,
@@ -782,28 +895,41 @@ export class AppController {
     await this.#persistence.snapshot(account).set(snapshot);
   }
 
-  async #createFilters(
-    groups: readonly SenderGroup[],
-    mode: Parameters<typeof createBlockFilters>[2],
-  ): Promise<number> {
+  /**
+   * Filter criteria for blocking the groups. A whole domain gets one domain-wide filter only if
+   * nothing in that domain is kept (including kept addresses the current scan didn't see).
+   */
+  #filterSenders(groups: readonly SenderGroup[]): string[] {
     const keep = this.keep.peek();
-    // A whole domain gets one domain-wide filter, unless some of its addresses are kept.
+    const keptInDomain = (domain: string): boolean =>
+      [...keep].some((k) => !k.startsWith('@') && domainKey(k) === domain);
     const senders = groups.flatMap((g) => {
       const addresses = actionableAddresses(g, keep);
-      return g.groupBy === 'domain' && addresses.length === g.addresses.size ? [g.key] : addresses;
+      const wholeDomain =
+        g.groupBy === 'domain' && addresses.length === g.addresses.size && !keptInDomain(g.key);
+      return wholeDomain ? [g.key] : addresses;
     });
-    return createBlockFilters(this.#gmail, senders, mode, (n) =>
+    return [...new Set(senders)].filter(isSafeFilterSender);
+  }
+
+  async #createFilters(
+    session: AccountSession,
+    senders: readonly string[],
+    mode: BlockMode,
+  ): Promise<number> {
+    return createBlockFilters(session.gmail, senders, mode, (n) =>
       this.dialogs.showProgress('Creating filters', `${n} of ${senders.length}`, n / senders.length),
     );
   }
 
-  /** Permanent deletion needs the full Gmail scope; ask for it only when first needed. */
-  async #ensureFullAccess(): Promise<boolean> {
-    if (await this.#auth.hasScope(SCOPES.full)) return true;
-    if (!(await this.dialogs.ask({ kind: 'grantFullAccess' }))) return false;
+  /** Permanent deletion needs full access, in its own token. Ask only the first time. */
+  async #ensureFullAccess(session: AccountSession): Promise<boolean> {
+    if (!(await this.#auth.hasFullAccess(session.account))) {
+      if (!(await this.dialogs.ask({ kind: 'grantFullAccess' }))) return false;
+    }
     try {
-      await this.#auth.getToken({ interactive: true, scopes: [...BASE_SCOPES, SCOPES.full] });
-      return await this.#auth.hasScope(SCOPES.full);
+      await session.tokens.getToken({ interactive: true, scopes: [SCOPES.full] });
+      return true;
     } catch (error) {
       // Still signed in with the base permissions; just report why.
       this.toasts.error(describeError(error, this.#auth.redirectUri()));
