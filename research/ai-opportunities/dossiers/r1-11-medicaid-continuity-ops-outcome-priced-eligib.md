@@ -126,3 +126,113 @@ All three skeptics landed the same blow on the "MCO buys zero-touch claims minin
 - https://www.macpac.gov/ ; https://data.hrsa.gov/tools/data-reporting/program-data/national
 - https://gbpi.org/ (Georgia Pathways)
 - https://www.fortunahealth.com/ (competitor; not accessed)
+
+## Round 2 diligence (2026-10-06)
+
+### Score change: 44 -> 32. Verdict: PASS (reopen only on a specific trigger)
+- **The mechanism is confirmed.** CMS-2454-IFC was released June 1, 2026, published June 3 and effective July 31. Diagnosis alone cannot verify medical frailty: the condition must also "significantly impair" the person's ability to meet 80 hours, and frailty is re-verified at least every 12 months. The "chart, not claims" insight was right.
+- **The market thesis around it got worse on every other axis:**
+  1. **Demand is deferred.** States may accept frailty self-attestation throughout 2027 when they have no reliable data. Documentation becomes binding only from 2028-01-01, when self-attestation is limited to once per enrollment period. That leaves a 15-month gap for a capital-light team.
+  2. **The provider/FQHC whitespace is gone.** Perenna Health launched July 24, 2026 for FQHC navigator teams. Fortuna Health ($18M a16z Series A, YC) is already publishing frailty guidance.
+  3. **The hours rail is commoditized.** Equifax TotalVerify sells a dedicated "H.R. 1 Community Engagement" product, Experian Verify competes on price, and CMS has a federal data hub project.
+  4. **The frailty definition is in litigation.** 25 states plus DC sued on 2026-06-29, which puts the wedge's core regulatory detail at risk.
+  5. **Buyers have little money.** Only risk-bearing primary-care and behavioral-health groups showed direct willingness to pay, at about $100-225k ACV. FQHCs top out at $10-25k and need grant money. Hospitals will pay contingency only, through their incumbent vendors.
+- **What survives** is a narrow, feature-shaped "functional-impairment evidence copilot" with 2028-dated demand. That is a cash-flow or acqui-hire outcome, not a venture one.
+- **Reopen trigger:** a risk-bearing group hands over 1,000+ charts for a free retrospective study, and that study shows 10 or more claims-invisible frailty cases per 1,000 per cycle.
+- **Unresolved conflict between the two round-2 reports.** The buyer simulation says the IFC allows no frailty self-attestation before 2028. KFF and the fact-check say it is allowed throughout 2027 and limited from 2028. The KFF/fact-check reading is more likely correct. Read the IFC text before using either reading as a sales hook.
+
+### Fact-check
+| Claim | Status | Evidence |
+|---|---|---|
+| IFR statutorily due 6/1/2026 | Verified | CMS-2454-IFC released 6/1, published in the Federal Register 6/3, effective 7/31; comments closed 7/31. https://www.federalregister.gov/documents/2026/06/03/2026-11094/medicaid-program-community-engagement-requirement-for-certain-individuals |
+| Start 1/1/2027, extensions to 12/31/2028 | Partially true | The first good-faith exemption is capped at 6 months, renewed only with quarterly updates. CMS reportedly projects about 2 of about 10 applicant states will get one. Early starters: Nebraska since 5/1/2026, Montana and Arkansas since 7/1/2026, Iowa from 12/1/2026; Georgia Pathways runs under a waiver through 12/31/2026. https://foleyhoag.com/news-and-insights/publications/alerts-and-updates/2026/june/cms-issues-interim-final-rule-imposing-medicaid-work-requirements-for-expansion-populations/ |
+| Uncoded frailty lives in notes, so claims-based ex parte checks cannot establish it | Verified | Diagnosis is insufficient; functional impairment is required; re-verification every 12 months or more often. Diagnosis "may be used in combination with ... provider documentation." https://www.kff.org/medicaid/the-medical-frailty-exemption-from-medicaid-work-requirements-key-takeaways-from-the-cms-interim-final-rule/ ; https://www.chcs.org/resource/a-summary-of-national-medicaid-work-requirements/ |
+| Kill criterion: broad self-attestation would make documentation worthless | Partially true | Self-attestation is allowed throughout 2027 when the state has no reliable data, and limited to once per enrollment period from 1/1/2028. Year-1 demand is soft. (Same KFF link) |
+| Statutory, so durable through 2029 | Partially true | The statute is not challenged, but 25 states plus DC sued over the IFR's frailty definition on 6/29/2026. https://citizenportal.ai/articles/9660882/Connecticut/Executive/Organizations/Departments-and-Agencies/Department-of-Social-Services/DSS-CMS-interim-rule-tightens-medicalfrailty-exemption-Connecticut-joins-multistate-suit |
+| Fortuna is the closest AI-native competitor | Verified | $18M Series A led by a16z with YC (7/21/2025), about $22.3M raised in total. It sells to states, plans and hospitals and claims payer customers covering more than 25M Medicaid lives. https://www.businesswire.com/news/home/20250721481890/en/Fortuna-Health-Raises-$18M-Led-by-Andreessen-Horowitz-to-Modernize-Medicaid-Access-and-Infrastructure-Amid-Federal-Reforms |
+| The provider/FQHC channel is uncontested | **Contradicted** | Perenna Health launched 7/24/2026: an FQHC navigator platform covering renewals, documentation and work-requirement reporting, with its first pilot in Indiana. https://www.inkfreenews.com/2026/07/24/perenna-health-launches-ai-to-keep-rural-medicaid-patients-covered/ |
+| Equifax and Experian will bundle work-requirement checks | Verified | Equifax has a TotalVerify "Medicaid H.R. 1 Community Engagement" product, and Senators Wyden, Warren and Sanders opened an investigation. Experian Verify is positioned as the lower-cost alternative (CBPP). https://totalverify.equifax.com/video-medicaid-community-engagement-solution |
+| About 18.5M subject adults; millions lose coverage | Partially true | Secondary sources only: 18.5M (MedicalXpress, 8/2026); about 5.3M more uninsured by 2034 (as cited by Perenna); about 11M facing new procedural steps (as cited by Fortuna). CBO's primary table was not opened. https://medicalxpress.com/news/2026-08-ai-medicaid-enrollees-hour.html |
+| State incumbents and the federal government absorb ex parte/hours verification | Partially true | CMS moved a Medicaid technology project to the Federal Data Services Hub (details not verified). Healthy Together sells states an "AI-powered rules engine" verification module. https://www.nextgov.com/digital-government/2026/07/cms-quietly-moved-medicaid-technology-project-federal-data-hub-new-eligibility-requirements-approach/415106/ |
+| Arkansas 2018: more than 95% compliant or exempt; about 70% of unwinding losses procedural | Unverifiable this session | Egress blocked; from model knowledge only. |
+| Navigator funding cut about 90%; $1.50-3 PMPM; $11-21B premium at risk | Unverifiable | The about 90% cut was to ACA Marketplace navigator grants (about $98M to $10M; model knowledge), not Medicaid assisters. The PMPM and premium figures are the dossier's own estimates. |
+
+### New competitors
+| Name | Type | What it does | Funding/scale | URL |
+|---|---|---|---|---|
+| Perenna Health | AI-native studio spinout | FQHC/CHC navigator platform: at-risk worklists, AI-drafted outreach, SMS document collection, work-requirement reporting. First pilot in Indiana. | Built with Parkview Health, Notre Dame and the 1842 Fund by Alloy Partners; round size not found | https://www.inkfreenews.com/2026/07/24/perenna-health-launches-ai-to-keep-rural-medicaid-patients-covered/ |
+| Healthy Together CEVS | State gov-tech SaaS | Hours logging, document upload, and an "AI rules engine" that validates exemptions | Existing benefits-tech vendor; scale not verified | https://www.cbpp.org/research/health/assessing-the-medicaid-work-requirement-vendor-landscape |
+| Equifax TotalVerify / The Work Number | Incumbent data vendor | Packaged H.R. 1 wage and hours verification for states | Public company; used by many states | https://totalverify.equifax.com/video-medicaid-community-engagement-solution |
+| CMS Federal Data Services Hub project | Federal build | Possible free federal verification plumbing | Federal | https://www.nextgov.com/digital-government/2026/07/cms-quietly-moved-medicaid-technology-project-federal-data-hub-new-eligibility-requirements-approach/415106/ |
+| CareRoute.ai | Unknown | Consumer guide to the work requirements; product, model and funding UNVERIFIED | Unknown | https://www.careroute.ai/blog/medicaid-work-requirements |
+| Fortuna Health (upgraded threat) | AI-native, a16z/YC | Navigation plus work and income documentation (self-employment, cash pay); publishes IFR and frailty explainers | $22.3M raised | (see fact-check) |
+
+**Crowding:** moderate to heavy, not the 4/10 the dossier implied.
+- Navigation and outreach: Fortuna, Perenna.
+- State adjudication: Healthy Together and the systems integrators.
+- Hours rail: Equifax, Experian, CMS hub.
+- Apparently open (unconfirmed): EHR-embedded, clinician-signed functional-impairment evidence. Perenna and Fortuna are each one feature away from it.
+
+### Buyer-interview highlights (role-play personas, NOT real quotes; WTP figures are estimates)
+- **VP Population Health, Medicaid risk-bearing primary-care group (40-80k lives).** The best buyer.
+  - Pain: "Every member who falls off is a PMPM I stop getting... My docs are not going to write 'this person can't work' on a state form for 3,000 patients, and the state isn't going to find our uncoded depression-plus-chronic-pain patients in claims. That gap is my money."
+  - Objections: "One of [my MCOs] already uses Fortuna"; "My 2027 budget is closed"; "If my state takes the extension, this is a 2028 problem"; liability for AI-drafted functional statements.
+  - WTP: $1.50 PMPM across the whole panel was refused. $0.40-0.75 PMPM on subject adults only, capped, or $20-40 per 834-confirmed exemption or reinstatement. That works out to about $120-225k ACV.
+  - Yes-trigger: a 30-day retrospective on 500 members terminated during the unwinding, plus clinician sign-off in under 90 seconds inside the EHR.
+- **O&E Manager at a mid-size FQHC (OCHIN Epic).** Has the pain, no money.
+  - Pain: "I had six application counselors two years ago and I have two now... providers told me flat out they're not occupational medicine doctors."
+  - Objections: "Is it in OCHIN Epic?"; "Patients don't answer the phone"; "I'd rather the state or our PCA bought this"; Part 2 consent.
+  - WTP: $1-2k a month per health center at most, paid from grant or PCA money. Per-packet pricing was rejected: "$5 a packet sounds cheap until you multiply by 4,000 patients twice a year."
+- **VP Revenue Cycle at a safety-net hospital system.** Will not buy direct.
+  - "I already pay R1/Ensemble/Experian on contingency. Bring it to them, not me." "IT and security review is 6-9 months. You're a three-person startup."
+  - WTP: $0 fixed; $75-150 per approved coverage on contingency, through the incumbent vendor only.
+- **Realistic year-1 book:** 3-6 risk-bearing groups, about $0.4-1.0M ARR, and only if the 2027 documentation window actually opens.
+
+### Pre-mortem: top failure modes (probabilities are independent estimates)
+| Failure mode | Probability | Early warning sign |
+|---|---|---|
+| Buyer can't pay a venture-scale price (FQHCs squeezed by OBBBA itself) | 45% | No paid LOI above $25k; every pilot needs a grant |
+| Evidence not needed in volume (ex parte claims checks plus 2027 self-attestation absorb it) | 40% | Retrospective yield below 10 per 1,000 per cycle; Nebraska and target states accept self-attestation |
+| Absorbed by platforms (Epic/OCHIN SmartForm, Experian Health/Waystar/R1, The Work Number) | 35% | Epic UGM or vendor release notes mention OBBBA exemption workflows |
+| Services trap (40+ state forms and portals; gross margin about 38%) | 35% | More than 6 weeks per new state; more than 30% of packets need an ops touch |
+| No intake channel into the state (packets stall with patients; 42 CFR 435.923) | 30% | Fewer than 50% of patients submit their packets; no provider upload or integrator feed |
+| Clinicians refuse to sign; FCA/qui tam exposure | 25% | Fewer than 60% of packets signed; compliance asks for indemnification |
+| A competitor wins distribution first (Fortuna, Perenna, mPulse/Icario) | 25% | Deals lost to an existing vendor; PCA picks a single vendor |
+| Political, regulatory or court shift (frailty-definition lawsuit; post-2028) | 20% | Ruling in the multistate suit; extension requests |
+
+**Kill criteria:**
+1. **Day 30:** 4 or more of 5 target states (Nebraska, Montana, Arkansas, Iowa, plus one January-2027 state) accept frailty self-attestation through 2027, with no signal that documentation will be preferred from 2028.
+2. **Day 45:** 3 or more of 5 states have no provider evidence-intake path (portal upload, fax-to-case or integrator feed).
+3. **Day 60:** retrospective yield below 10 per 1,000 per cycle of claims-invisible frailty.
+4. **Day 60:** fewer than 2 LOIs at $25k ACV or more from 15 or more qualified conversations, or no buyer can name at least $150 per churned patient per year.
+5. **Day 75:** FCA counsel says the needed manual review would cost more than 40% of the packet price.
+6. **Day 90:** clinicians sign fewer than 60% of packets, or the median edit takes more than 3 minutes.
+7. **Ongoing:** Epic/OCHIN or a revenue-cycle vendor ships a native exemption-evidence workflow, or Perenna or Fortuna locks up the launch state's largest networks.
+8. **Day 90:** no Medicaid eligibility operator has committed.
+
+### Discovery-call script
+1. Tell me about the last patient you know of who lost Medicaid. How did you find out, and how late?
+2. What did you do during the 2023-24 unwinding? Who worked on it, for how many hours, at what cost, and what did you stop doing?
+3. How many attributed patients did you lose, and what PMPM or PPS revenue did that cost? Who owns that number? (If nobody does, the pain is unmeasured.)
+4. When a state disability or frailty form reaches a clinician today, what happens step by step, and how long does it sit?
+5. Since June 1, what have you done about the IFR: budget, hires, vendor meetings, comment letters? Show me.
+6. How have your clinicians or CMO reacted to documenting functional impairment for the 80-hour test? Any refusals or liability questions?
+7. What does your MCO or state send you on renewal dates, noncompliance and terminations? In what format, and how late?
+8. Who else has pitched you (Fortuna, Perenna, your EHR vendor, your revenue-cycle vendor, your PCA)? What happened?
+9. What changes for you under a state extension, or under the 2028 documentation rules?
+10. In a paid 60-day pilot on 300 at-risk patients, what result gets you to sign? Whose budget would pay, and who else has to say yes?
+
+### Who to call first
+1. **Medicaid risk-bearing primary-care groups.** VP Population Health, VP Medicaid, COO. Cityblock (its founder is reportedly a Fortuna investor), Waymark, Equality Health (AZ/LA), Somos (NY), Pair Team (CA), Aledade Medicaid ACOs. Prioritize those in Nebraska, Montana, Arkansas and Iowa, which are live now.
+2. **OCHIN product/innovation leads, plus the PCAs in Nebraska, Montana, Arkansas and Iowa.** These are for distribution and grant money.
+3. **CCBHCs.** COO, Medical Director. First confirm the narrowed SMI/SUD exemption scope.
+4. **Channel partners:** revenue-cycle and coverage-discovery vendors; mPulse and Icario for white-label.
+5. **Perenna and Fortuna,** as possible partners or acquirers for the frailty-evidence module.
+- **LinkedIn post search:** "work requirements" AND ("medically frail" OR exemption), last 3 months.
+
+### First 30 days (only if pursuing despite PASS)
+- **Days 1-5:** read the IFC text on frailty, self-attestation and provider submissions. Pull the Nebraska, Montana, Arkansas and Iowa frailty forms and their intake paths. Settle the 2027 self-attestation conflict.
+- **Days 5-20:** run 15 calls (8 risk-bearing groups, 4 PCA/OCHIN, 2 CCBHCs, 1 Perenna/Fortuna). The goal is one data partner for a free retrospective on 1,000 or more expansion adults who were terminated or are up for renewal.
+- **Days 20-30:** run the chart-to-functional-impairment study: an LLM extracts cited evidence and a clinician reviews 50 packets. Measure claims-invisible yield per 1,000, sign rate and edit time.
+- **Day 30 decision:** go only if yield is at least 10 per 1,000, the sign rate is at least 60%, and 2 or more paid LOIs (or contingency LOIs) are signed. Otherwise kill, or pitch the module to Perenna or Fortuna.
+- **Constraints:** do not build the hours rail; do no outbound SMS or voice.

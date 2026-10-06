@@ -141,3 +141,154 @@ All figures are estimates.
 - 49 U.S.C. 14101: https://www.law.cornell.edu/uscode/text/49/14101
 - 49 CFR 370: https://www.ecfr.gov/current/title-49/subtitle-B/chapter-III/subchapter-B/part-370
 - NIST Handbook 44 §5.58: https://www.nist.gov/pml/owm/publications/nist-handbooks/handbook-44
+
+## Round 2 diligence (2026-10-06)
+
+> Method caveat: the egress proxy blocked every live fetch in round 2. That includes this re-judge, which retried lighthouz.ai and transflo.com on 2026-10-06 and was blocked. Competitor facts below come from search-result snippets gathered in the round-2 fact-check. The buyer interviews are **synthetic role-plays**, not evidence of demand. Statutes are cited from knowledge.
+
+### Score change: 41 -> 24. Verdict: PASS (keep as a feature/services fallback only)
+
+**Why it fell:**
+1. **The whitespace claim is contradicted.** The pivot's core loop is: check reweigh/reclass charges for an inspection or weight certificate, auto-dispute when it is missing, then invoice the customer. That loop is already sold to freight brokers by:
+   - **Lighthouz AI** (YC S24): https://lighthouz.ai/shipment-types/ltl
+   - **Transflo Workflow AI for LTL**, launched 2026-01-22 with Armstrong Transport Group as a named mid-tier broker reference: https://www.businesswire.com/news/home/20260122099350/en/
+   - **Freehand**, which came out of stealth at Manifest 2026 as an agentic audit, dispute and payment platform.
+   The incumbent, Transflo, already sits in the broker's BOL/POD document flow.
+2. **"The deadlines are the product" is overstated.** In practice the operative dispute window is the carrier tariff or the contract, often about 30 days (https://getltlrates.com/freight-reweigh-and-reclass). 14101(b) contracts can waive the 180-day window in 13710. That leaves throughput and accuracy as the value, which every competitor already sells.
+3. **Buyer simulation shows a thin budget.** The likely buyer, a broker billing manager, says "maybe" only after a free lookback shows dollars. She measures price against a $15-60k auditor and rejects per-shipment pricing. Agent offices have the pain but no dispute rights. Large 3PLs will build in-house and won't give up a share of pass-through revenue. Estimated ceiling: about $5-15M ARR before expanding into other modes.
+4. **Partial offsets that did not change the verdict:**
+   - The NMFC facts are verified, and ODFL references 2026 classification changes, so master-data churn may be slower to decay than feared.
+   - Loop ($95M Series C, $210M total, verified) is drifting toward broad shipper supply-chain AI, which leaves the broker segment less contested *by Loop*.
+   - Evos turns out to be horizontal rather than LTL-dedicated.
+
+| Dimension | R1 | R2 | Change driver |
+|---|---|---|---|
+| Market size | 4 | 3 | Synthetic WTP implies a $5-15M ARR ceiling for the LTL-only wedge |
+| Pain intensity | 6 | 6 | Real and possibly less decaying (2026 dockets), but buyers ignore $60-90 items |
+| Whitespace | 3 | 1 | Lighthouz, Transflo and Freehand sell the exact loop to the exact buyer |
+| AI leverage | 6 | 5 | Real, but now table stakes |
+| GTM feasibility | 4 | 3 | Contingency-only pilots; carrier-relationship veto; security sign-off for portal credentials |
+| Defensibility | 3 | 2 | Terminal-level reversal data is the only moat, and Transflo/LSP44 sit closer to the data |
+| Founder fit | 6 | 5 | Still needs a freight-insider co-founder, now against funded incumbents |
+
+### Fact-check
+
+| Claim | Status | Evidence |
+|---|---|---|
+| NMFC Docket 2025-1, effective 2025-07-19: ~2,000 items, 13-tier density scale | Verified | Scale went from 11 to 13 subs (Sub 11: 30-35 pcf = Class 60; Sub 12: 35-50 = Class 55; Sub 13: 50+ = Class 50). ODFL "2026 NMFC Classification Changes" page suggests further dockets. https://www.whyloyalty.com/blog/freight-class-list-nmfc-guide/ |
+| Loop $95M Series C (Apr 2026), ~$210M total | Verified | Led by Valor/Atreides; moving toward suppliers, trade, procurement and inbound. https://techcrunch.com/2026/04/17/loop-raises-95m-to-build-supply-chain-ai-that-predicts-disruptions/ |
+| Evos is an AI-native LTL audit company | Partially true | Horizontal "autonomous AI for legacy industries"; LTL audit is one use case. Seed led by Anthemis, amount undisclosed. https://getevos.ai/about |
+| Whitespace: no AI-native W&I check plus auto-dispute for brokers | **Contradicted** | Lighthouz LTL page; Transflo Workflow AI for LTL (2026-01-22). https://lighthouz.ai/shipment-types/ltl |
+| 13710 180-day window is "the product" | Partially true | Statute from knowledge. Practical window is "usually 30 days from invoice." https://getltlrates.com/freight-reweigh-and-reclass |
+| Carmack 9-month filing / 2-year suit window | Unverifiable (live) | Consistent from knowledge; LII blocked. https://www.law.cornell.edu/uscode/text/49/14706 |
+| 49 CFR 370: 30-day acknowledgment / 120-day disposition | Unverifiable (live) | Consistent from knowledge; eCFR blocked |
+| Kargo $42M Series B (Dec 2025) | Unverifiable | Only the BusinessWire URL slug supports it |
+| Corrections hit 5-10% of shipments (~$0.6-1.6B pool) | Unverifiable | Transflo cites 30-40% LTL invoice *error* rate (all exceptions; vendor figure) |
+| Freehand is a claims agent | Partially true | It is an agentic full freight audit and payment (FAP) platform, a direct competitor. https://www.freehand.ai/articles/best-ai-freight-audit-and-payment-software |
+| US LTL market ~$53B | Unverifiable | Order of magnitude plausible (high-$40B to mid-$50B); shipment count is derived |
+| CorePiper ~$2.50/case | Unverifiable | Not checked |
+| FedEx Freight separation (2026) as a "why now" | Unverifiable | Spin-off targeted ~June 2026 (from knowledge); effects unverified |
+
+### New competitors
+
+| Name | Type | What it does | Scale |
+|---|---|---|---|
+| Lighthouz AI | YC S24, broker back-office AI | FTL/LTL AP audit, accessorial validation, reweigh/redim/reclass certificate check plus auto-dispute, AR invoicing. Claims 70-85% touchless emails and 40% lower back-office cost (vendor claims). https://lighthouz.ai/shipment-types/ltl | ~$500K (Tracxn; may be stale) |
+| Transflo Workflow AI for LTL | Incumbent launch, 2026-01-22 | LTL audit plus invoice resolution for brokers and carriers; "two-click" resolution; audit trail. Armstrong Transport CFO: "up to a week" saved. https://www.transflo.com/products/workflow-ai/for-ltl/ | Established incumbent |
+| Freehand | AI-native agentic FAP | Ingestion -> match -> discrepancy -> carrier dispute -> ERP posting, with no human queue. https://www.freehand.ai/articles/best-ai-freight-audit-and-payment-software | Unknown |
+| LSP44 (project44 split, reported 2026-07-14) | Plumbing incumbent aimed at 3PLs and brokers | Owns carrier API rails (potential W&I retrieval). Single source: https://cxtms.com/blog/emerging-trends-technology | Unverified |
+| Evos | Horizontal agentic builder | Custom agent in "24 hours"; LTL class recalculation from BOL. https://www.getevos.ai/ | Seed (Anthemis) |
+| Expedock, ARDEM | AI-plus-BPO | Offshore freight audit and customer billing labor; sets a low price anchor | Job-post signals only |
+
+### Buyer-interview highlights (SYNTHETIC role-plays)
+
+- **"Dana", LTL billing manager, mid-tier broker (~200k LTL shipments a year). Verdict: "maybe."**
+  - Pain: *"Since the density change, my queue is half reclasses... Most of the $60-90 ones? Nobody touches them. They just age out."*
+  - Objections:
+    - *"I don't want a bot spamming the ODFL or Saia disputes inbox."*
+    - *"You'll find maybe 1 in 5 we can win."*
+    - *"Evos and Loop have both emailed me, and our TMS vendor says they're adding audit."*
+  - WTP:
+    - $0.50/shipment across all shipments: *"that's more than an auditor."*
+    - $3-6 per adjudicated correction: "a conversation."
+    - 25% of reversed dollars: fine if net-positive.
+- **"Rick", agent-office owner (15-30k shipments). Verdict: "no."**
+  - *"That's corporate's job. I literally can't file a dispute."*
+  - Would pay $100-200/month for quote-time class validation and would likely churn after about 3 months. He is a channel through the host network, not a buyer.
+- **"Priya", Controller at a large 3PL (500k-1M+ shipments). Verdict: "probably not."**
+  - *"Disputes aren't my problem. Unbilled cost is."*
+  - *"I'm not giving you 25% of [my revenue]."*
+  - *"Our IT team is building agents... could probably build the matching in a quarter."*
+  - WTP: $50-150k/year SaaS after SOC 2 and 6-9 months of procurement, realistically in 2027.
+- **WTP estimate (unvalidated):** target-segment ACV $40-150k, with year 1 more likely $25-60k. Ceiling of ~50-150 buyers × $50-100k = **$5-15M ARR**.
+- **Strongest residual signal:** finance cares more about the *unbilled or late-rebilled pass-through* bucket than about disputes. That is the only angle that didn't hit a named competitor head-on.
+
+### Pre-mortem: top failure modes (probabilities are estimates)
+
+| Mode | P | Early warning |
+|---|---|---|
+| Revenue ceiling and self-cannibalization (LTL-only SAM $15-60M; contingency shrinks as the backlog clears) | 60% | Contingency is >40% of revenue and falling; NRR <110% |
+| Reclass wave decays as SKU masters remap | 55% (likely lower if 2026 dockets continue) | Corrections per 1k shipments fall 3 months in a row; reclass share <40% |
+| Feature absorption by audit, TMS and broker-agent vendors | 50%, now **observed** (Lighthouz, Transflo) | 2 or more of the first 10 prospects say "my vendor already flags it" |
+| Brokers throttle filings to protect carrier relationships | 45% | <60% of recommended disputes approved; carrier complaint |
+| GTM/team gap (no freight insider) | 40% | No insider with equity by day 60 |
+| W&I retrieval friction / ToS | 40% | <70% automated image retrieval across the top 8 carriers by day 75 |
+| FAK and contract time bars shrink the pool | 35% | >50% of volume on FAK, or dispute windows of 60 days or less |
+
+**Kill criteria (any one triggers a stop):**
+- Fewer than 3 of 15 brokers share 6 months of rebill and W&I exports by day 45.
+- Winnable pool below 15%, or below $1.5k per 1,000 shipments, on 300+ corrections across 3 or more partners.
+- Recent 3-month correction rate below 65% of the Q4-2025 level, with reclass below 40% of correction dollars.
+- More than 50% of volume on FAK, or windows of 60 days or less.
+- Automated retrieval below 70% by day 75.
+- Live reversal rate below 50%, or any filing pause caused by a carrier complaint.
+- No paid pilot of at least $3k/month by day 90.
+- Write-off rate below 20% of correction dollars.
+- 3 or more of the first 10 prospects say an existing tool (Lighthouz, Transflo, Evos, Loop, TMS) suffices.
+- No freight-insider co-founder by day 60.
+- Partners won't pay for FTL accessorial expansion.
+
+### Discovery-call script
+
+1. Walk me through the last reweigh/reclass rebill, from invoice to close.
+2. How many corrections came in last month? How many had the W&I certificate actually opened? Is that from the TMS or a guess?
+3. What share of legitimate corrections gets rebilled to the customer, and how late? Who decides to eat them? Does sales override?
+4. When did a rebill last cost you a customer or a big short-pay?
+5. Who works these today, at what loaded cost, onshore or offshore?
+6. Which window do you actually work against: tariff, customer contract, or the 180-day statute? Have you lost money to a closed window?
+7. Which carriers and terminals reverse, and which never do? Has any carrier pushed back on your dispute volume?
+8. What have you tried: TMS audit, an audit provider, BPO, Lighthouz, Transflo, Evos, Loop, an internal LLM? Why did you keep it or drop it?
+9. If I came back in a week with dollars reversible, never rebilled, and written off, who else must see it?
+10. Will you give me last quarter's export under NDA this week? (A yes with a date is the only real signal.)
+
+### Who to call first
+
+- **Priority 1:** LTL billing, carrier settlement or freight audit managers at non-asset, LTL-heavy brokers with 50-500 employees, outside the CHR, WWEX, Echo and TQL orbits. The Controller is the signer. Candidate firms (fit unverified): NTG/FreightPros, Shiptli, Mothership, ShipPeek, ParcelPath, FreightPlus.
+- **Fastest signal:** hiring managers posting "LTL Billing Auditor" or "LTL Audit Specialist" roles, for example the Dallas JobLeads/Jooble posting and the Virtual Vocations posting.
+- **Also call:**
+  - Lighthouz and Transflo customers (Armstrong Transport). Ask what those tools miss.
+  - One host-network billing leader, for channel learning only.
+- **Don't call first:**
+  - Agent offices (no rights).
+  - Large 3PLs (they will build in-house).
+  - Shippers (often not the bill-to party).
+- **Venues:**
+  - TIA Capital Ideas
+  - SMC3 JumpStart
+  - NMFTA Digital LTL Council
+  - Transportation & Logistics Council (TLC)
+  - r/FreightBrokers
+
+### First 30 days (only if the founder insists on testing this before moving to a less contested dossier)
+
+- **Days 1-5:**
+  - Run a teardown of Lighthouz, Transflo and Freehand: demo requests, pricing, which carriers they retrieve W&I images from, whether they handle pass-through packets and customer collections.
+  - Send 40 outreach messages to the hiring managers and Sales Navigator lists above.
+- **Days 6-15:**
+  - Hold 15 discovery calls using the script. The goal is 3 NDA exports. Ask every call: "what does your current tool miss?"
+- **Days 16-25:**
+  - Hand-adjudicate at least 300 corrections across 3 partners.
+  - Split the dollars into three buckets: (a) reversible from carrier images, (b) legitimate but never or late rebilled, (c) FAK-neutralized.
+- **Day 30 gate:**
+  - **Continue only if** bucket (b) is at least 20% of correction dollars, at least one partner's existing tool missed it, and one Controller agrees to a paid pilot of at least $3k/month for a *rebill-capture / pass-through packet* product (not a dispute bot).
+  - Without a freight-insider co-founder lined up by then, drop it.
