@@ -1,293 +1,294 @@
 # AI Opportunity Hunt: Final Partner Memo
 
-*Date: 2026-10-06. For: the founder (technical, product-minded, small team, limited capital). Supersedes [MEMO-round1.md](MEMO-round1.md), which is kept unchanged for the record.*
+*2026-10-06. For the founder, assumed technical, small team, limited capital (if not, read §2). Supersedes [MEMO-round1.md](MEMO-round1.md), kept for the record.*
 
 ---
 
 ## 1. TL;DR
 
-- **The one strongest bet is distributor-side SPA / ship-and-debit debit recovery** (score 54, ranked #1 by all three IC personas). Mid-market electrical, HVAC and MRO distributors file special-pricing claims against manufacturers and silently write off the rejections and short-pays. You land with a free 2-week leakage audit, charge 20-25% contingency on recovered dollars, then sell a pre-submission validator. **It fits both founder types.** It is a $5-15M ARR cash-flow business first, and it becomes a venture story only if it turns into a two-sided claims rail.
-- **#2: Rulebook Desk** (33), a due-process and enforceability checker for Florida and Texas HOA/condo collection law firms. **It fits a bootstrapper, or a niche-SaaS founder.** Before you build anything, run a cheap test of the one unmeasured number it depends on: how often notice defects void recoveries.
-- **#3 (bootstrap only): an LTL rebill and pass-through capture desk** for mid-tier freight brokers (24). It uses the same recovery-desk muscles as #1 in a more crowded market. Pursue it only if you have a freight insider.
-- **Round 3 tested 30 more ideas from six new search methods and deep-dived 7. None beat SPA recovery.** The best (44) was Pick 1 with extra layers added. The rest are passes with services or desk ceilings ($8-30M). **What this tells us:** five of seven landed in the same 39-44 band under different lenses. For this founder profile the ceiling is structural, not a search failure, so validating Pick 1 beats more scouting. Round 3 also found a new Pick 1 threat: Canals ($35M) is one feature away (§6).
-- **No candidate is a venture-grade seed check today.** Run validation, not decks.
-- **Monday:** build a list of 150 Eclipse/P21 electrical distributors and start booking 25 calls with SPA coordinators, offering the free 12-month leakage audit. Phone SpeedyLabs, Rivvun, AD/IMARK and Epicor the same week.
+- **Bottom line: nothing here is a venture-grade seed bet today, and the best idea got narrower in the final round.** Validate for 30 days; don't raise.
+- **Pick 1 is still distributor-side SPA / ship-and-debit recovery** (54, #1 for all three IC personas; scored before the final teardown, so an upper bound). Electrical, HVAC and MRO distributors write off rejected and short-paid claims to manufacturers. Land with a free leakage audit and charge 20-25% contingency.
+- **What changed:** pre-submission validation is already sold in electrical (Enable + SPARXiQ RebateGPS, Ximple), and SpeedyLabs runs an AI short-pay agent in foodservice. **Only recovery after rejection still looks open.** Leakage is unmeasured. Our rough estimate of $7-30k contingency revenue per $100M of distributor revenue pushes the ICP to $300M+ distributors.
+- **Realistic outcome:** a $5-15M ARR cash-flow business; a venture story only if it becomes a two-sided claims rail.
+- **#2: Rulebook Desk** (33), a due-process checker for FL/TX HOA collection law firms. Measure the notice-defect rate before building.
+- **#3 (bootstrap only): LTL rebill and pass-through capture** for mid-tier brokers (24). Only with a freight insider.
+- **Round 3 found nothing above 44 in 30 more ideas.** The $8-30M desk ceiling reflects the assumed profile and a cut-only red team (§3.1), not just the market.
+- **With seed money, a domain cofounder or an acquisition plan, the ranking changes** (§2).
+- **Monday:** list 150 Eclipse/P21 electrical and HVAC distributors at $300M+ revenue, start booking 25 SPA-coordinator calls with a free 12-month audit, and run the gates in [VALIDATION-KIT-spa-recovery.md](VALIDATION-KIT-spa-recovery.md). Same week: get a RebateGPS demo and ask SpeedyLabs, AD-IMARK and Canals about electrical and rejected-claim plans.
 
 ---
 
-## 2. How this was done
+## 2. If your profile is different
 
-17 consultant scouts produced 116 longlist ideas ([01-longlist.md](01-longlist.md)), which we cut to a 24-idea shortlist. Each shortlisted idea got a deep dive, a 3-lens red team (competition, go-to-market, feasibility) and a judge's score out of 100. A gap round added 8 more, giving 32 judged ideas. A 3-persona IC (seed VC, bootstrapper, PE operator) then picked finalists.
+The rubric assumed a capital-light technical outsider and charged weak founder fit twice (§3.1). The process audit re-ranked under three other profiles.
 
-Round 2 re-tested the 7 finalists and the round-1 "horizontal claims engine" thesis with live fact-checks, simulated buyer interviews and pre-mortems. A big-swing sweep deep-dived 5 larger-TAM ideas. A final IC ranked all 13.
+**A. Technical founder, $3-5M seed, will recruit a domain cofounder**
+1. **Delegated claims QA, growing into an AI-native casualty TPA** ([r2-01](dossiers/r2-01-da-census-audit-an-ai-native-audit-firm-for-d.md), [r1-04](dossiers/r1-04-demand-shield-tender-desk-time-limited-demand.md)). A claims-executive cofounder and money for licenses and SOC 2 remove the founder-fit drag (scored 2). Endgame pools: $70B A&O, $45B DCC, with plaintiff AI as the tailwind.
+2. **SPA recovery as the wedge into a two-sided claims rail and margin-first ERP** ([r3-b2b-claims-engine](dossiers/r3-b2b-claims-engine.md), [r4-2](dossiers/r4-2-distributor-margin-system-of-record-sold-to-p.md)). Capital lets you race Canals and Epicor to the buying-group rail. ERP SAM est. $2-5B.
+3. **FL/TX private-provider rail** ([r1-01](dossiers/r1-01-licensed-ai-native-private-provider-for-flori.md)). With a licensed BCA/PE cofounder and E&O, you become the licensee that rule 3 says wins. National plan-review and inspection labor pool: $12-18B.
 
-Round 3 changed the search method: six scouts with new lenses pooled 30 ideas, and 7 went through the full pipeline (§6). In all, about 250+ agents ran across the three rounds, and 52 ideas were judged.
+**B. Domain insider (ex-operator), modest capital**
+1. **SPA recovery, if from distribution** ([r3-b2b-claims-engine](dossiers/r3-b2b-claims-engine.md)). An ex-SPA manager closes the top fit gap and can check claim formats and leakage on day 1. Debit Desk ([r1-09](dossiers/r1-09-debit-desk-ai-claims-assurance-and-denial-man.md)) becomes the second side.
+2. **LTC Medicaid lookback workbench, if from healthcare admin** ([r1-12](dossiers/r1-12-payer-conversion-desk-ai-run-service-that-get.md)). Scored 42, never re-tested, no AI-native confirmed, fast buyers. Its blocker, "needs a veteran caseworker," is you.
+3. **Delegated claims exposure scan as an audit service, if from insurance** ([r1-04](dossiers/r1-04-demand-shield-tender-desk-time-limited-demand.md)). $50-250k per program, read-only, no TPA license. An insider gets file access an outsider cannot.
 
-**Honesty caveat.** WebFetch was blocked by the egress proxy in every round, and the shared search budget ran out repeatedly. Most "verified" facts come from **search-result snippets, not opened pages**. **Every buyer quote is a role-play composite, not a real interview.** Statute citations marked "from memory" are unverified. Treat dollar figures without a URL as estimates.
+A licensed construction insider should move FL open-permit closeout ([r1-01](dossiers/r1-01-licensed-ai-native-private-provider-for-flori.md)) up.
 
----
+**C. Search fund or acquirer that buys and AI-enables a traditional business**
+1. **Property-tax consultant book roll-up** ([r1-14](dossiers/r1-14-taxdesk-for-the-noi-stressed-long-tail-ai-pro.md)). Form 50-162 designations make books sticky. Buy at 0.75-1.5x fees (the role-played seller asked 1.5-2x) and lift margin from about 30% to 50%+. Exit comparable: Ryan's ~$518M purchase of Altus property tax (verified).
+2. **LTC Medicaid eligibility-firm acquisition** ([r1-12](dossiers/r1-12-payer-conversion-desk-ai-run-service-that-get.md), phase 2). Labor-heavy single-state shops with fee-paying clients; AI attacks the 60-month lookback.
+3. **Premium-audit firm roll-up** ([r1-06](dossiers/r1-06-exposure-assurance-ai-native-premium-audit-an.md)). The dossier's own fallback: audits 3-5x cheaper on existing carrier relationships.
 
-## 3. Final leaderboard (13 ideas re-tested in round 2)
+Runner-up for C: a warranty-admin BPO roll-up ([r1-23](dossiers/r1-23-warranty-revenue-integrity-for-dealers-an-ai-.md)), margins from 20-30% toward 55-65%.
 
-PWP = promising with pivot. Score arrows show the earlier score → the final score.
-
-| # | Idea | Industry | Model | Final score | Verdict | Venture vs cash-flow | Why, in one line | Dossier |
-|---|---|---|---|---|---|---|---|---|
-| 1 | Distributor-side SPA / ship-and-debit debit recovery | Industrial distribution (electrical, HVAC, MRO) | B2B | **54** (new; re-scope of the unscored "horizontal engine") | PWP | Cash-flow first ($5-15M ARR); venture only via a two-sided rail | Buyer loses the money and keeps the recovery; structured EDI data; no funded AI-native found | [r3-b2b-claims-engine](dossiers/r3-b2b-claims-engine.md) |
-| 2 | Rulebook Desk: due-process engine for FL/TX HOA collection law firms | Community associations / legal | B2B | 42 → **33** | PWP | Niche SaaS ($10-40M ARR, est.) | Sells to the licensed party that bears the risk; rests on an unmeasured defect rate | [r3-swing-4](dossiers/r3-swing-4-rulebook-backed-outsourced-resale-and-enforce.md) |
-| 3 | Debit Desk: claims integrity for mid-tier manufacturers | Industrial distribution | B2B | 44 → **32** | Pass | Cash-flow / tuck-in | Wrong side: manufacturers approve 90%+ of claims to keep channel peace | [r1-09](dossiers/r1-09-debit-desk-ai-claims-assurance-and-denial-man.md) |
-| 4 | Medicaid frailty evidence copilot (OBBBA) | Medicaid / providers | B2B | 44 → **32** | Pass | Feature / acqui-hire | Real insight, but Fortuna and Perenna are one feature away and demand peaks in 2028 | [r1-11](dossiers/r1-11-medicaid-continuity-ops-outcome-priced-eligib.md) |
-| 5 | SecondLook: QC-grade SNAP pre-issuance review | State benefits | B2G | **32** (new) | Pass | Services | Maximus, Nava, SAS, Gainwell and CfA+Anthropic own the feature; RFP sales | [r3-swing-1](dossiers/r3-swing-1-secondlook-qc-grade-pre-issuance-review-for-s.md) |
-| 6 | TaxDesk: evidence engine for property-tax appeal firms (+ roll-up) | Property tax | B2B | 42 → **30** | Pass | Cash-flow | Drafting isn't the bottleneck; Reserve Tax and 4+ AI tools set a low price | [r1-14](dossiers/r1-14-taxdesk-for-the-noi-stressed-long-tail-ai-pro.md) |
-| 7 | Florida open-permit closeout over licensed private providers | Construction permitting | B2B | 45 → **30** | Pass | $1-5M regional services | Inspektr/Tew & Taylor and Freedom Code already run this model | [r1-01](dossiers/r1-01-licensed-ai-native-private-provider-for-flori.md) |
-| 8 | LIHTC independent file reviewer for syndicators | Affordable housing | B2B | 42 → **29** | Pass | $1-5M niche | TenantAudit targets syndicators at $49-99/mo; about 30 buyers | [r2-08](dossiers/r2-08-qualified-occupancy-desk-an-ai-run-syndicator.md) |
-| 9 | VSC authorization voice agent for repair shops | Auto aftermarket | B2B | 42 → **28** | Pass | $1-15M services | Payers automate their side (Circuitry.ai); $8-20 per claim | [r1-23](dossiers/r1-23-warranty-revenue-integrity-for-dealers-an-ai-.md) |
-| 10 | Union / prevailing-wage payroll verification for MEP subs | Construction payroll | B2B | **28** (new) | Pass | Cash-flow desk | Miter ($78M) computes correctly by design; LCPtracker validates for free | [r3-swing-2](dossiers/r3-swing-2-independent-union-and-prevailing-wage-payroll.md) |
-| 11 | ClaimCare: LTCi benefit verification for home care | Senior care | B2B | **28** (new) | Pass | Tuck-in | 3-4 claims per site per year; no eligibility rail | [r3-swing-5](dossiers/r3-swing-5-claimcare-ltci-benefit-verification-and-claim.md) |
-| 12 | LTL rebill adjudication / pass-through capture for brokers | LTL freight | B2B | 41 → **24** | Pass (bootstrap-viable) | $5-15M cash-flow | Lighthouz and Transflo sell the exact loop; the pass-through leak is the only open seam | [r1-08](dossiers/r1-08-originproof-a-shipper-side-ltl-tender-evidenc.md) |
-| 13 | Workers' comp claim-level statutory ledger | P&C claims | B2B | **24** (new) | Pass | Consultancy | Provable dollars are tiny (CA admin penalties about $1.35M a year statewide) | [r3-swing-3](dossiers/r3-swing-3-claim-level-statutory-ledger-for-workers-comp.md) |
-
-**How to read it.** Round 2 cut every round-1 finalist by 10-17 points, mostly because live searches found funded competitors the scouts had missed. The only score that rose belongs to the idea that changed sides of the transaction. B2C was allowed, but no B2C idea survived. The one serious B2C candidate (total-loss contents) died in round 1 to California regulation and free ChatGPT substitutes.
-
-**Round 3 does not change the order.** Its seven ideas (§6) scored 30-44 under the same live-search red team. The 41-44 ideas sit above Picks 2-4 on paper, but all are passes. The 44 is a superset of #1, and the rest are services or desks with no better ceiling. For a bootstrapper with a domain cofounder, two narrow wedges rival Pick 2: complaint/MDR staff augmentation (with an RA veteran) and 605B putback documentation (with an FCRA partner). Neither has been crowding-checked.
+**Never deep-dived, worth a look:** fire and life-safety ITM "Deficiency-to-Dollars" (~5.9M buildings; Pye-Barker did 57 deals in 2025; B/C); AI-native trade-credit and SKU-level product-liability MGAs (#26, #28 in [03-round3-longlist.md](03-round3-longlist.md); up to $0.5-1.2B MGA revenue; A); Restoration Claim Desk (#0, top round-3 scout score; B); asset-owner damage recovery ([r1-05](dossiers/r1-05-recovery-audit-for-the-risk-bearer-ai-run-sub.md); B/C); a pure-B2C auto claim-value agent (round-3 #5-7; A, after public-adjuster and UPL checks).
 
 ---
 
-## 4. Top picks
+## 3. How this was done
 
-### Pick 1: Distributor-side SPA / ship-and-debit debit recovery. Score 54. IC: VC #1 (conviction 6/10), bootstrapper #1 (7/10), PE #1 (6/10)
+About 300 agents ran across four rounds (184, 66 and 51, plus a final round). Scouts produced 116 ideas in round 1 ([01-longlist.md](01-longlist.md)) and 30 in round 3 ([03-round3-longlist.md](03-round3-longlist.md)); 52 deep dives were judged.
 
-**Thesis.** Distributors sell manufacturer product at special pricing agreement (SPA) prices and then claim the difference back as a "debit." Claims go out as EDI 844 and come back as 849 (from memory; verify). Manufacturers reject or short-pay for mechanical reasons: an expired agreement, an end-customer mismatch, a catalog-number suffix, or a ship date outside the window. Ship date governing validity is confirmed by [CMR](https://computermarketresearch.com/automating-ship-and-debit-claims-a-2026-guide-to-channel-roi/). Nobody reconciles the rejections, so they age out and get written off.
+- **Round 1:** 17 scouts, 116 ideas, cut to 24 plus 8 from a gap round. Each got a deep dive, a 3-lens red team (competition, go-to-market, feasibility) and a score out of 100. A 3-persona IC (seed VC, bootstrapper, PE operator) picked finalists.
+- **Round 2:** re-tested 7 finalists and the "horizontal claims engine" with live fact-checks, simulated buyer interviews and pre-mortems, plus 5 big swings. The IC ranked all 13.
+- **Round 3:** six scouts with new lenses, 30 ideas, 7 through the full pipeline (§7).
+- **Final round:** Pick 1 competitor teardown and leakage search, a 30-day validation kit, a methodology audit.
 
-The product works in three steps:
-1. Ingest 12 months of claims and credits plus the SPA PDFs.
-2. Use an LLM to turn the SPAs into versioned rules that a human approves.
-3. Re-adjudicate the history deterministically, show leakage by root cause, and generate clause-cited rebuttal packets for claims still inside the window. Then sell a validator that checks claims before they go out.
+**Honesty caveat.** WebFetch was blocked in every round, and the search budget ran out repeatedly. Most "verified" facts are **search snippets, not opened pages**. **Every buyer quote is a role-play composite, not a real interview.** "From memory" citations are unverified. Treat dollar figures without a URL as estimates.
 
-**Why it's non-obvious.** Round 1 recommended the *manufacturer* side (Debit Desk). Round 2 showed that the manufacturer approves 90%+ of claims for relationship reasons and doesn't want to win. The distributor, the claimant, loses real dollars and keeps the recovery, and its data sits outside Model N, Vistex and Enable. The "horizontal claims engine" survives as internal architecture, not as the pitch.
+### 3.1 Known biases in this process
 
-**Competitors.**
-- [Rivvun AI](https://thenextweb.com/news/rivvun-ai-seed-enterprise-spend-recovery-icertis): $7.55M seed (verified), Icertis alumni, horizontal "obligation to settlement." Enterprise and ERP-connected, so probably above Eclipse/P21 distributors (inference).
-- [ChannelScaler](https://channelscaler.com/platforms/distributor-back-end-credits-becs-software/) (distributor back-end-credit software), [CMR](https://computermarketresearch.com/ship-and-debit-tool/) (matching tool), [Smyyth](https://www.smyyth.com/outtasking-services/ship-and-debit-audits/) (audit services). All legacy or services.
-- [Enable](https://www.enable.com/blog/managing-spas-ship-debit-claimbacks-mdfs-and-more), Vistex and Model N on the manufacturer side.
-- [SpeedyLabs](https://blog.speedylabs.ai/ship-and-debit/): possible AI entrant; product unverified.
-- [Whitespace](https://www.ycombinator.com/companies/industry/supply-chain) (YC S2026): AI agents for wholesale distributors, the same buyer.
-- Adjacent funded deductions AI (Glimpse, Stuut) validates the category but sits on the supplier side.
-- **New in round 3:** Canals ($35M, May 2026) holds line data at 100+ target distributors, and Epicor Prism sits inside P21. Both are one feature away ([r4-2](dossiers/r4-2-distributor-margin-system-of-record-sold-to-p.md)). Add them to the day-45 check.
+- **The founder profile was assumed, then reported as a finding.** Founder fit scored 2-3 for most insurance, healthcare and construction ideas, and GTM feasibility charged the same penalty again. "The ceiling is structural" is partly circular.
+- **Red teams only cut.** Three adversarial lenses and no steelman. Round 2 cut every finalist 10-17 points; ideas survived only by shrinking. "One feature away" fails almost any B2B idea.
+- **Snippet research is lopsided.** Competitor funding surfaces easily; leakage and buyer pain don't. Competitive evidence is real; demand evidence was role-played by a model primed with the critique.
+- **Graveyard rules became search filters.** Round 3 applied 12 rules from about 30 ideas up front, steering toward narrow recovery desks.
+- **The benchmark was weakly verified.** All 7 round-3 dossiers were scored against SPA's 54, which rested on 2 searches, unmeasured leakage and an 844/849 premise from memory.
+- **B2C was under-sampled.** 7 of 116 longlist ideas faced consumers; none was deep-dived as pure B2C.
+- **Uneven testing.** Round-1 scores in §8 were never attacked live.
+- **Acquisitions and capital-heavy models were excluded by design** (roll-ups set aside, MGAs filtered out), though they are the largest pools.
+
+---
+
+## 4. Final leaderboard (13 ideas re-tested in round 2)
+
+All B2B except #5 (B2G). PWP = promising with pivot. Arrows show the earlier score → the final score.
+
+| # | Idea | Final score | Verdict | Venture vs cash-flow | Why, in one line | Dossier |
+|---|---|---|---|---|---|---|
+| 1 | Distributor-side SPA / ship-and-debit debit recovery | **54** (upper bound) | PWP | Cash-flow ($5-15M ARR); venture via two-sided rail | Claimant keeps the recovery; validation taken, post-rejection recovery open; leakage unmeasured | [r3-b2b-claims-engine](dossiers/r3-b2b-claims-engine.md) |
+| 2 | Rulebook Desk: due-process engine for FL/TX HOA collection law firms | 42 → **33** | PWP | Niche SaaS ($10-40M ARR, est.) | Sells to the licensed party that bears the risk; rests on an unmeasured defect rate | [r3-swing-4](dossiers/r3-swing-4-rulebook-backed-outsourced-resale-and-enforce.md) |
+| 3 | Debit Desk: claims integrity for mid-tier manufacturers | 44 → **32** | Pass | Cash-flow / tuck-in | Wrong side: manufacturers approve 90%+ of claims to keep channel peace | [r1-09](dossiers/r1-09-debit-desk-ai-claims-assurance-and-denial-man.md) |
+| 4 | Medicaid frailty evidence copilot (OBBBA) | 44 → **32** | Pass | Feature / acqui-hire | Real insight, but Fortuna and Perenna are one feature away and demand peaks in 2028 | [r1-11](dossiers/r1-11-medicaid-continuity-ops-outcome-priced-eligib.md) |
+| 5 | SecondLook: QC-grade SNAP pre-issuance review (B2G) | **32** (new) | Pass | Services | Maximus, Nava, SAS, Gainwell and CfA+Anthropic own the feature; RFP sales | [r3-swing-1](dossiers/r3-swing-1-secondlook-qc-grade-pre-issuance-review-for-s.md) |
+| 6 | TaxDesk: evidence engine for property-tax appeal firms (+ roll-up) | 42 → **30** | Pass | Cash-flow | Drafting isn't the bottleneck; Reserve Tax and 4+ AI tools set a low price | [r1-14](dossiers/r1-14-taxdesk-for-the-noi-stressed-long-tail-ai-pro.md) |
+| 7 | Florida open-permit closeout over licensed private providers | 45 → **30** | Pass | $1-5M regional services | Inspektr/Tew & Taylor and Freedom Code already run this model | [r1-01](dossiers/r1-01-licensed-ai-native-private-provider-for-flori.md) |
+| 8 | LIHTC independent file reviewer for syndicators | 42 → **29** | Pass | $1-5M niche | TenantAudit targets syndicators at $49-99/mo; about 30 buyers | [r2-08](dossiers/r2-08-qualified-occupancy-desk-an-ai-run-syndicator.md) |
+| 9 | VSC authorization voice agent for repair shops | 42 → **28** | Pass | $1-15M services | Payers automate their side (Circuitry.ai); $8-20 per claim | [r1-23](dossiers/r1-23-warranty-revenue-integrity-for-dealers-an-ai-.md) |
+| 10 | Union / prevailing-wage payroll verification for MEP subs | **28** (new) | Pass | Cash-flow desk | Miter ($78M) computes correctly by design; LCPtracker validates for free | [r3-swing-2](dossiers/r3-swing-2-independent-union-and-prevailing-wage-payroll.md) |
+| 11 | ClaimCare: LTCi benefit verification for home care | **28** (new) | Pass | Tuck-in | 3-4 claims per site per year; no eligibility rail | [r3-swing-5](dossiers/r3-swing-5-claimcare-ltci-benefit-verification-and-claim.md) |
+| 12 | LTL rebill adjudication / pass-through capture for brokers | 41 → **24** | Pass (bootstrap-viable) | $5-15M cash-flow | Lighthouz and Transflo sell the exact loop; the pass-through leak is the only open seam | [r1-08](dossiers/r1-08-originproof-a-shipper-side-ltl-tender-evidenc.md) |
+| 13 | Workers' comp claim-level statutory ledger | **24** (new) | Pass | Consultancy | Provable dollars are tiny (CA admin penalties about $1.35M a year statewide) | [r3-swing-3](dossiers/r3-swing-3-claim-level-statutory-ledger-for-workers-comp.md) |
+
+**How to read it.** Live searches found funded competitors the scouts missed, so round 2 cut every round-1 finalist 10-17 points; only the idea that switched sides rose. The one serious B2C candidate (total-loss contents) died in round 1 to California regulation and free ChatGPT substitutes. Round 3 (§7, 30-44) does not change the order. For a bootstrapper with a domain cofounder, two uncrowding-checked wedges rival Pick 2: complaint/MDR staff augmentation (with an RA veteran) and 605B putback documentation (with an FCRA partner).
+
+---
+
+## 5. Top picks
+
+### Pick 1: Distributor-side SPA / ship-and-debit debit recovery. Score 54 (upper bound). IC: VC #1 (conviction 6/10), bootstrapper #1 (7/10), PE #1 (6/10)
+
+**Thesis.** Distributors sell manufacturer product at special pricing agreement (SPA) prices and claim the difference back as a "debit." Manufacturers reject or short-pay for mechanical reasons: an expired agreement, an end-customer mismatch, a catalog-number suffix, or a ship date outside the window ([CMR](https://computermarketresearch.com/automating-ship-and-debit-claims-a-2026-guide-to-channel-roi/) confirms ship date governs). The rejections age out and get written off. We assumed EDI 844 out and 849 back (from memory); snippets say 844/849 is mainly pharma, so electrical may run on portals, email and credit memos, which the kit accepts.
+
+The product ingests 12 months of claims, rejections, credits and SPA PDFs (whatever Enable, Eclipse or P21 export), has an LLM turn SPAs into human-approved rules, re-adjudicates deterministically, reports leakage by root cause, and drafts clause-cited rebuttals per manufacturer for claims still in-window.
+
+**Why it's non-obvious.** Round 1 picked the manufacturer side (Debit Desk). Round 2 showed manufacturers approve 90%+ of claims for relationship reasons. The distributor is the claimant: it loses the dollars and keeps the recovery. The "horizontal claims engine" survives as architecture, not pitch.
+
+**Competitors (final-round teardown: 10 searches, snippets only).**
+- **AI-native, distributor side: [SpeedyLabs](https://www.speedylabs.ai/platform).** Its agent "Glass" reconciles deviations and short-pays, drafts claims "with the math shown" and writes net cost back to the ERP. It sells to **foodservice** distributors and runs a ["Speedy vs Enable"](https://www.speedylabs.ai/enable-alternative) page. Funding unknown. The closest match; electrical is a short step.
+- **Validation and missed claims, electrical: taken.** [Enable + SPARXiQ RebateGPS](https://sparxiq.com/rebategps/) (exclusive since 2023, IDEA channel) flags missing and under-supported claims and helps "avoid short-pay," with no evidence of 849 re-work. [Ximple](https://www.ximplesolution.com/industries/electrical-distribution-software/) (ERP built with NAED, IMARK and AD input) validates claims pre-submission. [Epicor EDA Rebates](https://www.epicor.com/en-us/products/business-intelligence-and-data-management/epicor-data-analytics/epicor-data-analytics-rebates/) runs rebate programs.
+- **One feature away:** [Canals](https://distributionstrategy.com/2026/05/canals-raises-35-million-to-expand-ai-automation-platform-for-wholesale-distributors/) ($35M, May 2026; line data at 100+ electrical, HVAC and plumbing distributors; no SPA product), Epicor [Prism Agent Foundry](https://www.epicor.com/en-us/newsroom/news-releases/epicor-introduces-agentic-ai-stack/) (no SPA agent yet), Whitespace (YC S2026).
+- **Horizontal:** [Rivvun AI](https://www.finsmes.com/2026/06/rivvun-ai-raises-7-55m-in-seed-funding.html) ($7.55M seed, ~June 2026), generic settlement variances for the Fortune 1000.
+- **Others:** manufacturer-side adjudicators ([IMA360](https://ima360.com/reference/chargebacks/what-is-ship-and-debit/), Vistex, Model N, Vendavo/Vistaar); legacy tools and services (ChannelScaler, Interlynx, CMR, Smyyth, Incentive Insights); contingency AP auditors not specific to SPA (apexanalytix, CPRS, Auditec; 2-4% of spend). AD-IMARK (merged 2024) runs rebate programs but no claim-recovery service was found.
+
+**Verdict: open, but narrower.** SPA management, claim generation, missed-claim alerts, validation and margin analytics are taken. **Recovery after rejection is not:** no funded electrical, HVAC or MRO player was found re-adjudicating past rejections and short-pays into clause-cited rebuttals on contingency. Position as *a contingency recovery audit for rejected and short-paid SPA money that sits alongside Enable or the ERP*: 20-25% of recoveries, no SaaS contract, deep on electrical/HVAC portal quirks and catalog normalization (which SpeedyLabs' foodservice stack lacks; inference). Treat Enable/SPARXiQ, Epicor and AD-IMARK as channels or acquirers too. Add validation later for retention, not as the pitch.
+
+**How big is the leak (low confidence).** Eight searches found no independent figure, only vendor content and paywalled headlines.
+- **Share of claim value lost:** about 1% for best-in-class (paywalled [MDM](https://www.mdm.com/premium/sales-marketing/cohort-commerical/the-1-problem-why-even-best-in-class-distributors-leave-spa-margin-on-the-table/) headline; base unknown) to 8-12% "unclaimed" (vendor blogs). Central guess: 3-6%.
+- **Dollars:** assuming SPA debits are 2-5% of revenue (one 2.5% rebate-pool snippet supports this), leakage is $40-600k per $100M of revenue (central $100-250k), a third to a half recoverable in-window. At 20-25% contingency: **about $7-30k revenue per $100M distributor per year**.
+- **So:** the dossier's "$100-500k recoverable per account" holds only at ~$300M+ revenue or on SPA-heavy lines. The ICP moves up-market, the pool shrinks, and the $20-100k ACV is strained. If MDM's 1% is 1% of *revenue*, the opportunity is larger; reading that article is the cheapest unlock.
 
 **What's good.**
-- The structured claim-in / coded-response-out primitive fits "LLM extracts, deterministic engine decides."
-- Two rounds of search found no funded AI-native competitor on the claimant side. Absence in search is not proof.
-- The free audit produces a dollar figure nobody has seen. A CFO or controller signs a contingency agreement with no IT project and no 9-18-month cycle.
-- Analyst decisions on exceptions build a compounding rules and data asset.
+- Coded claims and responses fit "LLM extracts, deterministic engine decides."
+- No funded claimant-side competitor found doing post-rejection recovery in electrical or HVAC.
+- The free audit yields a dollar figure nobody has seen; a controller signs contingency with no IT project or 9-18-month cycle.
+- Analysts' exception decisions build a compounding rules and data asset.
 
-**What's bad (strongest red-team and pre-mortem hits).**
-- **Feature, not company (45%, pre-mortem estimate).** Buying groups (AD, IMARK), Epicor or Whitespace-style startups could bolt it on.
-- **Small pool.** Low thousands of mid-market distributors (estimate) at about $20-100k revenue per account (estimate) puts the ceiling near $5-15M ARR without a second wedge.
-- **Determinism may break** on verbal exceptions and emailed extensions. Straight-through processing may stall below 50-70%.
-- **Cash and politics.** Contingency cash arrives 60-120 days late, and attribution fights follow ("nothing on stuff my team would have won anyway"). Relationship politics cap how hard a distributor will push.
-- **Founder fit.** The founder lacks channel-finance domain expertise.
+**What's bad.**
+- **Feature, not company (45%, pre-mortem).** SpeedyLabs adding electrical, RebateGPS's "under-supported claims" reaching into rejections, or an Epicor Agent Foundry build would close the gap.
+- **Thin per-account economics.** Only $300M+ distributors pay off, and the mid-market pool is low thousands (estimate). Ceiling near $5-15M ARR without a second wedge.
+- **Recovery decays and the renewing product is taken.** The PE operator's validator is already sold by RebateGPS and Ximple.
+- **Determinism may break** on verbal exceptions and emailed extensions (straight-through may stall below 50-70%).
+- **Cash and politics.** Contingency cash lands 60-120 days late, attribution fights follow, and channel relationships cap how hard a distributor pushes.
+- **Founder fit.** No channel-finance expertise on the team.
 
 **What buyers said (role-play composites).**
-- A ~$350M Eclipse/P21 electrical distributor's SPA manager was the strongest buyer: *"Nobody reconciles rejected 849s against what we actually sold."* *"If you find $300k a year that we're writing off, I'd pay 20 to 25% of what you recover."* They would not sign a 3-year SaaS deal. The CFO signs below about $3k a month. *"If you make us look aggressive, the manufacturer rep calls my VP."*
-- A ~$600M lighting manufacturer would not buy: *"We approve something like 90-plus percent of claims because rejecting them costs more than it saves."*
+- A ~$350M Eclipse/P21 electrical distributor's SPA manager: *"Nobody reconciles rejected 849s against what we actually sold."* *"If you find $300k a year that we're writing off, I'd pay 20 to 25% of what you recover."* No 3-year SaaS; the CFO signs below about $3k a month. *"If you make us look aggressive, the manufacturer rep calls my VP."*
+- A ~$600M lighting manufacturer: *"We approve something like 90-plus percent of claims because rejecting them costs more than it saves."* Above 97% approval by value, there is too little leakage to fund contingency.
 
-**IC split.** All three ranked it #1 with different emphases:
-- **VC:** fund a 90-day validation, not a deck. The upside is a two-sided coded-claims rail plus rebates, billbacks, MDF and price protection.
-- **Bootstrapper:** "the only candidate where cash shows up in the first quarter without anyone's permission."
-- **PE operator:** the validator, not recovery, is the product that renews. Recovery decays once the backlog is cleared, and a claim filed correctly never needs a fight.
+**IC split.** All ranked it #1. **VC:** fund a 90-day validation; upside is a two-sided coded-claims rail. **Bootstrapper:** "the only candidate where cash shows up in the first quarter without anyone's permission." **PE:** the validator renews and recovery decays (now colliding with RebateGPS and Ximple).
 
-**Kill criteria** (from the dossier):
-- **Day 30:** fewer than 25 calls with the exact title, or fewer than 40% of callers can size their rejections.
-- **Day 45:** more than 50% say an incumbent, buying group or ERP vendor "handles it," or 3+ VC-backed AI-natives come up unprompted.
-- **Day 60:** no 12-month dataset received under NDA.
-- **Day 75:** leakage found is below 3x the annual fee, or correct adjudication on real data is below 50%.
-- **Day 90:** fewer than 2 signed contingency pilots, or a projected cycle above 9 months.
-- **Any time:** building vertical-2 connectors before these tests pass.
+**Kill criteria** (dossier; the [validation kit](VALIDATION-KIT-spa-recovery.md) hardens these into Day-30 gates):
+- **Day 30:** under 25 calls with the exact title, or under 40% can size rejections from a system.
+- **Day 45 (kit: Day 30):** over 50% say an incumbent, buying group or ERP "handles it," or 3+ VC-backed AI-natives come up unprompted.
+- **Day 60:** no 12-month dataset under NDA.
+- **Day 75:** leakage below 3x the annual fee (kit: below 2x on 3+ audits), or under 50% correct adjudication on real data.
+- **Day 90:** under 2 signed contingency pilots, or a projected cycle over 9 months.
+- **Any time:** building second-vertical connectors before these pass.
+- **Pivot, not kill:** if most refuse any rebuttal, re-test a SaaS validator; if one segment is green, narrow to it.
 
-**First 30 days.**
-- **Days 1-3:** build an ICP list of 150 distributors from NAED, HARDI and buying-group lists, and write a one-page audit offer plus NDA.
-- **Days 1-10:** hold 25+ Mom-Test calls (script in dossier §6) and build a taxonomy of rejection codes.
-- **Weeks 1-2:** primary checks on SpeedyLabs, Rivvun's down-market intent, ChannelScaler/CMR depth, AD/IMARK/Epicor programs and real 844/849 usage.
-- **Days 8-20:** build the thinnest engine: CSV/EDI plus SPA PDFs in, report and spreadsheet out, no UI.
-- **Days 15-30:** deliver 3-5 audits and convert them to 60-90-day contingency pilots.
-- **Gate:** 25+ calls, 3+ datasets, and at least one audit showing $100k+ a year recoverable. Recruit an ex-SPA manager as advisor or cofounder in parallel.
+**First 30 days** (full plan in the [kit](VALIDATION-KIT-spa-recovery.md)).
+- **Days 1-3:** 150-distributor ICP list from NAED, HARDI and buying-group lists, weighted to $300M+; one-page audit offer and NDA.
+- **Days 1-10:** 25+ Mom-Test calls (dossier §6, kit §4); build a rejection-code taxonomy; ask for value-weighted rejection rates.
+- **Weeks 1-2 checks:** Does RebateGPS reconcile 849 codes? Is SpeedyLabs planning electrical or HVAC? Does AD-IMARK run central claim audits? Is SPA on Canals' roadmap? How do claims actually travel?
+- **Days 8-20:** thinnest engine: exports and SPA PDFs in, report and spreadsheet out, no UI.
+- **Days 15-30:** deliver 3-5 audits; convert to 60-90-day contingency pilots.
+- **Gate:** 25+ calls, 3+ datasets, one audit at $100k+/yr recoverable. Recruit an ex-SPA manager in parallel.
 
 ---
 
 ### Pick 2: Rulebook Desk, a due-process engine for FL/TX HOA collection law firms. Score 33 (was 42 before the pivot). IC: #2 for all three (convictions 4, 4, 3)
 
-**Thesis.**
-1. An LLM builds a citation-linked "association rulebook" from scanned CC&Rs, amendments, minutes and fine schedules.
-2. A deterministic per-state checker rebuilds the notice, cure and hearing history before a fine, lien letter, collection referral or foreclosure notice goes out. Statutes: FL 720.305, 720.3085, 718.116 and 718.303; TX 209.006-.007 and 209.0064 (citations from memory).
-3. The output is a cited memo plus corrected notices, sold to the community-association law firms and collection agencies that sign the work.
+**Thesis.** An LLM builds a citation-linked "association rulebook" from scanned CC&Rs, amendments, minutes and fine schedules. A deterministic per-state checker rebuilds the notice, cure and hearing history before a fine, lien letter, collection referral or foreclosure notice goes out (FL 720.305, 720.3085, 718.116, 718.303; TX 209.006-.007, 209.0064; from memory). Output: a cited memo plus corrected notices, sold to the association law firms and collection agencies that sign the work.
 
-**Why it's non-obvious.** The original idea, AI-prepared estoppel and resale certificates for management companies, dies three ways:
-- Vantaca/HOAi and RealPage/HomeWiseDocs can bundle it for free.
-- The manager keeps the fee while the association bears the loss.
-- Preparing certificates may be licensed CAM work (Fla. Stat. 468.431(2), unverified).
+**Why it's non-obvious.** The original idea, AI estoppel and resale certificates for management companies, died three ways: Vantaca/HOAi and RealPage/HomeWiseDocs can bundle it free; the manager keeps the fee while the association bears the loss; and certificate prep may be licensed CAM work (Fla. Stat. 468.431(2), unverified). Law firms bear the risk, hold the license, sign the output and recover fees from the owner.
 
-Moving to law firms puts the product with the party that bears the risk, holds the license, signs the output and recovers fees from the owner.
-
-**Competitors.**
-- [Vantaca](https://www.prnewswire.com/news-releases/vantaca-acquires-hoai-to-unlock-a-new-era-of-hoa-community-management-with-cutting-edge-ai-302310780.html): $300M at a $1.25B valuation, Oct 2025; owns HOAi.
-- [HomeWiseDocs/RealPage](https://www.realpage.com/news/realpage-agrees-to-acquire-homewisedocs/).
-- [Mosaic](https://mosaichoa.com/blog/florida-hoa-estoppel-certificates/), [HOA-OS](https://www.hoa-os.com/), [PayHOA](https://www.payhoa.com/streamline-resale-documents-how-in-app-processing-saves-time/), [CommunityPay](https://www.communitypay.us/concepts/florida-estoppel-certificate-requirements/), [PropLogix](https://www.proplogix.com/services/hoa-estoppels/), [Rexera](https://rexera.com/blog/hoa-resale-package/), HOALife, and Assembly HOA (YC S24).
-- No one was found targeting the law-firm buyer. General legal AI (Harvey/CoCounsel-type) is the nearest substitute.
+**Competitors.** [Vantaca](https://www.prnewswire.com/news-releases/vantaca-acquires-hoai-to-unlock-a-new-era-of-hoa-community-management-with-cutting-edge-ai-302310780.html) ($300M at $1.25B, Oct 2025; owns HOAi), [HomeWiseDocs/RealPage](https://www.realpage.com/news/realpage-agrees-to-acquire-homewisedocs/), [Mosaic](https://mosaichoa.com/blog/florida-hoa-estoppel-certificates/), [HOA-OS](https://www.hoa-os.com/), [PayHOA](https://www.payhoa.com/streamline-resale-documents-how-in-app-processing-saves-time/), [CommunityPay](https://www.communitypay.us/concepts/florida-estoppel-certificate-requirements/), [PropLogix](https://www.proplogix.com/services/hoa-estoppels/), [Rexera](https://rexera.com/blog/hoa-resale-package/), HOALife, Assembly HOA (YC S24). Nobody targets the law-firm buyer; general legal AI (Harvey/CoCounsel-type) is the nearest substitute.
 
 **What's good.**
 - **Large, stable base:** about 373k associations, $124.2B in annual assessments, 35.2% of US housing (CAI Foundation; snippet-verified).
-- **Real liability:** fines issued without proper notice are unenforceable and can trigger fee-shifting. FL 718.116(8)(c) waives amounts left off an estoppel.
+- **Real liability:** fines without proper notice are unenforceable and can shift fees; FL 718.116(8)(c) waives amounts left off an estoppel.
 - **Recurring demand:** Florida rewrites association law nearly every session.
 - **Counter-cyclical:** collections rise when home sales fall.
 - **Concentrated buyers:** a few dozen firms per state, each covering hundreds to thousands of associations.
 
 **What's bad.**
-- **The thesis rests on an unmeasured number:** how often defects actually cost recoveries.
-- **Slow buyers:** partner-driven firms in a small universe of perhaps 50-100 across FL and TX.
-- **Unpaid onboarding:** building each rulebook from scanned CC&Rs is unpaid services work.
-- **Licensing and UPL questions remain unverified** (flsenate.gov was blocked).
+- **Rests on an unmeasured number:** how often defects actually cost recoveries.
+- **Slow, scarce buyers:** perhaps 50-100 partner-driven firms across FL and TX.
+- **Unpaid onboarding:** each rulebook from scanned CC&Rs is services work.
+- **Licensing and UPL unverified** (flsenate.gov was blocked).
 
-**What buyers said.** There was no buyer simulation for the law-firm pivot, which is a gap. In the original simulation, management companies would not give up 20-30% of a capped certificate fee.
+**What buyers said.** The law-firm pivot had no buyer simulation, which is a gap. In the original, management companies would not give up 20-30% of a capped certificate fee.
 
-**IC split.** All three called the pivot clever and ranked it #2, but none would build before measuring the defect rate. The PE operator: "Experienced collection firms already run templated, paralegal-checked workflows."
+**IC split.** All three called the pivot clever; none would build before measuring the defect rate. PE operator: "Experienced collection firms already run templated, paralegal-checked workflows."
 
-**Kill criteria.** Kill if any of these holds:
-- Defects appear in fewer than about 2% of files.
-- No firm will pay at least $25 per file.
-- Counsel confirms the pivot itself needs licensure.
+**Kill criteria.** Defects in under about 2% of files, no firm paying $25+ per file, or counsel saying the pivot needs a license.
 
 **First 30 days (under $2k).**
 1. Pay a Florida association attorney for one hour ($300-500) to check 468.431(2), the 718.116(8) waiver text and UPL exposure.
 2. Hold 10 calls with FL/TX collection partners.
-3. If 2+ say defects happen "often," run 100-200 of their closed files through a spreadsheet-plus-LLM rulebook and measure the defects their attorneys missed.
+3. If 2+ say defects happen "often," run 100-200 of their closed files through a spreadsheet-plus-LLM rulebook and count the defects their attorneys missed.
 
 ---
 
 ### Pick 3 (bootstrap only): LTL rebill and pass-through capture desk for mid-tier brokers. Score 24 (was 41). IC: bootstrapper #3, VC #6, PE #9
 
-**Thesis.** The NMFC density overhaul (Docket 2025-1, effective 2025-07-19, about 2,000 items, 13 density subs; verified) flooded broker billing queues with reclass and reweigh corrections. Run it as a recovery desk:
-- Adjudicate each correction against the carrier's own weight-and-inspection images.
-- Dispute the winnable ones.
-- Most important, capture the pass-through charges that never get rebilled to the shipper, with customer-ready evidence packets.
+**Thesis.** The NMFC density overhaul (Docket 2025-1, effective 2025-07-19; about 2,000 items, 13 density subs; verified) flooded broker billing queues with reclass and reweigh corrections. A recovery desk checks each against the carrier's own weight-and-inspection images, disputes the winnable ones and, above all, captures pass-through charges never rebilled to the shipper, with customer-ready evidence packets.
 
-**Why it's non-obvious.** The controller's problem is unbilled cost, not disputes. No named competitor attacks that pass-through leak head-on.
+**Why it's non-obvious.** The controller's problem is unbilled cost, not disputes. No named competitor goes straight at that pass-through leak.
 
-**Competitors.**
-- [Lighthouz](https://lighthouz.ai/shipment-types/ltl) (YC S24): the same auto-dispute loop.
-- [Transflo Workflow AI for LTL](https://www.transflo.com/products/workflow-ai/for-ltl/): launched 2026-01-22 and already owns the broker document flow.
-- [Freehand](https://www.freehand.ai/articles/best-ai-freight-audit-and-payment-software), [Evos](https://www.getevos.ai/), and [Loop](https://techcrunch.com/2026/04/17/loop-raises-95m-to-build-supply-chain-ai-that-predicts-disruptions/) ($95M Series C).
+**Competitors.** [Lighthouz](https://lighthouz.ai/shipment-types/ltl) (YC S24) sells the same auto-dispute loop. [Transflo Workflow AI for LTL](https://www.transflo.com/products/workflow-ai/for-ltl/) launched 2026-01-22 and already owns the broker document flow. Also [Freehand](https://www.freehand.ai/articles/best-ai-freight-audit-and-payment-software), [Evos](https://www.getevos.ai/) and [Loop](https://techcrunch.com/2026/04/17/loop-raises-95m-to-build-supply-chain-ai-that-predicts-disruptions/) ($95M Series C).
 
-**What's good.** Human auditors are paid to do this today (job postings exist). No license is needed. It is capital-light, and it shows dollars within 60 days.
+**What's good.** Human auditors are paid for this today (job postings exist); no license; capital-light; dollars within 60 days.
 
-**What's bad.**
-- Directly crowded.
-- The practical dispute window is often about 30 days, not 180.
-- Brokers veto bot disputes.
-- About 50-150 meaningful accounts, priced against a $15-60k auditor.
-- Backlogs decay as the shock fades.
+**What's bad.** Directly crowded. The practical dispute window is often about 30 days, not 180. Brokers veto bot disputes. About 50-150 meaningful accounts, priced against a $15-60k auditor. Backlogs decay as the shock fades.
 
 **What buyers said (role-play).**
-- A broker billing manager: *"Most of the $60-90 ones? Nobody touches them. They just age out."* *"I don't want a bot spamming the ODFL or Saia disputes inbox."* $0.50 per shipment is "more than an auditor"; $3-6 per adjudicated correction is "a conversation."
+- A broker billing manager: *"Most of the $60-90 ones? Nobody touches them. They just age out."* *"I don't want a bot spamming the ODFL or Saia disputes inbox."* $0.50 per shipment is "more than an auditor," while $3-6 per adjudicated correction is "a conversation."
 - A large 3PL controller: *"Disputes aren't my problem. Unbilled cost is."* *"I'm not giving you 25% of [my revenue]."*
 
 **IC split.** The bootstrapper sees a profitable small desk. The VC and PE operator see a feature, not a category.
 
 **Kill criteria.** Continue only with a freight-insider cofounder and a controller who will pay for rebill capture that existing tools miss.
 
-**First 30 days.**
-1. One mid-tier broker hands over a month of rebills on a share-of-recovered-pass-through basis.
-2. Hold 10 calls with broker billing managers and controllers.
+**First 30 days.** Get one mid-tier broker to hand over a month of rebills on a share-of-recovered-pass-through basis, and hold 10 calls with broker billing managers and controllers.
 
 ---
 
 ### Pick 4 (not standalone): Debit Desk, the manufacturer-side mirror of Pick 1. Score 32 (was 44). IC: #3, #4, #3
 
-**Thesis.** Validate incoming distributor SPA debits for mid-tier electrical and plumbing OEMs and return reason-coded 849s.
+**Thesis.** Validate incoming distributor SPA debits for mid-tier electrical and plumbing manufacturers and return reason-coded responses. This is the second side of Pick 1's two-sided rail at Series A, not a starting wedge.
 
-**Why it still matters.** It is the second side of Pick 1's two-sided claims rail at Series A. It should not be the starting wedge.
+**Competitors.** [IMA360](https://ima360.com/solutions/), Stuut, Glimpse, Enable ($120M Series D, Nov 2023, at a $1.12B valuation), Vistex, Model N, CMR, Smyyth, Ximple and Vendavo.
 
-**Competitors.**
-- [IMA360](https://ima360.com/solutions/) (automated SPA, ship-and-debit and chargeback claim validation).
-- Stuut, Glimpse.
-- Enable ($120M Series D, Nov 2023, at a $1.12B valuation).
-- Vistex, Model N, CMR, Smyyth, Ximple and Vendavo.
+**What's good.** a16z money in Glimpse and Stuut validates supplier-side claims AI; Model N and Vistex stay upmarket; clerks auto-approve lines under $500 and run month-end in spreadsheets.
 
-**What's good.** a16z money in Glimpse and Stuut validates supplier-side claims AI. Model N and Vistex stay upmarket. The clerk-level pain is real: lines under $500 are auto-approved, and month-end runs in spreadsheets.
+**What's bad.** Sales leadership blocks short-pays to top distributors, so value collapses to labor savings (top pre-mortem failure, 45%). A few hundred manufacturers at $40-80k ACV: SAM about $15-30M. 9-14-month cycles. Over-claim rates plausibly 1-3%.
 
-**What's bad.**
-- Sales leadership blocks short-pays to top distributors, so the value collapses to labor savings (top pre-mortem failure mode, 45%).
-- A few hundred OEMs at $40-80k ACV, giving a SAM of roughly $15-30M.
-- 9-14-month cycles.
-- Real over-claim rates are plausibly 1-3%.
-
-**Kill criteria.** Revisit only with an insider cofounder, a design partner, and evidence that OEMs actually short-pay validated over-claims.
+**Kill criteria.** Revisit only with an insider cofounder, a design partner, and evidence that manufacturers actually short-pay validated over-claims.
 
 ---
 
-## 5. Big swings: what bolder ideas looked like
+## 6. Big swings: what bolder ideas looked like
 
-We ran the sweep to find larger-TAM ideas than round 1's niches. Five were deep-dived. **Four passed, and one survived only by shrinking.**
+Five larger-TAM ideas were deep-dived. **Four passed; one survived only by shrinking.**
 
 | Swing | The big version | What happened | Score |
 |---|---|---|---|
 | **Rulebook Desk** | An AI resale and enforcement back office for 373k associations | Shrank to a law-firm checker (Pick 2) | 33 |
-| **SecondLook** | QC-grade review of 100% of SNAP actions as states take on cost share (75% admin share from Oct 2026; benefit cost share from FY2028; snippet-verified) | Maximus, Nava (Google grant), CfA+Anthropic, SAS and Gainwell already ship it; ROI noise (about 1.15pp standard error) matches the tier bands; RFP sales | 32 |
-| **Union payroll verifier** | A payroll-agnostic checker that expands into AP, job cost and GL | Miter's $40M Series B on 2026-09-30 ([finsmes](https://www.finsmes.com/2026/09/miter-raises-40m-in-series-b-funding.html)); the checker re-reads the same inputs; discoverable underpayment logs | 28 |
-| **ClaimCare** | "Benefits verification for private pay," starting with LTCi | No 270/271-style rail; median site sees 3-4 activations a year; the data holders give help away free | 28 |
-| **WC statutory ledger** | A per-claim statutory system of record for WC and casualty | CA's statewide admin penalty pool is about $1.35M (2024); Tower MSA, Verisk and CLARA already sell code governance | 24 |
+| **SecondLook** | QC review of 100% of SNAP actions as states take on cost share (75% admin from Oct 2026; benefits from FY2028; snippet-verified) | Maximus, Nava, CfA+Anthropic, SAS, Gainwell already ship it; ROI noise (~1.15pp SE) as wide as tier bands; RFP sales | 32 |
+| **Union payroll verifier** | A payroll-agnostic checker that expands into AP, job cost and GL | Miter's $40M Series B, 2026-09-30 ([finsmes](https://www.finsmes.com/2026/09/miter-raises-40m-in-series-b-funding.html)); checker re-reads the same inputs; underpayment logs are discoverable | 28 |
+| **ClaimCare** | "Benefits verification for private pay," starting with LTCi | No 270/271-style rail; median site sees 3-4 activations a year; data holders help for free | 28 |
+| **WC statutory ledger** | A per-claim statutory system of record for WC and casualty | CA statewide admin penalties about $1.35M (2024); Tower MSA, Verisk, CLARA sell code governance | 24 |
 
-**Lesson.** Bigger TAM came with worse founder fit: government buyers, systems of record, or funded leaders already in place. Spin-offs worth a fresh scout (not validated): a daily claims-QA copilot for mid-size TPAs, a multi-payer "private-pay funding desk" for senior care, and structured LTCi intake for carriers.
+**Lesson.** Under the assumed profile, bigger TAM meant worse fit: government buyers, systems of record or funded leaders. Unvalidated spin-offs: a claims-QA copilot for mid-size TPAs, a multi-payer private-pay funding desk for senior care, structured LTCi intake for carriers.
 
 ---
 
-## 6. Round 3: fresh-method sweep
+## 7. Round 3: fresh-method sweep
 
-**Method.** Six scouts, 8 searches each, one new lens apiece: AI-native analogs, B2C agents, AI-native services, second-order AI effects, labor cliff, big-TAM contrarian. Together they produced 30 ideas ([03-round3-longlist.md](03-round3-longlist.md)).
-An advisor picked 7 (two B2C/B2B2C). Each got a deep dive, a live-search red team, a buyer simulation and a judge's score.
-**Result: 7 of 7 passed, scoring 30-44. None beat 54.**
+**Method.** Six scouts, 8 searches each, one new lens apiece (AI-native analogs, B2C agents, AI-native services, second-order AI effects, labor cliff, big-TAM contrarian), pooled 30 ideas ([03-round3-longlist.md](03-round3-longlist.md)). Seven went through the full pipeline. **All 7 passed at 30-44; none beat 54.**
 
-| Idea | Segment | Score | Verdict | Good | Bad | Dossier |
-|---|---|---|---|---|---|---|
-| Distributor margin system of record for PE roll-ups | Wholesale distribution; PE platforms (B2B) | 44 | Pass (2 kill votes) | Real rebate pain; correct side | Superset of Pick 1; Marquis IQ, Datarails, ERP entrants; 2-3 yr life | [r4-2](dossiers/r4-2-distributor-margin-system-of-record-sold-to-p.md) |
-| CRE Renewal and Collateral Desk for community lenders | CRE valuation / credit admin (B2B) | 43 | Pass (0) | Verified no-license band ($500K banks, $1M CUs) | In-house and borrower-paid substitutes; every layer owned | [r4-3](dossiers/r4-3-cre-renewal-and-collateral-desk-for-community.md) |
-| DisputeShield: FCRA investigation layer for furnishers | Consumer credit furnishers (B2B) | 41 | Pass (1) | Record FCRA filings (7,274 through Aug 2026, verified) | Bridgeforce, Bloom own workflow; deletion is free | [r4-1](dossiers/r4-1-disputeshield-the-defensible-investigation-la.md) |
-| Post-clearance QA/RA operations for small device makers | Medtech QA/RA services (B2B) | 41 | Pass (0) | Verified why-now (QMSR, 2026-02-02) | eQMS bundles AI; NAMSA, Emergo sell the same; needs RA veteran | [r4-6](dossiers/r4-6-post-clearance-qa-ra-operations-as-a-service-.md) |
-| ACV Check: total-loss valuation audit | Auto total loss / GAP / lender deficiency (B2B2C) | 39 | Pass (2) | Proven underpayment ($13.8-30.75M settlements) | GAP addenda bind to carrier ACV; Allied EZ Claim; adjuster licensing | [r4-4](dossiers/r4-4-acv-check-an-acv-assurance-layer-that-audits-.md) |
-| Bid-to-Fab fire protection design bureau | Fire protection design (B2B) | 36 | Pass (1) | Real NICET capacity gap | 13+ AI tools (FireDesign.ai, Quotr); FL/TX licensing; services margins | [r4-5](dossiers/r4-5-bid-to-fab-fire-protection-design-bureau-ai-d.md) |
-| Depreciation and passive-loss workbench for CPAs | Tax advisory (B2B2C) | 30 | Pass (3) | OBBBA permanent 100% bonus (verified) | $495 price floor; 20+ occupants | [r4-7](dossiers/r4-7-depreciation-and-passive-loss-evidence-workbe.md) |
+| Idea | Score | Verdict | Good | Bad | Dossier |
+|---|---|---|---|---|---|
+| Distributor margin system of record for PE roll-ups | 44 | Pass (2 kill votes) | Real rebate pain; correct side | Superset of Pick 1; Marquis IQ, Datarails, ERP entrants; 2-3 yr life | [r4-2](dossiers/r4-2-distributor-margin-system-of-record-sold-to-p.md) |
+| CRE Renewal and Collateral Desk for community lenders | 43 | Pass (0) | Verified no-license band ($500K banks, $1M CUs) | In-house and borrower-paid substitutes; every layer owned | [r4-3](dossiers/r4-3-cre-renewal-and-collateral-desk-for-community.md) |
+| DisputeShield: FCRA investigation layer for furnishers | 41 | Pass (1) | Record FCRA filings (7,274 through Aug 2026, verified) | Bridgeforce, Bloom own workflow; deletion is free | [r4-1](dossiers/r4-1-disputeshield-the-defensible-investigation-la.md) |
+| Post-clearance QA/RA operations for small device makers | 41 | Pass (0) | Verified why-now (QMSR, 2026-02-02) | eQMS bundles AI; NAMSA, Emergo sell the same; needs RA veteran | [r4-6](dossiers/r4-6-post-clearance-qa-ra-operations-as-a-service-.md) |
+| ACV Check: total-loss valuation audit (B2B2C) | 39 | Pass (2) | Proven underpayment ($13.8-30.75M settlements) | GAP addenda bind to carrier ACV; Allied EZ Claim; adjuster licensing | [r4-4](dossiers/r4-4-acv-check-an-acv-assurance-layer-that-audits-.md) |
+| Bid-to-Fab fire protection design bureau | 36 | Pass (1) | Real NICET capacity gap | 13+ AI tools (FireDesign.ai, Quotr); FL/TX licensing; services margins | [r4-5](dossiers/r4-5-bid-to-fab-fire-protection-design-bureau-ai-d.md) |
+| Depreciation and passive-loss workbench for CPAs (B2B2C) | 30 | Pass (3) | OBBBA permanent 100% bonus (verified) | $495 price floor; 20+ occupants | [r4-7](dossiers/r4-7-depreciation-and-passive-loss-evidence-workbe.md) |
 
-**Distributor margin system of record (44).** Pick 1 plus a PE layer, a vendor-terms library and an eventual AI-native ERP.
-- *Good:* real pain (acquisitions break rebate and SPA eligibility) and strong connector fit. One unmet need: $40-80k per acquisition for master-data normalization.
-- *Bad:* platforms standardize ERPs and exit, so the need ends in 2-3 years. A low-hundreds buyer universe (unverified). Sherman Act information-exchange risk on the vendor-terms moat (from memory). Realistic price is $60-180k per platform.
+**Distributor margin system of record (44):** Pick 1 plus a PE layer, a vendor-terms library and eventually an AI-native ERP.
+- *Good:* acquisitions really do break rebate and SPA eligibility; connectors fit; master-data normalization is an unmet $40-80k-per-acquisition need.
+- *Bad:* platforms standardize ERPs and exit, so the need lasts 2-3 years. Low-hundreds buyer universe (unverified). Sherman Act information-exchange risk on the vendor-terms moat (from memory). Realistic price $60-180k per platform. Only a buying-group claim rail (est. 50-56) might match 54, and that rail belongs to Pick 1.
 - *Competitors:* Marquis IQ, Datarails, Canals, Epicor Prism/Ascend, 10X ERP, Doss, Enable, Vendavo, Vistex, 360insights, Rivvun.
 
-Only a buying-group claim rail (estimated 50-56) might match 54, and that belongs to Pick 1.
-
 **CRE Renewal and Collateral Desk (43).**
-- *Good:* sells to the lender that bears the loss. No license is needed in the evaluation band. Office and retail renewal tests are a live exam pain.
-- *Bad:* the cash slice is about $0.1-0.3B (estimate). ACV is $20-40k at credit unions and about $0 at banks with a reviewer (role-play). Vendor-risk cycles run 4-12 months and margins 40-55%. Buyers refused the data consortium (GLBA).
+- *Good:* sells to the lender that bears the loss; no license in the evaluation band; office and retail renewals are a live exam pain.
+- *Bad:* cash slice about $0.1-0.3B (est.). ACV $20-40k at credit unions, about $0 at banks with a reviewer (role-play). 4-12-month vendor-risk cycles, 40-55% margins. Buyers refused the data consortium (GLBA).
 - *Competitors:* LightBox, Bowery, Lama AI, Aloan, Abrigo, nCino, ValuationPro.ai, RealQuantum, Blooma.
 
 **DisputeShield (41).**
-- *Good:* AI letter mills inflate dispute volume. Sells to the side that pays, needs no license, and has hundreds of buyers.
-- *Bad:* Bridgeforce DQS already reviews every disputed account and is piloting AI. Deleting the tradeline is free. The budget behaves like insurance ($35-60k at auto lenders, about $0 at CUs, role-play). Memos become willfulness evidence.
+- *Good:* AI letter mills inflate dispute volume; sells to the side that pays; no license; hundreds of buyers.
+- *Bad:* Bridgeforce DQS already reviews every disputed account and pilots AI. Deleting the tradeline is free. Budget behaves like insurance ($35-60k at auto lenders, ~$0 at CUs; role-play). Memos become willfulness evidence.
 - *Competitors:* Bridgeforce, Bloom Credit, e-OSCAR, Finvi, Latitude, FICO Debt Manager, Quavo, offshore BPO.
-- *Variant worth one scout:* 605B documentation for debt buyers' seller putback claims, a recovery owed to the buyer.
+- *Variant worth one scout:* 605B documentation for debt buyers' putback claims against sellers.
 
-**Post-clearance QA/RA operations (41).** The 510(k) wedge was wrong: fixed-fee shops charge $15-25k, and five AI tools compete. The refined offer runs complaints, MDR, CAPA and audits.
-- *Good:* recurring prevention, the manufacturer stays the signer, and there is a verified QMSR why-now.
-- *Bad:* eQMS vendors are shipping AI agents. Leverage is low at tens of complaints a year (4-8 clients per specialist). The sale rests on a named RA veteran.
+**Post-clearance QA/RA operations (41).** The 510(k) wedge was wrong ($15-25k fixed-fee shops, five AI tools); the refined offer runs complaints, MDR, CAPA and audits.
+- *Good:* recurring prevention; the manufacturer stays the signer; verified QMSR why-now.
+- *Bad:* eQMS vendors ship AI agents; low leverage at tens of complaints a year (4-8 clients per specialist); the sale rests on a named RA veteran.
 - *Competitors:* NAMSA, Emergo, USDM, SJ MedTech, Ketryx, Complizen, Smarteeva, Flinn.ai, fractional boutiques.
 - *Real pull:* $4-7k/month complaint and MDR staff augmentation for multi-510(k) firms, a respectable bootstrap services business.
+
+**ACV Check, fire design bureau, depreciation workbench:** good and bad as in the table.
 
 **Residual threads (unscored):** non-GAP lender deficiency desk, QPP recapture monitoring (est. 38-42), roll-up master-data normalization.
 
 ---
 
-## 7. The rest of round 1 (not re-tested in round 2)
+## 8. The rest of round 1 (not re-tested in round 2)
 
-Round-1 scores, never live-verified. Round 2 cut finalists by 10-17 points, so discount these similarly.
+Round-1 scores, never live-verified; discount by the 10-17 points round 2 took from finalists.
 
 | Idea (as pivoted) | Score | Good | Bad |
 |---|---|---|---|
@@ -319,28 +320,30 @@ Round-1 scores, never live-verified. Round 2 cut finalists by 10-17 points, so d
 
 ---
 
-## 8. Graveyard and the rules it taught
+## 9. Graveyard and the rules it taught
 
-1. **Sell to the side that loses money and keeps the recovery.** Debit Desk flipped to SPA recovery; estoppel QA moved from managers to law firms. *Killed by this rule:* Debit Desk, the original Rulebook, LiftLedger.
+These rules assume the §3.1 profile; rule 3 is also a reason to become the licensee.
+
+1. **Sell to the side that loses money and keeps the recovery.** Debit Desk flipped to SPA recovery, and estoppel QA moved from managers to law firms. *Killed:* Debit Desk, the original Rulebook, LiftLedger.
 2. **If the payer or data holder controls the channel, you lose.** *Killed:* VSC voice agent (administrators automate and can block AI callers), ClaimCare (carriers hold the binding facts), WC ledger (the TPA holds the data and is the party audited).
 3. **If the scarce asset is a license, the licensee wins.** *Killed:* FL permits (license plus E&O), LIHTC (HCCP sign-off), TaxDesk (representation rights).
 4. **Government RFPs and partner-driven buyers kill capital-light teams.** *Killed:* SecondLook, Medicaid frailty.
 5. **A checker that reads the same inputs as the system it checks finds only arithmetic errors.** *Killed:* union payroll verifier.
 6. **Finding the defect can create the liability.** *Killed:* Guaranty Shield, WC look-back, union-payroll flag logs.
-7. **Cutting the time to draft a document is not a business** when drafting isn't the bottleneck and a general LLM is a free substitute. *Killed:* TaxDesk, LTCi packets.
-8. **Recovery revenue decays; prevention renews.** Every contingency idea needs a validator or prevention product behind the audit.
+7. **Cutting drafting time is not a business** when drafting isn't the bottleneck and a general LLM is a free substitute. *Killed:* TaxDesk, LTCi packets.
+8. **Recovery revenue decays; prevention renews.** Every contingency idea needs prevention behind the audit (for Pick 1, already contested).
 9. **Buyer-universe math.** Fewer than about 300 logos at under $50k ACV never made the cut.
 10. **If the buyer can make the problem vanish for $0, there is no budget.** *Killed (round 3):* DisputeShield, CRE desk.
 11. **Read the contract before sizing the market. Standing decides who collects.** *Killed:* ACV Check (GAP addenda bind to the carrier's ACV).
-12. **An AI-native services firm inherits services margins and a named-expert sale.** *Killed:* QA/RA ops, fire design bureau, cost seg workbench (30-41).
+12. **An AI-native services firm inherits services margins and a named-expert sale.** *Killed:* QA/RA ops, fire design bureau, cost seg workbench (30-41). Profile-specific: the longlist's trend notes show this model out-raising SaaS (Strala, Corgi, Harper).
 
 ---
 
-## 9. Cross-cutting insights
+## 10. Cross-cutting insights
 
 ### Crowding map: where AI-native money already is (October 2026)
 
-Funding amounts are verified only where a URL is given; the rest are snippets.
+Funding is snippet-level unless a URL appears elsewhere in this memo.
 
 | Area | Funded players |
 |---|---|
@@ -356,57 +359,49 @@ Funding amounts are verified only where a URL is given; the rest are snippets.
 | LIHTC compliance | TenantAudit, Pronto, Tire Swing, LeaseBase. **Crowded at a low price.** |
 | WC / claims AI | CCC/EvolutionIQ (about $730M), CLARA, FurtherAI. **Crowded.** |
 | Horizontal contract-to-settlement recovery | Rivvun ($7.55M seed). **Narrative taken.** |
+| Distributor SPA / rebates (final round) | Enable + SPARXiQ RebateGPS, Ximple, Epicor EDA; SpeedyLabs (AI-native, foodservice). **Validation taken.** |
 | Distribution margin / ERP (round 3) | Canals ($35M), Doss ($55M B), Epicor Prism/Ascend, 10X ERP, Marquis IQ. **Crowding fast; threatens Pick 1.** |
 | CRE lending / valuation (round 3) | LightBox ($221M), Bowery (>$80M), Lama AI (>$20M), Blooma, ValuationPro.ai. **Crowded.** |
 | Medtech RA/QA (round 3) | Ketryx ($55M+), Complizen, FormlyAI ($2M), Klaris, Greenlight Guru/Qualio AI agents. **Crowded.** |
 | Fire protection design / takeoff (round 3) | FireDesign.ai, Caident, Quotr ($4M seed, 2026-09-30), Countfire, BuildVision. **Crowded.** |
 | Cost segregation / CPA tax planning (round 3) | Instead (absorbed Corvee), Holistiplan, Cost Seg Smart, 6+ REPS apps. **Commoditized.** |
-| **Still open (no funded AI-native found; unverified absence)** | **Distributor-side SPA/ship-and-debit recovery**, HOA collection-firm due process, outbound VSC authorization calls, broker pass-through capture, and round-1 untested niches (air-capacity data, small-utility rate studies, asset-owner damage recovery) |
+| **Still open (absence unverified)** | **Post-rejection SPA recovery in electrical/HVAC**, HOA collection-firm due process, outbound VSC authorization, broker pass-through capture, untested round-1 niches (air-capacity data, utility rate studies, asset-owner damage recovery) |
 
 ### Patterns that survive
 
-- **"LLM extracts the rules, a deterministic engine recomputes, output is clause-cited evidence" is now table stakes.** Every dossier rediscovered it, and in most verticals a funded player or the system of record already has it. It is not a moat.
-- **The moat is positional:**
-  1. Sit on the side of the transaction that bears the loss.
-  2. Use data the buyer can export without IT or an incumbent's API.
-  3. Hold data rights that compound across customers.
-  4. Have a credible path to a two-sided rail.
-- **The right land motion is a free audit that produces a dollar figure, then contingency, then a subscription for prevention.**
-- **Rule-change cadence is a durable demand driver** (Florida association law, NMFC dockets, OBBBA), but only when the rule change hits the party who pays.
-- **(Round 3) Supersets lower expected value.** Layers stacked on the best wedge add risk (PE churn, ERP capital, antitrust), not edge.
-- **(Round 3) Count cash, not events.** Event-count TAMs (CRE renewals, complaints, total losses) shrank once in-house labor, pass-through fees and free substitutes were removed.
-- **(Round 3) Second-order AI effects create demand, not openings.** AI dispute letters inflate volume, but the workflow incumbent (Bridgeforce) captures the response. Look for effects that land where no workflow owner exists.
-- **(Round 3) The ceiling held under every lens.** For a small technical team with no license, insider or government channel, the reachable outcome looks like an $8-30M desk. Breaking past it needs a domain cofounder or a two-sided rail, not a better search.
+- **"LLM extracts rules, deterministic engine recomputes, output is clause-cited evidence" is table stakes, not a moat.** Every dossier rediscovered it, and most verticals already have it.
+- **The moat is positional:** sit on the side that bears the loss, use data the buyer exports without IT, hold data rights that compound, and have a path to a two-sided rail.
+- **Land with a free audit that yields a dollar figure, then contingency, then prevention.** Check early whether someone already owns prevention, as RebateGPS does for Pick 1.
+- **Rule-change cadence drives demand** (Florida association law, NMFC, OBBBA) only when it hits the party who pays.
+- **Supersets lower expected value.** Layers on the best wedge add risk (PE churn, ERP capital, antitrust), not edge.
+- **Count cash, not events.** Event-count TAMs (CRE renewals, complaints, total losses) shrank net of in-house labor, pass-through fees and free substitutes.
+- **Second-order AI effects create demand, not openings.** AI dispute letters inflate volume, but Bridgeforce captures the response. Look where no one owns the workflow.
+- **The $8-30M desk ceiling is a ceiling for this profile.** It held under every lens for a small team with no license, insider or government channel. A domain cofounder, capital, an acquisition or a two-sided rail moves it (§2).
 
 ### Trajectories to watch
 
-- **OBBBA Medicaid work requirements** go live in more states (Iowa 2026-12-01). The frailty definition is being litigated (25 states plus DC). The self-attestation cap starts in 2028.
+- **OBBBA Medicaid work requirements** spread (Iowa 2026-12-01); the frailty definition is in litigation (25 states plus DC); the self-attestation cap starts in 2028.
 - **SNAP state cost share** (FY2028 onward) will keep states buying error-reduction tools from incumbents.
-- **NMFC follow-on dockets in 2026** (an ODFL page suggests more).
-- **Vertical AI consolidation** (Vantaca/HOAi, CCC/EvolutionIQ, Trimble/Document Crunch) means a tuck-in exit is the realistic base case for most ideas here.
+- **NMFC follow-on dockets in 2026** (an ODFL page suggests more are coming).
+- **Vertical AI consolidation** (Vantaca/HOAi, CCC/EvolutionIQ, Trimble/Document Crunch) makes a tuck-in the base-case exit.
 
 ### The "horizontal B2B claims engine" thesis
 
-**Still supported as architecture, dead as a seed pitch.**
-- Rivvun has the narrative and pedigree.
-- Two of the four proposed starting verticals are funded AI-native categories.
-- Every simulated buyer wanted a tool built for its own portals and codes ("I don't care that it also does freight rebills").
-
-Build the engine internally and win vertical 1 (distributor SPA recovery). Earn the horizontal story at Series A with about $1M ARR and about 10 referenceable distributors, then extend to rebates, billbacks, MDF and price protection, or to VSC TPAs as a backup wedge.
+**Sound as architecture, dead as a seed pitch.** Rivvun owns the narrative, two of four proposed verticals are funded AI-native categories, and every simulated buyer wanted its own portals and codes ("I don't care that it also does freight rebills"). Build the engine internally, win SPA recovery, and earn the horizontal story at Series A (~$1M ARR, ~10 referenceable distributors), extending to rebates, billbacks, MDF and price protection, or VSC TPAs as backup.
 
 ---
 
-## 10. Open questions: what we could not verify
+## 11. Open questions: what we could not verify
 
-1. **Real SPA leakage per distributor.** All leakage figures are vendor marketing or role-play. This is the load-bearing number for Pick 1.
-2. **SpeedyLabs:** live product, customers, and whether it serves distributors outside foodservice.
-3. **Rivvun:** down-market intent and the exact month of its round.
-4. **Buying groups and ERPs:** whether AD, IMARK or Epicor (Eclipse/P21) already offer claim recovery.
-5. **EDI 844/849 usage** across mid-market electrical, HVAC and MRO, versus portals and email (from memory).
-6. **The HOA notice-defect rate**, plus Fla. Stat. 468.431(2) scope and the full 718.116(8) / 720.30851 waiver text (flsenate.gov was blocked).
-7. **Whether any real buyer says what the composites said.** No real interviews were conducted.
-8. **The mid-market distributor count** ("low thousands" is an estimate; size it from NAED and HARDI membership).
-9. **Round-1 ideas never re-tested live** (§7). Their scores are likely inflated in the same way the finalists' were.
-10. **Canals and Epicor Prism:** whether either already reconciles SPA rejections (load-bearing for Pick 1).
+1. **Real SPA leakage per distributor**, the load-bearing number for Pick 1. Only vendor figures exist (1-12% of claim value). Read MDM's "1% Problem" for its base; ask the first 10 calls for value-weighted rejection rates.
+2. **SpeedyLabs:** funding, customers, and electrical or HVAC plans.
+3. **RebateGPS:** whether "under-supported claims" already re-works 849 rejections (check in a demo).
+4. **AD-IMARK, Epicor Agent Foundry, Canals:** any SPA rejection recovery built or planned. None found in snippets.
+5. **How claims travel** in mid-market electrical, HVAC and MRO: EDI 844/849 (snippets say mainly pharma), portals or email.
+6. **Rivvun:** down-market intent.
+7. **The HOA notice-defect rate**, plus Fla. Stat. 468.431(2) scope and the 718.116(8) / 720.30851 waiver text (flsenate.gov was blocked).
+8. **Whether real buyers say what the composites said.** No real interviews were held.
+9. **How many distributors exceed $300M revenue.** Size from NAED and HARDI membership.
+10. **Round-1 ideas never re-tested live** (§8); scores likely inflated.
 
-*Files: [MEMO-round1.md](MEMO-round1.md) · [01-longlist.md](01-longlist.md) · [03-round3-longlist.md](03-round3-longlist.md) · [dossiers/](dossiers/). Read first: [r3-b2b-claims-engine](dossiers/r3-b2b-claims-engine.md) (day-30 gate, call script, kill criteria), then [r3-swing-4](dossiers/r3-swing-4-rulebook-backed-outsourced-resale-and-enforce.md).*
+*Files: [VALIDATION-KIT-spa-recovery.md](VALIDATION-KIT-spa-recovery.md) · [MEMO-round1.md](MEMO-round1.md) · [01-longlist.md](01-longlist.md) · [03-round3-longlist.md](03-round3-longlist.md) · [dossiers/](dossiers/). Read first: the validation kit, then [r3-b2b-claims-engine](dossiers/r3-b2b-claims-engine.md) (call script, kill criteria), then [r3-swing-4](dossiers/r3-swing-4-rulebook-backed-outsourced-resale-and-enforce.md).*
