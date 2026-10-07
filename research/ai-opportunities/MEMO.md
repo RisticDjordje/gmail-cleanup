@@ -1,6 +1,6 @@
 # AI Opportunity Hunt: Final Partner Memo
 
-> **Founder profile now known: start with [FOUNDER-FIT.md](FOUNDER-FIT.md).** It ranks ideas for a full-stack + applied-AI product builder who has little capital and no domain background and wants to bootstrap, then raise. Top pick: RegistryPilot (61); alternates: PlanSet and Switchboard (55 each). The rest of this memo is the earlier generic-profile history.
+> **Founder profile now known: start with [FOUNDER-FIT.md](FOUNDER-FIT.md).** It ranks ideas for a full-stack + applied-AI product builder who has little capital and no domain background and wants to bootstrap, then raise. Top pick: RegistryPilot (55, contested; narrowed to lab-agnostic report verification); alternates: PlanSet and Switchboard (50 each, contested). **Who else is building: see [LANDSCAPE.md](LANDSCAPE.md)**, which checks every idea against the YC W25-F26 directory and tier-1 VC deals. The rest of this memo is the earlier generic-profile history.
 
 *2026-10-06. Rounds 1-3 assumed a technical outsider with a small team and little capital. Round 5 (§8) re-scored six ideas for four founder profiles. Supersedes [MEMO-round1.md](MEMO-round1.md), kept for the record.*
 

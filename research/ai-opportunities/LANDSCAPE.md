@@ -10,7 +10,7 @@
 - **Money:** a16z-led vertical Series As clustered at **$25-55M** (Prosper, Lassie, Ease, Probook, Town, Lio). Tier-1 firms are buying category leaders (Harvey, EliseAI, Avoca, HappyRobot), not seeding new categories.
 - **Model shift:** 22% of entrants sell the outcome (AI-native services or full-stack operators). In insurance it is 41%. YC is funding "be the firm" as often as "sell the firm software."
 - **Whitespace:** workflows with large spend but almost no entrants. They involve slow buyers (water/wastewater utilities, telecom make-ready, upstream oil and gas back office, ag co-ops, port demurrage), have to read the buyer's own operating data (manufacturer warranty analytics, multi-site utility bills), or sit beside a vertical-software system instead of replacing it (legacy data migration, trade-license exam prep).
-- **For this founder:** stay out of phone agents, RCM, quote-to-order and broker tools. The strongest unclaimed lanes match his engineering edge: **Switchboard/legacy migration, FieldSignal, CodeTab and PlanSet.** Two of our ideas are now contested by brand-new YC companies: **RegistryPilot** (Complir, MarkIt) and **contents reconstruction** (InventoryQuant). **Linegraph** is effectively taken (Operon).
+- **For this founder:** stay out of phone agents, RCM, quote-to-order and broker tools. After the round-6 re-check (§5), **RegistryPilot, PlanSet, Switchboard, FieldSignal and ParityProof are all contested**; what stays open in each is a neutral verification layer. **CodeTab** is the only shortlist idea still open. **Contents reconstruction** is contested (InventoryQuant) and **Linegraph** is effectively taken (Operon).
 
 ---
 
@@ -118,17 +118,28 @@ Verdicts: **open** = no recent YC/tier-1 overlap found · **contested** = 1-3 ov
 | Hard-class product-liability MGA | AI carriers Florin, Risklytics, PRINCEPS, Hedge, Corgi, none in consumer products liability | **Contested** on model, open on niche |
 | B2C not-at-fault auto claim | None (Blueshoe is a general consumer law firm) | **Open** but weak |
 
-### Round 6 pool ([04-founder-fit-rescore.md](04-founder-fit-rescore.md) §3-4; no r6 dossiers on disk yet)
+### Round 6 (re-checked 2026-10-07 against the round-6 dossiers)
+
+The five round-6 leaders were re-checked against their dossiers, the full YC W25-F26 descriptions and 5 web searches each. Scores are founder-fit scores; [FOUNDER-FIT.md](FOUNDER-FIT.md) has the re-ranked shortlist.
+
+| Idea | Dossier | Overlapping startups | Verdict | Still-open angle |
+|---|---|---|---|---|
+| **RegistryPilot** (CPSC certificates and lab reports for SMB brands) | [r6-4](dossiers/r6-4-registrypilot-cpsc-certificate-autopilot.md) | *Direct:* **Complir** (YC Spring 2026, $11M General Catalyst; now publishes CPSC eFiling guides in DE/ES, enterprise/EU buyers), **Comply PRO+** (eFile SaaS and auto-certificates for Amazon sellers). *Partial:* labs (Intertek, BV, QIMA, Eurofins, SGS) for their own reports; Shopify CPSC fields, Global-e, Zonos, Easyship; MarkIt (YC F25, labels/formulations); Certivo ($4M, manufacturers); Apify gap checker. *Adjacent:* Fuchsia (YC), Trava, Tarifflo, Alchemize (YC customs), Donkey, Saudara (YC sourcing), Certo, Truli | **Contested** (61→55). Complir's US CPSC move has partly arrived as localization | Lab-agnostic report verification for sub-$20M Alibaba/1688 buyers, triggered by Amazon CPC fixes and the mail (2026-10-22) and FTZ (2027-01-08) phases; cross-customer verified-report graph. Plain filing is not open |
+| **PlanSet** (permit autopilot for outdoor structures) | [r6-5](dossiers/r6-5-planset-a-permit-autopilot-for-outdoor-l.md) | *Direct:* **Site Plans AI** (address to site plan for deck/patio/shed/fence contractors, from $69), **BluePrints AI** ($500K; sketch/photo/CAD to permit documents). *Partial:* Simpson/MiTek planners, ArcSite, RedX, Sketchronix, SitePlanCreator, MySitePlan, Spacial ($10M, unverified), Pulley, PermitFlow. *City side:* Archistar (30+ cities), Blitz, Permitify (YC W25), Verdant (YC S26), AutoSitu (YC W26), Symbium, GovWell | **Contested** (55→50). Earlier "open" missed the two direct entrants | Outcome-priced first-pass approval with resubmits included, per-jurisdiction correction ledger in 2-3 metros, then a rules/approval-prediction API; "passes the city's AI pre-check" |
+| **Switchboard** (source-side legacy extraction for vertical SaaS) | [r6-1](dossiers/r6-1-switchboard-a-source-side-extraction-and.md) | *Direct:* **Bitwerx** (vet), **RecordLinker** (insurance AMS), **The Back Office** (Tekmetric, $750/migration), **Universal Migrator** (legal). *Partial:* ClonePartner, superglue (YC W25, ERP), Vern, Doyen/Sage, Flatfile, Zengines, Woflow. *Adjacent:* Zatanna (YC W26), Minicor (YC S26), Asteroid (YC W25), Supergood, Hypercubic (YC F25), Lab0 (YC S26), Lume, OneSchema, DualEntry, Movestax | **Contested** (55→50). Was "open"; insurance and auto repair now occupied | Arms dealer: metadata-free readers plus deterministic reconciliation sold to converters and vendor in-house teams; property management and US law/CPA unchecked |
+| **FieldSignal** (warranty analytics and supplier recovery) | [r6-6](dossiers/r6-6-fieldsignal-warranty-claims-analysis-and.md) | *Direct:* **ServiceCPQ** (AI claim triage, fraud, supplier recovery for capital-equipment OEMs), **Syncron/Mize** (supplier recovery, sold to small OEMs). *Partial:* Axion ($37M B), Viaduct ($10M B), Tavant, Aquant, 4CS iWarranty, Davisware, OnPoint. *Adjacent:* Kebra, Bernard (YC S26, servicer side), Revion (YC W26), GroundControl (YC) | **Contested** (53→48). Was "open"; YC lane still empty | Claims-system-agnostic statistical overlay for thin-data makers, white-labeled through Davisware/4CS/OnPoint, or a supplier-side chargeback defense product. The leakage audit is table stakes |
+| **ParityProof** (verified Dynamics GP exit) | [r6-2](dossiers/r6-2-parityproof-gp-first-a-verified-erp-exit.md) | *Direct:* **superglue** (YC W25; implements NetSuite/Intacct/SAP/BC/Acumatica and migrates legacy data), **eOne** (GP-to-Intacct/NetSuite packages, Popdock archive). *Partial:* Campfire, DualEntry, ECOSIRE, Microsoft BC migration tool. *Adjacent:* Rillet, Tessera Labs ($60M, a16z), Qorelo, Lab0 (YC S26), Agentin AI (YC W25) | **Contested** (52→47) | Neutral, destination-agnostic parity reports for operational subledgers, OEM'd to loaders; only as an adapter of the Switchboard engine |
+| CodeTab (trade-license exam trainer) | [r6-3](dossiers/r6-3-codetab-a-trainer-for-finding-answers-fa.md) | Alice.tech, Miyagi Labs (general exam prep) | **Open** (not re-checked) | |
+| SPA Claims Autopilot | [r6-7](dossiers/r6-7-spa-claims-autopilot-a-recovery-first-cl.md) | Canals, Whitespace (YC S26), Lark (YC F26), Enable, SpeedyLabs | **Contested** (not re-checked) | Post-rejection recovery |
+| ProvenanceLedger (wildfire ownership ledger) | [r6-8](dossiers/r6-8-provenanceledger-a-permissioned-what-you.md) | InventoryQuant (YC W26) | **Contested** (not re-checked) | |
+
+**Common thread:** in every re-checked idea, nobody sells independent verification separately from the filer, loader or claims suite. That is the remaining slot, and it is narrow.
+
+### Other founder-fit pool ideas ([04-founder-fit-rescore.md](04-founder-fit-rescore.md) §3-4; not re-checked)
 
 | Idea | Overlap | Verdict |
 |---|---|---|
-| **Switchboard** (legacy vertical-SaaS migration) | superglue (YC W25) does ERP implementation and migration only | **Open** |
-| **GP Liftoff** (Dynamics GP sunset) | superglue (implements Business Central/NetSuite/Acumatica and migrates legacy data), DualEntry (free migration), Rillet | **Contested.** superglue is a direct threat to the partner channel |
 | AccessLift (Access → web app) | None | **Open** (horizontal, SEO) |
-| **CodeTab** (trade-license exam trainer) | Alice.tech, Miyagi Labs (general exam prep) | **Open** |
-| **RegistryPilot** (CPSC eFiling) | **Complir** (YC Spring 2026, "Vanta for physical products"), **MarkIt** (YC F25, packaging/regulatory review), Fuchsia (YC, hardware certification), Truli (speedrun, FDA labels) | **Contested.** Re-check Complir's US CPSC scope before building |
-| **PlanSet** (residential permit drawings) | Permitify, Verdant, GovWell (city side); AutoSitu (YC W26, plan/permit review for developers); PermitFlow | **Open** on drafting for small contractors |
-| **FieldSignal** (warranty quality analytics) | Kebra, Bernard (servicer-side claim filing); HERA, Hundred (in-plant QA) | **Open** |
 | StudyReady (arc-flash model capture) | None in dataset (AmpSketch outside) | **Open** (niche) |
 | Linegraph (P&ID → plant graph) | **Operon** (YC S26), Arrakis, Control Seat, Neuron adjacent | **Taken** |
 | PortalRunner (supplier-portal AR) | Alder (YC F25), Rex (YC S26), FullSeam; Monto outside | **Taken** |
@@ -141,7 +152,7 @@ Verdicts: **open** = no recent YC/tier-1 overlap found · **contested** = 1-3 ov
 | DisputeShield | Zomma (disputes), Socratix, MouseCat | **Contested** |
 | Air Headroom | GridCARE, ThinkLabs, Squid are grid, not air | **Open** |
 
-**Net:** of 13 leaderboard ideas, 8 are taken, 3 contested and 2 open. Of the founder-fit shortlist (Switchboard, GP Liftoff, CodeTab, RegistryPilot, PlanSet, FieldSignal, SPA, contents), **4 are still open: Switchboard, CodeTab, PlanSet and FieldSignal.**
+**Net:** of 13 leaderboard ideas, 8 are taken, 3 contested and 2 open. Of the founder-fit shortlist (RegistryPilot, PlanSet, Switchboard, FieldSignal, ParityProof, SPA, CodeTab, contents), **only CodeTab is still open**, and it was not re-checked. The three other lanes this file first called open (Switchboard, PlanSet, FieldSignal) turned out contested once the round-6 dossiers and targeted searches were added.
 
 ---
 
@@ -149,11 +160,11 @@ Verdicts: **open** = no recent YC/tier-1 overlap found · **contested** = 1-3 ov
 
 - **Don't build a vertical phone agent, an RCM/prior-auth tool, a quote-to-ERP agent, a takeoff tool or broker-placement software.** Each has 10-35 entrants, several with $25M+ Series As. A bootstrapped solo engineer loses there on distribution, not on tech.
 - **Don't compete with AI-native services firms on their own terms.** YC is funding 110 "be the firm" companies with domain-insider founders. Without domain depth or capital, a product founder's comparative edge is the reverse: tooling those firms or their switching costs need.
-- **Do play where the hard part is engineering on messy proprietary data:** legacy database extraction (Switchboard), statistical defect detection on warranty narratives (FieldSignal), parametric CAD plus a rules engine (PlanSet), knowledge tracing (CodeTab). These are the lanes YC/a16z have not touched, and they reward his Netflix-grade systems and ML skills.
+- **Do play where the hard part is engineering on messy proprietary data:** legacy database extraction (Switchboard), statistical defect detection on warranty narratives (FieldSignal), parametric CAD plus a rules engine (PlanSet), knowledge tracing (CodeTab). No YC company sits in these exact lanes, though §5 shows non-YC entrants in each, and they reward his Netflix-grade systems and ML skills.
 - **Sell to vertical-software challengers, not only to the industry.** The 365 YC companies here are a customer base: every Smartbase, Lark or Tepali has to migrate customers off legacy systems. Switchboard's buyer list writes itself from this CSV.
 - **Assume a fast follower within 6-12 months on anything with a demo-able BPO wedge.** Batch-to-batch clones are visible (dental RCM ×3, freight load planning ×4, distributor order entry ×12). Moats need compounding data (conversion library, defect taxonomy, jurisdiction approval data, item bank).
 - **Raise after traction, in the a16z pattern.** a16z repeatedly takes the A after another fund's seed (Probook, Prosper) and speedrun now expects about $100K ARR at entry. Bootstrapping to $100-300K ARR fits how these funds actually underwrite.
-- **Re-check RegistryPilot and contents reconstruction first.** Both picked up YC entrants (Complir, InventoryQuant); confirm whether they cover US CPSC eFiling and mass-tort claimants.
+- **RegistryPilot re-check done (§5):** Complir now publishes CPSC eFiling guides, so build only the lab-agnostic report-verification angle. Contents reconstruction still needs a check against InventoryQuant.
 - **The slow-buyer whitespace (water, telecom make-ready, oil and gas, ag co-ops) is real but wrong for bootstrapping.** Treat it as a later-stage expansion or a cofounder-led bet, not a first product.
 
 ---
@@ -164,4 +175,4 @@ Verdicts: **open** = no recent YC/tier-1 overlap found · **contested** = 1-3 ov
 - **VC data is partial and snippet-level.** 202 deals were scanned with a 10-search budget per sweep. 135 fall into the traditional-industry clusters. Publisher sites (TechCrunch, a16z.com, speedrun.a16z.com, BusinessWire, Construction Dive, f4.fund) were blocked to direct fetch, so most amounts, leads and dates come from search snippets. Rillet, Salient and Tennr rest on model knowledge. Westmag, Endra, Keythorn and the unnamed a16z/Khosla RCM company are unverified. Speedrun coverage is incomplete (SR005 had 58 companies, SR006 60, SR007 about 29-50; we have roughly 25).
 - **"Zero entrants" means zero in this dataset.** It does not rule out incumbents (Enverus, AMCS, Sphera, Bushel, Yardi) or seed companies outside YC and tier-1 VCs. Each whitespace row needs a 10-search check before building.
 - **Overlap verdicts use one-liners and descriptions.** An overlapping company may target a different buyer or geography (e.g. Complir may focus on cross-border/EU rules). Treat "contested" as "read their site first," not "dead."
-- Inputs: [data/yc-w25-f26.csv](data/yc-w25-f26.csv), [MEMO.md](MEMO.md), [04-founder-fit-rescore.md](04-founder-fit-rescore.md). FOUNDER-FIT.md and r6 dossiers did not exist when this was written; re-run section 5 when they land.
+- Inputs: [data/yc-w25-f26.csv](data/yc-w25-f26.csv), [MEMO.md](MEMO.md), [04-founder-fit-rescore.md](04-founder-fit-rescore.md). Round-6 rows in §5 were re-checked against the [round-6 dossiers](dossiers/) and [FOUNDER-FIT.md](FOUNDER-FIT.md) on 2026-10-07 (data/vertical-ai-landscape.json was not available).

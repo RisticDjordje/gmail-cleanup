@@ -1,170 +1,135 @@
 # Founder Fit: Where You Should Start
 
-*2026-10-07. Written for your profile: full-stack and applied-AI engineer, no industry background, little capital, bootstrap then raise. Built from round 6 (8 deep dives) and [04-founder-fit-rescore.md](04-founder-fit-rescore.md) (51 older ideas re-scored); history in [MEMO.md](MEMO.md). Scale: 54 = old best; 70+ = genuinely compelling.*
+*2026-10-07. Written for your profile: full-stack and applied-AI engineer, no industry background, little capital, bootstrap then raise. Built from round 6 (8 deep dives) and [04-founder-fit-rescore.md](04-founder-fit-rescore.md) (51 older ideas re-scored), then cross-checked against the YC W25-F26 directory and tier-1 VC deals ([LANDSCAPE.md](LANDSCAPE.md)). History in [MEMO.md](MEMO.md). Scale: 54 = old best; 70+ = genuinely compelling.*
 
 ---
 
 ## Bottom line for you
 
-- **Start: RegistryPilot (61).** It verifies the CPSC certificates small Shopify and Amazon brands must supply at import, and finds the gaps. No credentials needed, card revenue in month 1, and a funded category to raise into.
-- **Alternate 1: PlanSet (55).** A permit autopilot for deck and shed builders (geospatial, vision, rules engine). The ceiling is low unless it becomes a jurisdiction-rules API.
-- **Alternate 2: Switchboard (55).** Legacy-database extraction for vertical-SaaS vendors. It has the deepest technical edge in the pool but stays semi-services for a long time.
-- **Why these fit you:** the engineering is the product (document AI, abstention, verification, geospatial), buyers are findable without a network, and paid work is possible in 30-90 days for under $3k.
-- **Honest ceiling:** nothing reaches 70. RegistryPilot's venture case needs it to grow into a multi-regulation SMB compliance hub.
-- **This week:** check Netflix's outside-work and IP policy; CPSC's mail phase starts **2026-10-22**, so publish SEO pages now.
+- **Every top pick is contested.** The cross-check found direct competitors for all five round-6 leaders and cut each by 4-6 points. None is "open" and none is "taken". What survives in each case is the same narrow slot: a neutral verification layer sold alongside the filer, loader or platform, not in place of it.
+- **Start: RegistryPilot (55, contested), narrowed.** Sell lab-agnostic verification of the factory's test reports to small Shopify and Amazon brands: does this PDF really cover this SKU and this rule, and from a CPSC-accepted lab? Do not lead with filing. Shopify's fields, the labs, Comply PRO+ and probably Complir (YC, $11M) already handle filing. It stays #1 because it still has the best bootstrap profile (no credentials, card revenue in month 1) and nobody sells self-serve multi-lab verification. You have perhaps 6-12 months before Complir or Shopify closes the gap.
+- **Alternate 1: PlanSet (50, contested).** Sell guaranteed first-pass approval for decks and pergolas, resubmits included. Do not sell drawings: Site Plans AI and BluePrints AI already sell AI site plans and permit drawings.
+- **Alternate 2: Switchboard (50, contested), as an arms dealer.** Source-side legacy readers plus a reconciliation report, licensed to converters (Bitwerx, RecordLinker, The Back Office) and to vendors' in-house teams. ParityProof folds in as its Dynamics GP adapter.
+- **The only open lane on the shortlist is CodeTab (49, not re-checked).** Its ceiling is small. Run it as a side experiment, not as the company.
+- **Honest ceiling:** nothing reaches 70, and the best score is now 55. Treat all three as bootstrap vehicles that need a paid kill test before you raise.
+- **This week:** check Netflix's outside-work and IP policy. Publish the SEO pages before CPSC's mail phase starts on **2026-10-22**. Read Complir's US pages and try Comply PRO+ as a customer would.
 
 ---
 
 ## Ranked shortlist
 
-Fit is out of 100. B→R (bootstrap-to-raise), Prod (product, not services) and NoDom (no domain experience needed) are out of 10. "(old)" marks ideas from earlier rounds, as re-scored in [04](04-founder-fit-rescore.md).
+Fit is out of 100. B→R (bootstrap-to-raise), Prod (product, not services) and NoDom (no domain experience needed) are out of 10. "(old)" marks ideas from earlier rounds, as re-scored in [04](04-founder-fit-rescore.md). Crowding: **open** / **contested** / **taken**. Rows marked * were not re-checked in this pass and take their crowding from [LANDSCAPE.md](LANDSCAPE.md) §5.
 
-| # | Idea | Segment | Fit | B→R | Prod | NoDom | Verdict | Tech moat | Biggest risk | Dossier |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | **RegistryPilot** | SMB importers on Shopify and Amazon | **61** | 7 | 7 | 9 | **Start** | Verified-report graph across labs, plus SKU→certificate sync | Thin whitespace; enforcement unverified | [r6-4](dossiers/r6-4-registrypilot-cpsc-certificate-autopilot.md) |
-| 2 | **PlanSet** | Deck, pergola and shed builders | 55 | 7 | 6 | 7 | Alternate | Per-jurisdiction ledger of reviewer corrections | $5-20M ceiling; free substitutes | [r6-5](dossiers/r6-5-planset-a-permit-autopilot-for-outdoor-l.md) |
-| 3 | **Switchboard** | Vertical-SaaS vendors | 55 | 6 | 4 | 8 | Alternate | Metadata-free legacy readers; verification to the cent | Semi-services; Bitwerx | [r6-1](dossiers/r6-1-switchboard-a-source-side-extraction-and.md) |
-| 4 | SPA claims engine (old) | Electrical and HVAC distributors | 55 | 8 | 6 | 6 | Superseded by #7 | Claim outcome labels | Fell to 50 under round-6 review | [r3](dossiers/r3-b2b-claims-engine.md) |
-| 5 | FieldSignal | Mid-market equipment makers | 53 | 4 | 6 | 6 | Watch (needs a claims-platform partner) | Failure rates pooled across makers sharing parts | 2-6 month sales cycles | [r6-6](dossiers/r6-6-fieldsignal-warranty-claims-analysis-and.md) |
-| 6 | ParityProof | Dynamics GP exits | 52 | 6 | 5 | 6 | Fold into Switchboard | Penny-exact inventory replay | eOne already serves it; market ends 2031 | [r6-2](dossiers/r6-2-parityproof-gp-first-a-verified-erp-exit.md) |
-| 7 | SPA Claims Autopilot | Same distributors (rejected SPA claims) | 50 | 6 | 5 | 5 | Pass unless an insider joins | Model of which refiled claims get paid | Canals, Enable, SpeedyLabs | [r6-7](dossiers/r6-7-spa-claims-autopilot-a-recovery-first-cl.md) |
-| 8 | CodeTab | Open-book trade-license exams, in Spanish | 49 | 6 | 9 | 8 | Pass (side experiment at most) | Lookup-speed readiness model | Tiny overlap; $5-20M ceiling | [r6-3](dossiers/r6-3-codetab-a-trainer-for-finding-answers-fa.md) |
-| 9 | Air Headroom (old) | Teams siting onsite power | 47 | 5 | 7 | 6 | Watch | Parcel-level emissions-headroom dataset | Small, cyclical market | [r2-05](dossiers/r2-05-behind-the-meter-air-desk-ai-enabled-air-perm.md) |
-| 10 | Contents reconstruction (old) | Wildfire mass-tort firms | 46 | 6 | 7 | 7 | Superseded by #13 | Matching items across records and photos | Lumpy, docket-driven demand | [r1-17](dossiers/r1-17-total-loss-contents-and-depreciation-recovery.md) |
-| 11 | DisputeShield (old) | Credit-dispute furnishers | 45 | 5 | 8 | 6 | Watch | AI-vs-AI dispute investigator | Bank vendor-risk reviews | [r4-1](dossiers/r4-1-disputeshield-the-defensible-investigation-la.md) |
-| 12 | SKU risk graph / MGA (old) | Hard-class consumer products | 44 | 3 | 6 | 3 | Wrong as an MGA | Per-SKU risk graph | Needs an underwriter and a fronting carrier | [r5-3](dossiers/r5-3-ai-mga.md) |
-| 13 | ProvenanceLedger | Wildfire firms and public adjusters | 38 | 3 | 5 | 7 | Pass (keep the matching engine) | Calibrated ownership ledger | $1-5M/yr wedge; window closing | [r6-8](dossiers/r6-8-provenanceledger-a-permissioned-what-you.md) |
+| # | Idea | Segment | Fit | B→R | Prod | NoDom | Crowding (overlapping startups) | Verdict | Tech moat | Biggest risk | Dossier |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | **RegistryPilot** | SMB importers on Shopify and Amazon | **55** (was 61) | 7 | 7 | 9 | **Contested:** Complir (YC), Comply PRO+ direct; labs, Shopify fields, MarkIt (YC), Certivo partial | **Start** (verification only) | Cross-customer graph of verified reports | Complir or Shopify ships verification | [r6-4](dossiers/r6-4-registrypilot-cpsc-certificate-autopilot.md) |
+| 2 | **PlanSet** | Deck, pergola and shed builders | 50 (was 55) | 7 | 6 | 7 | **Contested:** Site Plans AI, BluePrints AI direct; Simpson/MiTek, ArcSite, Pulley, PermitFlow partial; Archistar, Blitz, Permitify (YC) city side | Alternate | Per-jurisdiction ledger of reviewer corrections | City AI pre-check shrinks resubmit pain | [r6-5](dossiers/r6-5-planset-a-permit-autopilot-for-outdoor-l.md) |
+| 3 | **Switchboard** | Vertical-SaaS vendors and converters | 50 (was 55) | 6 | 4 | 8 | **Contested:** Bitwerx, RecordLinker, The Back Office, Universal Migrator direct; superglue (YC), ClonePartner partial | Alternate (arms dealer) | Metadata-free readers; verification to the cent | Few buyers; semi-services | [r6-1](dossiers/r6-1-switchboard-a-source-side-extraction-and.md) |
+| 4 | SPA Claims Autopilot* | Electrical and HVAC distributors | 50 | 6 | 5 | 5 | **Contested:** Canals, Whitespace (YC), Lark (YC), Enable, SpeedyLabs | Pass unless an insider joins | Which refiled claims get paid | Insider-only data | [r6-7](dossiers/r6-7-spa-claims-autopilot-a-recovery-first-cl.md) |
+| 5 | CodeTab* | Open-book trade-license exams, in Spanish | 49 | 6 | 9 | 8 | **Open:** only general exam prep (Alice.tech, Miyagi Labs) | Side experiment | Lookup-speed readiness model | $5-20M ceiling | [r6-3](dossiers/r6-3-codetab-a-trainer-for-finding-answers-fa.md) |
+| 6 | FieldSignal | Mid-market equipment makers | 48 (was 53) | 4 | 6 | 6 | **Contested:** ServiceCPQ, Syncron direct; Axion, Viaduct, Tavant upmarket | Watch (white-label via a claims platform) | Empirical-Bayes failure rates | Leakage wedge already sold | [r6-6](dossiers/r6-6-fieldsignal-warranty-claims-analysis-and.md) |
+| 7 | ParityProof | Dynamics GP exits | 47 (was 52) | 6 | 5 | 6 | **Contested:** superglue (YC), eOne direct; Campfire, DualEntry, ECOSIRE partial | Fold into Switchboard | Penny-exact subledger replay | Market ends 2031 | [r6-2](dossiers/r6-2-parityproof-gp-first-a-verified-erp-exit.md) |
+| 8 | Air Headroom (old)* | Teams siting onsite power | 47 | 5 | 7 | 6 | **Open** (grid tools only) | Watch | Parcel-level emissions headroom | Small, cyclical | [r2-05](dossiers/r2-05-behind-the-meter-air-desk-ai-enabled-air-perm.md) |
+| 9 | Contents reconstruction (old)* | Wildfire mass-tort firms | 46 | 6 | 7 | 7 | **Contested:** InventoryQuant (YC W26) | Pass | Item matching across records | Lumpy demand | [r1-17](dossiers/r1-17-total-loss-contents-and-depreciation-recovery.md) |
+| 10 | DisputeShield (old)* | Credit-dispute furnishers | 45 | 5 | 8 | 6 | **Contested:** Zomma, Socratix, MouseCat | Watch | AI-vs-AI dispute investigator | Bank vendor-risk reviews | [r4-1](dossiers/r4-1-disputeshield-the-defensible-investigation-la.md) |
+| 11 | SKU risk graph / MGA (old)* | Hard-class consumer products | 44 | 3 | 6 | 3 | **Contested** on model (AI carriers), open on niche | Wrong as an MGA | Per-SKU risk graph | Needs underwriter and front | [r5-3](dossiers/r5-3-ai-mga.md) |
+| 12 | ProvenanceLedger* | Wildfire firms and public adjusters | 38 | 3 | 5 | 7 | **Contested:** InventoryQuant (YC W26) | Pass (keep matching engine) | Calibrated ownership ledger | Window closing | [r6-8](dossiers/r6-8-provenanceledger-a-permissioned-what-you.md) |
+
+The old SPA claims engine (55 in [04](04-founder-fit-rescore.md)) merges into row 4.
+
+---
+
+## Checked against YC W25-F26 and tier-1 VC deals
+
+Method: each round-6 pick was grepped against the descriptions of all 1,360 YC W25-F26 companies and against the 500-startup scan in [LANDSCAPE.md](LANDSCAPE.md), and got 5 web searches. Full overlap lists are in LANDSCAPE.md §5.
+
+| Idea | Score | Verdict | What changed |
+|---|---|---|---|
+| RegistryPilot | 61→55 | Contested | Complir now publishes CPSC eFiling guides (in German and Spanish), so the dossier's top threat has partly arrived. Comply PRO+ already sells filing and certificates to Amazon sellers. No YC company names CPSC or lab reports. A search for AI report verification found only consultants. |
+| PlanSet | 55→50 | Contested (LANDSCAPE.md had it open) | Two direct contractor-side entrants: Site Plans AI (from $69, aimed at deck and fence contractors) and BluePrints AI ($500K seed). City-side AI pre-check is spreading (Archistar in 30+ cities, Blitz). No YC company works on the contractor side. |
+| Switchboard | 55→50 | Contested (was open) | Two of the four wedge verticals are occupied: insurance agencies (RecordLinker) and auto repair (The Back Office for Tekmetric). The recurring-access layer has 4+ entrants (Supergood, Asteroid, Zatanna, Minicor). |
+| FieldSignal | 53→48 | Contested (was open) | ServiceCPQ markets AI leakage and supplier recovery to the same mid-market OEMs. Syncron sells recovery down-market. Axion raised a $37M Series B. The YC lane is empty. |
+| ParityProof | 52→47 | Contested | superglue (YC W25) now implements NetSuite, Intacct, Acumatica and Business Central and migrates the legacy data. eOne sells GP-to-Intacct and GP-to-NetSuite moves and owns the archive tail. |
+
+**Pattern:** no funded or YC company sells *independent* verification: covered-or-not for lab reports, signed parity reports for migrations, statistical overlays on claims systems. That is the founder-fit sweet spot, and also the reason ceilings are modest: verification is often a feature that the loader can bundle.
 
 ---
 
 ## Top 3 in detail
 
-### 1. RegistryPilot (61): CPSC certificate verification autopilot
+### 1. RegistryPilot (55, contested): CPSC test-report verification
 
-**Thesis.** Since 2026-07-08 every CPSC-regulated import must carry certificate data at entry (about 16 fields per SKU, no size exemption); mail joins 2026-10-22, FTZ entries 2027-01-08. Small Alibaba-sourcing brands juggle 5-20 labs with no compliance staff, labs serve only their own reports, and funded AI-natives sell to enterprises. The open job: messy SKU plus factory PDF in, correct certificate out, kept in sync with the catalog. **Pivot:** lead with verification and gap-finding; filing is commoditizing.
+**Thesis.** Since 2026-07-08 every CPSC-regulated import must carry certificate data at entry (about 16 fields per SKU, no size exemption). Mail joins on 2026-10-22 and FTZ entries on 2027-01-08. Small brands buying from Alibaba and 1688 factories deal with 5-20 labs and have no compliance staff. **Pivot (sharper after the cross-check):** upload whatever PDF the factory sent and get a verdict. Does it cover this SKU and this rule? Is the lab CPSC-accepted for that scope? Was the report issued to another client? Sell it on Amazon CPC fixes and listing reinstatement, not on filing. The moat is a neutral graph of verified reports, factory to report, that labs (who parse only their own reports) and enterprise-focused Complir have no reason to build.
 
-**Why you.** The work is yours to build: catalog scraping, multimodal applicability calls that abstain when unsure, document AI over Chinese and English lab templates, a state graph, and a consumer-grade Shopify app. The importer certifies and every rule is public, so you need no credentials.
+**Why you.** Document AI over Chinese and English lab templates, multimodal applicability calls that abstain when unsure, catalog scraping, and a consumer-grade Shopify app. The importer certifies and every rule is public, so you need no credentials.
 
-**Competitors.** CPSC Product Registry and Shopify fields (free); Intertek, Bureau Veritas, QIMA, Eurofins eFiling; Complir ($11M, General Catalyst), Certivo, Certo; Comply PRO+, Apify gap checker; Easyship, Global-e.
+**Competitors.** *Direct:* Complir (YC Spring 2026, $11M led by General Catalyst; enterprise and EU retail, now writing CPSC eFiling content) and Comply PRO+ (eFile SaaS that auto-generates certificates for Amazon sellers). *Partial:* labs (Intertek, Bureau Veritas, QIMA, Eurofins, SGS), but only for their own reports; Shopify CPSC fields, Global-e, Zonos, Easyship (platform risk); MarkIt (YC F25, labels and formulations); Certivo ($4M, manufacturers); an Apify gap-checker clone. *Adjacent:* Fuchsia (YC, hardware), Trava, Tarifflo and Alchemize (YC customs), Donkey and Saudara (YC sourcing), Certo, Truli.
 
-**What's good.** A recurring mandate (every new SKU, factory and phase). A free catalog scan as lead magnet, $199-499 packs for month-1 cash. Cross-lab verification is a real AI problem labs won't solve. A funded category; a falling human-review rate is a clean seed story. Switching costs once certificate IDs flow into Shopify and Amazon.
+**What's good.** A recurring mandate (every new SKU, factory and phase). A free scan as lead magnet, $199-499 packs for month-1 cash. Cross-lab verification is a real AI problem labs won't solve. Brokers can resell it under their own brand.
 
-**What's bad.** Thin whitespace. No CPSC hold data found, so it may be a nice-to-have. The July panic window has passed. Early packs are partly concierge. CPSC-only caps at $20-50M ARR with SMB churn. Liability for a false "covered" call. Shopify or forwarders could build it.
+**What's bad.** A YC company with $11M is visibly moving toward US CPSC. Filing is commoditized. There is no CPSC hold data, and the July panic window has passed. Early packs are partly concierge. CPSC-only caps out at $20-50M ARR. Liability for a wrong "covered" call.
 
-**Weekend prototype.** Next.js plus Postgres/pgvector. Paste a store URL and get per-SKU applicable rules with citations and a children's-product call with abstention (retrieval over 16 CFR plus a deterministic rules layer). Upload a factory PDF; a vision model extracts it into a coverage diff (missing, expired, wrong client or SKU, lab out of scope). GCC/CPC draft and Registry CSV behind a $299 Stripe checkout. Hand-label 100 SKUs and 60 reports.
-
-**Bootstrap to raise (months 0-12).**
-
-| Months | Plan |
-|---|---|
-| 0 | Email 200 kids' and toy brands with a $299 pre-sale. Ask 5 brokers for hold counts. Build an eval set (about $500). |
-| 1 | Deliver 10-25 concierge packs ($3-7k). Publish SEO pages for the mail and FTZ phases. |
-| 2-3 | Launch a self-serve scan and a $49-149/month sync tier. List on the Shopify App Store, sign 2 forwarder partners, reach about $5k MRR. |
-| 4-6 | Amazon SP-API sync and lab referral revenue share. Human review under 15%, $15-25k MRR. Quit Netflix at $15k+ MRR growing 15%+ a month. |
-| 7-9 | FTZ campaign, plus a GPSR or Prop 65 module. |
-| 10-12 | 400-600 brands, $0.5-0.7M ARR, net revenue retention of 100%+, measurable report reuse across customers. Raise a $3-5M seed as "Vanta for SMB product compliance." |
-
-**Cofounder.** None to start. Contract a former lab regulatory specialist at $1-2k/month. After traction, add a growth cofounder from the Amazon and Shopify seller-agency world.
-
-**First 30 days.** Settle the Netflix question. Measure children's recall and false "covered" rate on the eval set. Scrape 500 kids' and toy stores; email 200 a free gap report. Sell $299 packs with 72-hour delivery. Interview 5 forwarders. Track conversion and review minutes per SKU.
-
-**Kill if:** under 10 paid packs in 30 days; no broker can name real holds and Amazon-removal demand is weak; children's recall under 98% or false "covered" over 5% after two iterations; human review over 20% at month 4; a funded player ships free multi-lab SMB verification; MRR under $10k at month 6.
-
-### 2. PlanSet (55): permit autopilot for outdoor-living contractors
-
-**Thesis.** Deck drawings are free from Simpson and MiTek. Builders pay for approval on the first try in a specific city. That takes four things: a site plan from parcel data, sheets matched to the city's checklist, a pre-filled application, and a loop that turns reviewer comments into rules. **Pivot:** sell the approval loop, not drawings. The path to scale is a jurisdiction-rules API.
-
-**Why you.** The work is geospatial (PostGIS, county GIS, aerial imagery), vision and LLM parsing on a deterministic structural core, with TurboTax-style UX. Prescriptive DCA 6 decks need no stamp in many places. Compute is under $1.50 a permit against a $99-179 price.
-
-**Competitors.** Simpson and MiTek (free); Site Plans AI, SitePlanCreator; ArcSite, RedX, Sketchronix, BluePrints AI; Spacial ($10M), PermitFlow (~$91M), Pulley, Symbium; Fiverr drafters ($50-200).
-
-**What's good.** One metric (first-pass approval) doubles as the fundraising slide. Revenue within 90 days. Free Simpson/MiTek output becomes intake. The correction ledger is data no drafter collects.
-
-**What's bad.** A $5-20M ARR ceiling. Cheap substitutes for both site plan and drawings. Trade permits belong to PermitFlow, Pulley and Symbium. Templating drifts toward drafting services. County GIS can be feet off. No portal write APIs. E&O exposure. Seasonal buyers in the field all day.
-
-**Weekend prototype.** W1: 30 city checklists; PostGIS site-plan spike from county parcels, building footprints and NAIP imagery (pass: median error under 1 ft on 20 platted addresses). W2: DCA 6 logic with property tests, SVG/PDF/DXF sheets, a "$99, resubmits included" city page.
+**Weekend prototype.** Next.js plus Postgres/pgvector. Upload a factory PDF. A vision model extracts it into a coverage diff: missing, expired, wrong client or SKU, lab out of scope against CPSC's accepted-lab list. Paste a store URL to get per-SKU applicable rules with citations and a children's-product call with abstention. $299 Stripe checkout. Hand-label 100 SKUs and 60 reports.
 
 **Bootstrap to raise (months 0-12).**
 
 | Months | Plan |
 |---|---|
-| 0 | Run the kill test. |
-| 1 | Build the DCA 6 engine and deliver 5 concierge packages ($500-1k). |
-| 2 | Template 3 cities, build the correction parser, send outbound to 200 builders. $3-5k MRR. |
-| 3 | $199-399/month subscription with QA under 15 minutes. $5-8k MRR. |
-| 4-6 | 8-10 jurisdictions, $12-25k MRR. Quit at about $15k MRR if repeat builders bring in more than half. |
-| 7-9 | 20-30 jurisdictions, plus an API prototype with one field-service platform. |
-| 10-12 | 2,000+ permits, first-pass approval above 85%, QA under 5 minutes, and a signed API partner or trade-permit pilot. Without that last item it is a good business but not fundable. |
+| 0 | Email 200+ kids' and toy brands with a $299 report-verification pack. Ask 5 brokers for hold and Amazon-removal counts. Build the eval set (about $500). |
+| 1 | Deliver 10-25 packs ($3-7k). Publish SEO pages for the mail and FTZ phases. |
+| 2-3 | Self-serve verifier plus a $49-149/month sync tier on the Shopify App Store. Sign 2 white-label forwarder or broker partners. About $5k MRR. |
+| 4-6 | Amazon SP-API Compliance Documents sync. Human review under 15%. $15-25k MRR. Quit Netflix at $15k+ MRR growing 15%+ a month. |
+| 7-12 | FTZ campaign, then a GPSR or Prop 65 module. 400-600 brands, $0.5-0.7M ARR, measurable report reuse across customers. Raise a $3-5M seed. |
 
-**Cofounder.** None to start. Later, add a GTM cofounder from lumber yards or permit expediting. Use a contract PE for stamps.
+**Cofounder.** None yet; contract a former lab regulatory specialist ($1-2k/month).
 
-**First 30 days.** List 100 builders from Google Maps; call 20 about rejection rates and a $150 prepay. Show Simpson and Site Plans AI output to 2-3 plan reviewers. Run the GIS spike. Deliver 5 paid packages.
+**Kill if:** under 10 paid packs from 200+ emails in 30 days; children's recall under 98% or false "covered" over 5% after two iterations; human review over 20% at month 4; Complir, Shopify or a lab ships free self-serve verification across labs; MRR under $10k at month 6.
 
-**Kill if:** free printouts already pass first time; under 3 of 20 builders file 5+ permits a month and would prepay; GIS misses the pass mark or metros require surveyed plans; first-pass approval under 70% on the first 10; QA over 20 minutes per permit at month 3.
+### 2. PlanSet (50, contested): first-pass permit approval for outdoor structures
 
-### 3. Switchboard (55): legacy-database extraction for vertical-SaaS vendors
+**Thesis.** Drawings are commodities: free from Simpson and MiTek, about $69 from Site Plans AI, AI-generated by BluePrints AI, $50-200 on Fiverr. Builders pay for approval on the first try in a specific city. **Pivot:** sell an outcome-priced guarantee (first-pass approval, resubmits included), backed by a per-jurisdiction rules graph and a ledger of reviewer corrections, in 2-3 strict metros. Use Simpson/MiTek exports and parcel data as inputs. Position it as "passes the city's AI pre-check first time", then license a jurisdiction-rules and approval-prediction API to contractor apps.
 
-**Thesis.** Migration speed now wins deals (Sage bought Doyen AI; DualEntry raised $90M on 24-hour migration). Target-side mapping is crowded; the source side is open: reading Btrieve without schema files, DBF, Jet and c-tree, recovering field meaning, proving correctness to the cent. **Pivot:** pick a vertical with no Bitwerx equivalent (insurance agencies, auto repair, property management) where vendors confirm lost deals.
+**Why you.** Geospatial work (PostGIS, county GIS, aerial imagery), vision intake, and a deterministic DCA 6 core with TurboTax-style UX. Compute is under $1.50 a permit against a $99-179 price.
 
-**Why you.** The buyer is a software company. The work is reverse engineering, ETL, LLM structuring and testing. No credentials are needed, and buyers already pay $500-2,500 per conversion.
+**Competitors.** *Direct:* Site Plans AI (address-to-site-plan for deck, patio, shed and fence contractors), BluePrints AI ($500K; sketch, photo or CAD to permit documents). *Partial:* Simpson and MiTek planners; ArcSite, RedX, Sketchronix; SitePlanCreator, MySitePlan; Spacial ($10M, unverified); Pulley; PermitFlow (~$91M, tracking). *City side:* Archistar, Blitz, Permitify (YC W25), Verdant (YC S26), AutoSitu (YC W26), Symbium, GovWell.
 
-**Competitors.** Bitwerx DataCo; Vern, Doyen/Sage, DualEntry, Flatfile/Obvious, Lume, Zengines, superglue, Woflow; Supergood, Asteroid; in-house vendor teams.
+**What's good.** First-pass approval doubles as the fundraising slide. Revenue within 90 days. The correction ledger is data no drafter collects.
 
-**What's good.** First-quarter revenue. Proven exit pattern (Sage-Doyen). The verification report sells to the CRO's win-rate budget. The eval corpus compounds across vendors.
+**What's bad.** A $5-20M ARR ceiling. City-side AI pre-check cuts the cost of a resubmit, the very pain PlanSet sells. Drift toward drafting services. E&O exposure. Seasonal, field-bound buyers.
 
-**What's bad.** Vet is taken. Under 20 buyers per vertical. Long-tail sources keep it semi-services. Lumpy volume. EULA and liability exposure. The moat is an 18-36 month head start.
+**Plan.** Weeks 1-2: 30 city checklists, a PostGIS site-plan spike (median error under 1 ft on 20 platted addresses), DCA 6 logic with property tests. Month 1: 5 concierge packages ($500-1k). Months 2-3: 3 cities, a correction parser, $199-399/month subscription, $5-8k MRR. Months 4-6: 8-10 jurisdictions, $12-25k MRR. Months 10-12: first-pass approval above 85% plus a signed API partner, or it is not fundable.
 
-**Weekend prototype.** DBF, Jet and Btrieve readers turning 3 databases into profiled Parquet; a Claude field-semantics proposer; a deterministic verification report (AR aging to the cent); differential reverse engineering (pywinauto plus byte diffs).
+**Kill if:** free printouts already pass first time; under 3 of 20 builders file 5+ permits a month and would prepay; first-pass approval under 70% on the first 10; QA over 20 minutes per permit at month 3.
 
-**Bootstrap to raise (months 0-12).**
+### 3. Switchboard (50, contested): legacy readers and verification for converters
 
-| Months | Plan |
-|---|---|
-| 0 | Pick the vertical after 10 vendor calls. |
-| 1-2 | One report reconciled to the cent, Upwork bids, 3-5 paid conversions ($3-6k). |
-| 3 | 2 vendor agreements, about $10k cumulative. |
-| 4-6 | Self-serve portal, 40+ conversions, first platform fee. Quit only with $5k+ a month recurring plus a platform-fee LOI. |
-| 7-9 | A second vertical. |
-| 10-12 | $40-80k MRR across 6+ vendors, 85%+ of conversions with no human touch, gross margin above 70%. Raise a $2-4M seed as "the read layer for legacy SMB systems." ParityProof becomes an adapter. |
+**Thesis.** Migration speed wins deals (Sage bought Doyen AI; DualEntry raised $90M). Target-side mapping is crowded, and every vertical checked so far has a converter. **Pivot:** be the arms dealer. Offer an SDK or API that rebuilds tables from Btrieve, DBF, Jet and c-tree files with no vendor metadata, recovers field meaning, and issues a deterministic reconciliation report (AR to the cent). Sell it to converters who do this by hand and to vendors' in-house teams (Tekmetric, HawkSoft, Digitail, ezyVet). The fallback is a standalone migration-audit product. ParityProof's GP parity engine becomes one adapter.
 
-**Cofounder.** A second technical cofounder with reverse-engineering or data-infrastructure depth, or a former vertical-SaaS implementation lead.
+**Why you.** Software buyers; reverse engineering, ETL and testing; no credentials.
 
-**First 30 days.** Map Bitwerx-like players in 4 verticals. Ten vendor calls: "name the deals you lost." Build the readers. One report reconciled to the cent. Win 2 conversions.
+**Competitors.** *Direct:* Bitwerx DataCo (vet), RecordLinker (insurance agency systems), The Back Office (Tekmetric, $750 per migration), Universal Migrator (legal). *Partial:* ClonePartner, superglue (YC W25, ERP), Vern, Doyen/Sage, Flatfile, Zengines, Woflow. *Adjacent:* Zatanna (YC W26), Minicor (YC S26), Asteroid (YC W25), Supergood, Hypercubic, Lab0, Lume, OneSchema, DualEntry.
 
-**Kill if:** under 3 of 10 vendors name lost deals; every vertical already has a converter vendors like; AR not reconciled to the cent within 2 weeks; no paid conversion or LOI by week 8; over 3 human hours per conversion after 25; an EULA or encryption blocks the top source.
+**What's good.** First-quarter revenue. A proven exit pattern (Sage-Doyen). Converters are both prospects and acquirers.
+
+**What's bad.** Few buyers. Long-tail sources keep it semi-services. The recurring-access end state is crowded. EULA exposure. The moat is a head start of 18-36 months.
+
+**Plan.** Month 0: pitch the readers and verification to The Back Office, RecordLinker and Bitwerx; make 10 vendor calls in property management and US law/CPA, the two verticals not yet checked. Months 1-2: DBF, Jet and Btrieve readers, one report reconciled to the cent, 3-5 paid conversions. Months 4-6: self-serve portal and a first licensing deal. Months 10-12: $40-80k MRR, 85%+ of conversions with no human touch. Raise as "the read and verify layer for legacy SMB systems."
+
+**Kill if:** no converter will license or pilot it by week 8; under 3 of 10 vendors name lost deals; AR not reconciled to the cent within 2 weeks; over 3 human hours per conversion after 25.
 
 ---
 
-## Ideas that look good on paper but are wrong for you
+## Wrong for you, despite good scores elsewhere
 
-- **Restoration contractor roll-up (65 for acquirers):** you would be running a labor business, and AI is only a margin lever.
-- **Infrastructure recovery shop and StrikeLedger (60-65 for others):** depend on utility trust, collections labor and 60-180-day cash lags.
-- **Casualty severity TPA (57-62 for others, 18 for you):** a licensed services firm staffed by adjusters, and Reserv and Corgi set the bar.
-- **Product-liability MGA (59 for funded founders):** needs an underwriter and a fronting carrier, and must raise before it can start.
-- **Restoration claim-revenue engine (59 for insiders):** needs Xactimate fluency and senior QA, and the Verisk EULA is a problem.
-- **SPA recovery (the old profile-0 #1 at 54):** the confidential pricing data only reaches insiders, and contingency cash arrives in months 5-8.
-- **Fire ITM pull-through (60 for acquirers):** a services roll-up.
-- **Florida private-provider inspections:** the moat is the license and the county relationships.
-- **QA/RA operations as a service:** sold on the name of a regulatory-affairs veteran.
+Restoration roll-up (65 for acquirers), StrikeLedger and infrastructure recovery (60-65), casualty TPA (taken by Veltha, Corgi, Pace), product-liability MGA (59, needs an underwriter and a front), restoration claim revenue (59, Xactimate and Verisk EULA), SPA recovery (insider data, slow cash), Fire ITM, Florida inspections, QA/RA as a service. Each depends on labor, licenses, insider data or procurement trust rather than engineering.
 
----
-
-## Patterns
-
-**Where technical founders win in 2026:**
-1. New mandates hitting SMBs with no compliance staff (CPSC now; EPR, PFAS, GPSR next): self-serve, card-paying, scrapeable buyers.
-2. Proof layers, not generation: abstention, reconciliation to the cent, cross-source checks. "LLM plus rules table" is table stakes.
-3. Messy documents into a graph that compounds across customers; labeled data is the moat, not the model.
-4. Buyers who decide in days: software companies and owner-operators.
-5. One quality metric (recall, first-pass approval, human minutes per job) that becomes the seed slide.
-
-**Where they don't:** licensed acts; bank, carrier and utility procurement; contingency recovery with 6-24 month cash lags; roll-ups and staffed desks; lanes a funded AI-native owns (Canals, Reserv, PermitFlow); data held by a system of record that can bundle the feature (Verisk, Shopify, claims platforms).
+**Pattern:** technical founders win on new SMB mandates (CPSC now; EPR, PFAS, GPSR next), proof layers rather than generation, document graphs that compound across customers, buyers who decide in days, and one quality metric that becomes the seed slide. They lose on licensed acts, slow procurement, contingency cash lags, and data a system of record can bundle (Shopify, claims platforms, ERP loaders).
 
 ---
 
 ## Honest caveats
 
-- **Snippet-level research.** WebFetch was mostly blocked, so "verified" usually means a search snippet. Every TAM is an estimate.
-- **Role-played buyers.** No real customer was interviewed. Demand is the biggest unknown for all three picks, so each one starts with a paid kill test of 2-4 weeks.
-- **Deep dives cut scout scores 5-14 points** (RegistryPilot 66→61, Switchboard 64→55, GP Liftoff 63→52, CodeTab 63→49). Discount untested scout ideas likewise: AccessLift 60, StudyReady ~60, GiveawayIQ ~60, Linegraph ~58, PackWeight 57 ([04 §3](04-founder-fit-rescore.md)). They are backups; PackWeight (EPR) fits inside a RegistryPilot hub.
-- **Open unknowns:** CPSC enforcement intensity, Comply PRO+ maturity, plan-reviewer acceptance of GIS site plans, legacy-vendor EULAs, Netflix IP terms.
+- **Snippet-level research.** WebFetch was mostly blocked, and the cross-check had 5 searches per idea. Competitor scopes come from marketing copy. data/vertical-ai-landscape.json was missing.
+- **Role-played buyers.** No customer was interviewed; demand is the biggest unknown.
+- **Scores fell twice:** deep dives cut 5-14 points, and the cross-check cut another 4-6. Discount untested scout ideas (AccessLift, StudyReady, GiveawayIQ ~60, PackWeight 57; [04 §3](04-founder-fit-rescore.md)) by similar amounts.
+- **Open unknowns:** Complir's US SMB plans, CPSC enforcement intensity, Comply PRO+ maturity, how fast city AI pre-check spreads, legacy-vendor EULAs, Netflix IP terms.
