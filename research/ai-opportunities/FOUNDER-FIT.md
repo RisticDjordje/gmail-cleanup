@@ -1,6 +1,6 @@
 # Founder Fit: Where You Should Start
 
-*2026-10-07. Written for your profile: full-stack and applied-AI engineer, no industry background, little capital, bootstrap then raise. Built from round 6 (8 deep dives) and [04-founder-fit-rescore.md](04-founder-fit-rescore.md) (51 older ideas re-scored), then cross-checked against the YC W25-F26 directory and tier-1 VC deals ([LANDSCAPE.md](LANDSCAPE.md)). History in [MEMO.md](MEMO.md). Scale: 54 = old best; 70+ = genuinely compelling.*
+*2026-10-07. Written for your profile: full-stack and applied-AI engineer, no industry background, little capital, bootstrap then raise. Built from round 6 (8 deep dives) and [04-founder-fit-rescore.md](04-founder-fit-rescore.md) (51 older ideas re-scored), then cross-checked against the YC W25-F26 directory and tier-1 VC deals ([LANDSCAPE.md](LANDSCAPE.md)). Round 7 (YC playbooks moved into new industries, [05](05-yc-playbook-transfers.md)) added 10 ideas. History in [MEMO.md](MEMO.md). Scale: 54 = old best; 70+ = genuinely compelling.*
 
 ---
 
@@ -11,6 +11,7 @@
 - **Alternate 1: PlanSet (50, contested).** Sell guaranteed first-pass approval for decks and pergolas, resubmits included. Do not sell drawings: Site Plans AI and BluePrints AI already sell AI site plans and permit drawings.
 - **Alternate 2: Switchboard (50, contested), as an arms dealer.** Source-side legacy readers plus a reconciliation report, licensed to converters (Bitwerx, RecordLinker, The Back Office) and to vendors' in-house teams. ParityProof folds in as its Dynamics GP adapter.
 - **The only open lane on the shortlist is CodeTab (49, not re-checked).** Its ceiling is small. Run it as a side experiment, not as the company.
+- **Round 7 changes nothing at the top.** Ten YC playbooks moved into new industries; none beats RegistryPilot (55) or the 50-point alternates. The best, **PrequalPassport (49)**, ties CodeTab. It is the strongest *new-industry* backup: buyers already pay $1.7-5K a year just to be listed, and you can reach them through SEO. It only becomes fundable if it grows into a contractor-side compliance system of record. Keep it as Alternate 3, behind the existing picks, and run a 5-interview probe only if RegistryPilot's kill test fails.
 - **Honest ceiling:** nothing reaches 70, and the best score is now 55. Treat all three as bootstrap vehicles that need a paid kill test before you raise.
 - **This week:** check Netflix's outside-work and IP policy. Publish the SEO pages before CPSC's mail phase starts on **2026-10-22**. Read Complir's US pages and try Comply PRO+ as a customer would.
 
@@ -18,7 +19,7 @@
 
 ## Ranked shortlist
 
-Fit is out of 100. B→R (bootstrap-to-raise), Prod (product, not services) and NoDom (no domain experience needed) are out of 10. "(old)" marks ideas from earlier rounds, as re-scored in [04](04-founder-fit-rescore.md). Crowding: **open** / **contested** / **taken**. Rows marked * were not re-checked in this pass and take their crowding from [LANDSCAPE.md](LANDSCAPE.md) §5.
+Fit is out of 100. B→R (bootstrap-to-raise), Prod (product, not services) and NoDom (no domain experience needed) are out of 10. "(old)" marks ideas from earlier rounds, as re-scored in [04](04-founder-fit-rescore.md). Crowding: **open** / **contested** / **taken**. Rows marked * were not re-checked in this pass and take their crowding from [LANDSCAPE.md](LANDSCAPE.md) §5. "(R7)" rows come from round 7 (YC playbook transfers, below).
 
 | # | Idea | Segment | Fit | B→R | Prod | NoDom | Crowding (overlapping startups) | Verdict | Tech moat | Biggest risk | Dossier |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -27,15 +28,46 @@ Fit is out of 100. B→R (bootstrap-to-raise), Prod (product, not services) and 
 | 3 | **Switchboard** | Vertical-SaaS vendors and converters | 50 (was 55) | 6 | 4 | 8 | **Contested:** Bitwerx, RecordLinker, The Back Office, Universal Migrator direct; superglue (YC), ClonePartner partial | Alternate (arms dealer) | Metadata-free readers; verification to the cent | Few buyers; semi-services | [r6-1](dossiers/r6-1-switchboard-a-source-side-extraction-and.md) |
 | 4 | SPA Claims Autopilot* | Electrical and HVAC distributors | 50 | 6 | 5 | 5 | **Contested:** Canals, Whitespace (YC), Lark (YC), Enable, SpeedyLabs | Pass unless an insider joins | Which refiled claims get paid | Insider-only data | [r6-7](dossiers/r6-7-spa-claims-autopilot-a-recovery-first-cl.md) |
 | 5 | CodeTab* | Open-book trade-license exams, in Spanish | 49 | 6 | 9 | 8 | **Open:** only general exam prep (Alice.tech, Miyagi Labs) | Side experiment | Lookup-speed readiness model | $5-20M ceiling | [r6-3](dossiers/r6-3-codetab-a-trainer-for-finding-answers-fa.md) |
-| 6 | FieldSignal | Mid-market equipment makers | 48 (was 53) | 4 | 6 | 6 | **Contested:** ServiceCPQ, Syncron direct; Axion, Viaduct, Tavant upmarket | Watch (white-label via a claims platform) | Empirical-Bayes failure rates | Leakage wedge already sold | [r6-6](dossiers/r6-6-fieldsignal-warranty-claims-analysis-and.md) |
-| 7 | ParityProof | Dynamics GP exits | 47 (was 52) | 6 | 5 | 6 | **Contested:** superglue (YC), eOne direct; Campfire, DualEntry, ECOSIRE partial | Fold into Switchboard | Penny-exact subledger replay | Market ends 2031 | [r6-2](dossiers/r6-2-parityproof-gp-first-a-verified-erp-exit.md) |
-| 8 | Air Headroom (old)* | Teams siting onsite power | 47 | 5 | 7 | 6 | **Open** (grid tools only) | Watch | Parcel-level emissions headroom | Small, cyclical | [r2-05](dossiers/r2-05-behind-the-meter-air-desk-ai-enabled-air-perm.md) |
-| 9 | Contents reconstruction (old)* | Wildfire mass-tort firms | 46 | 6 | 7 | 7 | **Contested:** InventoryQuant (YC W26) | Pass | Item matching across records | Lumpy demand | [r1-17](dossiers/r1-17-total-loss-contents-and-depreciation-recovery.md) |
-| 10 | DisputeShield (old)* | Credit-dispute furnishers | 45 | 5 | 8 | 6 | **Contested:** Zomma, Socratix, MouseCat | Watch | AI-vs-AI dispute investigator | Bank vendor-risk reviews | [r4-1](dossiers/r4-1-disputeshield-the-defensible-investigation-la.md) |
-| 11 | SKU risk graph / MGA (old)* | Hard-class consumer products | 44 | 3 | 6 | 3 | **Contested** on model (AI carriers), open on niche | Wrong as an MGA | Per-SKU risk graph | Needs underwriter and front | [r5-3](dossiers/r5-3-ai-mga.md) |
-| 12 | ProvenanceLedger* | Wildfire firms and public adjusters | 38 | 3 | 5 | 7 | **Contested:** InventoryQuant (YC W26) | Pass (keep matching engine) | Calibrated ownership ledger | Window closing | [r6-8](dossiers/r6-8-provenanceledger-a-permissioned-what-you.md) |
+| 6 | PrequalPassport (R7) | Industrial and energy subs on ISN/Avetta/Veriforce | 49 | 7 | 5 | 6 | **Contested:** PrequalPilot direct; ISN, Avetta, Veriforce platforms; prequal consultants | Alternate 3 (pivot to compliance system of record) | Cross-platform evidence library plus deficiency corpus | Avetta ships native supplier feedback | [r7-8](dossiers/r7-8-prequalpassport-an-ai-stay-green-autopil.md) |
+| 7 | FieldSignal | Mid-market equipment makers | 48 (was 53) | 4 | 6 | 6 | **Contested:** ServiceCPQ, Syncron direct; Axion, Viaduct, Tavant upmarket | Watch (white-label via a claims platform) | Empirical-Bayes failure rates | Leakage wedge already sold | [r6-6](dossiers/r6-6-fieldsignal-warranty-claims-analysis-and.md) |
+| 8 | ParityProof | Dynamics GP exits | 47 (was 52) | 6 | 5 | 6 | **Contested:** superglue (YC), eOne direct; Campfire, DualEntry, ECOSIRE partial | Fold into Switchboard | Penny-exact subledger replay | Market ends 2031 | [r6-2](dossiers/r6-2-parityproof-gp-first-a-verified-erp-exit.md) |
+| 9 | Air Headroom (old)* | Teams siting onsite power | 47 | 5 | 7 | 6 | **Open** (grid tools only) | Watch | Parcel-level emissions headroom | Small, cyclical | [r2-05](dossiers/r2-05-behind-the-meter-air-desk-ai-enabled-air-perm.md) |
+| 10 | Contents reconstruction (old)* | Wildfire mass-tort firms | 46 | 6 | 7 | 7 | **Contested:** InventoryQuant (YC W26) | Pass | Item matching across records | Lumpy demand | [r1-17](dossiers/r1-17-total-loss-contents-and-depreciation-recovery.md) |
+| 11 | DisputeShield (old)* | Credit-dispute furnishers | 45 | 5 | 8 | 6 | **Contested:** Zomma, Socratix, MouseCat | Watch | AI-vs-AI dispute investigator | Bank vendor-risk reviews | [r4-1](dossiers/r4-1-disputeshield-the-defensible-investigation-la.md) |
+| 12 | StubLedger (R7) | Mineral royalty and non-op owners | 45 | 5 | 7 | 6 | **Contested:** Enverus (MineralSoft, EnergyLink), MineralTracker, Valor | Pass unless B2B diligence pulls | Cross-owner well benchmark | Niche ceiling (MineralSoft precedent) | [r7-2](dossiers/r7-2-stubledger-an-ai-auditor-for-royalty-che.md) |
+| 13 | PackFee (R7) | F&B producers filing packaging EPR | 45 | 5 | 5 | 7 | **Contested:** FoodChain ID+Unpac, Packgine, Packledger, rePurpose | Pass | Pooled component graph | Grams not estimable from photos | [r7-9](dossiers/r7-9-epr-ledger-narrowed-to-packfee-an-ai-pac.md) |
+| 14 | SKU risk graph / MGA (old)* | Hard-class consumer products | 44 | 3 | 6 | 3 | **Contested** on model (AI carriers), open on niche | Wrong as an MGA | Per-SKU risk graph | Needs underwriter and front | [r5-3](dossiers/r5-3-ai-mga.md) |
+| 15 | WDO Scribe (R7) | California termite inspectors | 44 | 6 | 9 | 5 | **Contested:** TermiteKiosk, FieldRoutes, PestPac | Pass | Cited schema-filling plus conversion follow-up | $10-30M market; FSM incumbents add AI | [r7-3](dossiers/r7-3-wdo-scribe-an-ai-app-that-writes-califor.md) |
+| 16 | KeepFull (R7) | Propane and heating-oil dealers | 44 | 4 | 8 | 6 | **Contested:** ADD, Cargas, PDI ship AI forecasting | Pass | Per-tank Bayesian forecast plus risk-priced VRP | Proof takes a full winter | [r7-4](dossiers/r7-4-keepfull-a-forecasting-and-dispatch-laye.md) |
+| 17 | SubmittalCheck FP (R7) | Fire sprinkler and alarm contractors | 44 | 5 | 7 | 5 | **Contested:** CodeComply (AHJ side), AutoSPRINK PRO | Pass (10-interview probe at most) | AHJ return-letter corpus | Pain unproven; association-driven GTM | [r7-6](dossiers/r7-6-submittalcheck-fp-an-ahj-ready-package-b.md) |
+| 18 | OperatorPath (R7) | Small water and wastewater plants | 44 | 4 | 8 | 5 | **Contested:** Nyad, Hach WIMS, Klir; free NRWA circuit riders | Pivot to contract ops and industrial pretreatment | Symptom-to-outcome corpus | Municipal cost-center buyer | [r7-7](dossiers/r7-7-operatorpath-a-copilot-for-small-plant-w.md) |
+| 19 | HookOS Release Desk (R7) | Towing and impound yards | 41 | 5 | 7 | 5 | **Taken in effect:** Towbook portal, AgentZap, TowLien | Pass | State release rules plus VLM document checks | Convenience-fee revenue may be illegal | [r7-1](dossiers/r7-1-hookos-release-desk-ai-impound-release-d.md) |
+| 20 | ProvenanceLedger* | Wildfire firms and public adjusters | 38 | 3 | 5 | 7 | **Contested:** InventoryQuant (YC W26) | Pass (keep matching engine) | Calibrated ownership ledger | Window closing | [r6-8](dossiers/r6-8-provenanceledger-a-permissioned-what-you.md) |
+| 21 | ForwardDesk (R7) | Non-CargoWise NVOCCs | 38 | 5 | 5 | 4 | **Contested:** Burt (YC W26), Expedock (Magaya partner), CargoWise | Pass (breaks round rule) | Read-back reliability layer | Vendor-endorsed rivals | [r7-5](dossiers/r7-5-forwarddesk-a-carrier-invoice-and-accrua.md) |
+| 22 | LeakLedger (R7) | Refrigeration contractors and grocers | 38 | 4 | 7 | 6 | **Contested:** Trakref, Verisae, ServiceTitan, RefriComply | Pass | Model-to-charge graph | 15 lb rule under petition | [r7-10](dossiers/r7-10-leakledger-a-tool-that-turns-refrigerati.md) |
 
 The old SPA claims engine (55 in [04](04-founder-fit-rescore.md)) merges into row 4.
+
+---
+
+## Round 7: proven YC playbooks, new industries
+
+Method ([05-yc-playbook-transfers.md](05-yc-playbook-transfers.md)): cluster the 1,360 YC W25-F26 companies into 32 mechanism archetypes. Move each archetype into a traditional industry no YC company serves (the source industry is off limits). Then search for competitors and score on the founder-fit rubric. Competitors are allowed; the test is whether an AI-native product can take share.
+
+| Idea | Source playbook (YC) | Target industry | Fit | B→R | Prod | NoDom | AI adv. | Verdict | Good | Bad | Dossier |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| PrequalPassport | Questionnaire capture: Archon, Chromie (+Conveyor) | Subcontractor safety prequal | 49 | 7 | 5 | 6 | 5 | Pivot | Proven WTP; no green grade means no work | Platforms own the data; Avetta adding feedback | [r7-8](dossiers/r7-8-prequalpassport-an-ai-stay-green-autopil.md) |
+| StubLedger | Doc to ledger: Clerked, IronLedger.ai, Comena, Hemut | Oil and gas royalty owners | 45 | 5 | 7 | 6 | 5 | Pivot | Checkable arithmetic; cheap to build | MineralSoft (YC) already exited small | [r7-2](dossiers/r7-2-stubledger-an-ai-auditor-for-royalty-che.md) |
+| PackFee | Compliance autopilot: Complir, MarkIt, Archon, Tire Swing | Packaging EPR | 45 | 5 | 5 | 7 | 5 | Pass | Live, growing state mandate | ~$35M mid-market; AI is table stakes | [r7-9](dossiers/r7-9-epr-ledger-narrowed-to-packfee-an-ai-pac.md) |
+| WDO Scribe | Field capture to report: ValueMate, Opusense, Vetnio, Revion | Termite inspections (CA) | 44 | 6 | 9 | 5 | 4 | Pass | Pure product; public lead list | TermiteKiosk and FSMs already there | [r7-3](dossiers/r7-3-wdo-scribe-an-ai-app-that-writes-califor.md) |
+| KeepFull | Solver overlay: Dayjob, Maximal, Fleetline | Propane and heating-oil delivery | 44 | 4 | 8 | 6 | 4 | Pass | Strong skill fit; CSV audit | ADD, Cargas ship AI; one-winter proof | [r7-4](dossiers/r7-4-keepfull-a-forecasting-and-dispatch-laye.md) |
+| SubmittalCheck FP | Rulebook review: Permitify, Structured AI, Avoice | Fire sprinkler and alarm | 44 | 5 | 7 | 5 | 5 | Pass | Public, quantitative AHJ rules | Unproven pain; tiny low-spend buyers | [r7-6](dossiers/r7-6-submittalcheck-fp-an-ahj-ready-package-b.md) |
+| OperatorPath | Technician copilot: Pairio, Sidekick, Kebra, Bernard | Water and wastewater | 44 | 4 | 8 | 5 | 5 | Pivot | Workforce cliff; no integration | Municipal buyer; free circuit riders | [r7-7](dossiers/r7-7-operatorpath-a-copilot-for-small-plant-w.md) |
+| HookOS | Vertical OS + payments: Parrot, Nautilus, Zaplar | Towing and impound | 41 | 5 | 7 | 5 | 4 | Pass | Money moves at the counter | Towbook and AgentZap own the flow | [r7-1](dossiers/r7-1-hookos-release-desk-ai-impound-release-d.md) |
+| ForwardDesk | Computer-use employee: Lunavo, Zomma, Lance | NVOCC AP (non-CargoWise) | 38 | 5 | 5 | 4 | 3 | Pass | Validated AP pain | Burt (YC) already there | [r7-5](dossiers/r7-5-forwarddesk-a-carrier-invoice-and-accrua.md) |
+| LeakLedger | Records to asset model: Norra, Operon, Talos | Refrigerant leak compliance | 38 | 4 | 7 | 6 | 4 | Pass | Federal rule in force | Rule under petition; FSMs capture data | [r7-10](dossiers/r7-10-leakledger-a-tool-that-turns-refrigerati.md) |
+
+**No round-7 idea reaches 52**, so none gets a write-up. PrequalPassport (49) comes closest. The mechanism transferred cleanly every time. What failed was the premise that the industry was unreached: an incumbent or a small AI point tool was already there in all 10 cases, and a YC company in 2 (MineralSoft, Burt).
 
 ---
 
@@ -124,6 +156,10 @@ Method: each round-6 pick was grepped against the descriptions of all 1,360 YC W
 Restoration roll-up (65 for acquirers), StrikeLedger and infrastructure recovery (60-65), casualty TPA (taken by Veltha, Corgi, Pace), product-liability MGA (59, needs an underwriter and a front), restoration claim revenue (59, Xactimate and Verisk EULA), SPA recovery (insider data, slow cash), Fire ITM, Florida inspections, QA/RA as a service. Each depends on labor, licenses, insider data or procurement trust rather than engineering.
 
 **Pattern:** technical founders win on new SMB mandates (CPSC now; EPR, PFAS, GPSR next), proof layers rather than generation, document graphs that compound across customers, buyers who decide in days, and one quality metric that becomes the seed slide. They lose on licensed acts, slow procurement, contingency cash lags, and data a system of record can bundle (Shopify, claims platforms, ERP loaders).
+
+**Patterns from round 7 (which YC playbooks transfer best for you):**
+- **Transfer best:** buyer-imposed compliance capture (PrequalPassport) and rulebook review before a gatekeeper. A third party forces the work, so willingness to pay already exists, the rules are public, and SEO reaches buyers without a network. Field capture to report fits your skills but loses to the FSM incumbent.
+- **Transfer worst:** overlays on a system of record (solver layers, computer-use employees, vertical OS plus payments). Back-office vendors in towing, propane and freight have already shipped AI or endorsed a partner. Pick industries where no single platform owns the record.
 
 ---
 
