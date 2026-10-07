@@ -1,5 +1,7 @@
 # AI Opportunity Hunt: Final Partner Memo
 
+> **Founder profile now known: start with [FOUNDER-FIT.md](FOUNDER-FIT.md).** It ranks ideas for a full-stack + applied-AI product builder who has little capital and no domain background and wants to bootstrap, then raise. Top pick: RegistryPilot (61); alternates: PlanSet and Switchboard (55 each). The rest of this memo is the earlier generic-profile history.
+
 *2026-10-06. Rounds 1-3 assumed a technical outsider with a small team and little capital. Round 5 (§8) re-scored six ideas for four founder profiles. Supersedes [MEMO-round1.md](MEMO-round1.md), kept for the record.*
 
 ---
@@ -49,7 +51,7 @@ The B2C auto claim agent ([r5-6](dossiers/r5-6-b2c-auto-claim.md), max 51) is a 
 
 ## 3. How this was done
 
-About 330 agents ran across five rounds (184, 66 and 51, a final round, then a balanced round 5). Scouts produced 116 ideas in round 1 ([01-longlist.md](01-longlist.md)) and 30 in round 3 ([03-round3-longlist.md](03-round3-longlist.md)); 58 ideas were judged in deep dives.
+About 382 agents ran across six rounds (184, 66 and 51, a final round, a balanced round 5, then round 6, scored for the founder's actual profile; see [FOUNDER-FIT.md](FOUNDER-FIT.md)). Scouts produced 116 ideas in round 1 ([01-longlist.md](01-longlist.md)) and 30 in round 3 ([03-round3-longlist.md](03-round3-longlist.md)); 58 ideas were judged in deep dives.
 
 - **Round 1:** 17 scouts, 116 ideas, cut to 24 plus 8 from a gap round. Each got a deep dive, a 3-lens red team (competition, go-to-market, feasibility) and a score out of 100. A 3-persona IC (seed VC, bootstrapper, PE operator) picked finalists.
 - **Round 2:** re-tested 7 finalists and the "horizontal claims engine" with live fact-checks, simulated buyer interviews and pre-mortems, plus 5 big swings. The IC ranked all 13.
